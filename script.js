@@ -160,8 +160,8 @@ function renderAulas() {
 ">
   ${materias.map(mat => `
     <button class="auth-btn" style="
-      min-width: 180px;
-      height: 70px;
+      min-width: 100px;
+      height: 50px;
       display: flex;
       align-items: center;
       justify-content: center;
