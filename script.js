@@ -152,14 +152,28 @@ function renderAulas() {
   ];
 
   document.getElementById("form-box").innerHTML = `
-    <div style="text-align: center;">
-      <h2 style="color:#2E7D32; font-size: 24px; margin-bottom: 20px;">Escolha a matéria:</h2>
-      <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; justify-items: center;">
-        ${materias.map(mat => `<button class="auth-btn" onclick="abrirAulas('${mat}')">${mat}</button>`).join("")}
-      </div>
-      <button class="auth-link" style="margin-top: 30px;" onclick="renderMenuPrincipal()">← Voltar</button>
-    
-    </div>
+    <div style="
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+  justify-content: center;
+">
+  ${materias.map(mat => `
+    <button class="auth-btn" style="
+      min-width: 180px;
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      white-space: normal;
+      font-weight: bold;
+      padding: 10px;
+    ">${mat}</button>
+  `).join("")}
+  <button class="auth-link" style="margin-top: 30px;" onclick="renderMenuPrincipal()">← Voltar</button>
+</div>
+
   `;
   animateCard();
 }
