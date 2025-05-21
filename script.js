@@ -262,7 +262,7 @@ function renderIntro() {
       <h2 style="font-size: 24px; color:rgb(16, 82, 19); margin-bottom: 20px">Você no rumo certo!</h2>
       <p style="margin-bottom: 20px; font-size: 17px; color: #444">Seja Bem vindo!</p>
       <p style="margin-bottom: 20px; font-size: 17px; color: #444">Se você ainda não tem seu acesso de login:</p>
-      <p style="margin-bottom: 20px; font-size: 17px; color: #444">Solicite pelo whats'app: (35) 99847-5349</p>
+      <p style="margin-bottom: 20px; font-size: 17px; color: #444">Solicite pelo whatsapp: (35) 99847-5349</p>
       <button class="auth-btn" onclick='renderLogin()'>Login</button>
       <p style='margin-top: 25px; font-size: 14px; color: #555;'>• Desenvolvedor e Instrutor de Trânsito, Jonas!</p>
     </div>
