@@ -152,41 +152,84 @@ function renderAulas() {
   ];
 
   document.getElementById("form-box").innerHTML = `
-    <div style="
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 20px;
-  justify-content: center;
-">
-  ${materias.map(mat => `
-    <button class="auth-btn" style="
-      min-width: 100px;
-      height: 50px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      white-space: normal;
-      font-weight: bold;
-      padding: 10px;
-    ">${mat}</button>
-  `).join("")}
-  <button class="auth-link" style="margin-top: 30px;" onclick="renderMenuPrincipal()">← Voltar</button>
-</div>
+    <div style="text-align: center;">
+      <h2 style="color:#2E7D32; font-size: 24px; margin-bottom: 20px;">Escolha a matéria:</h2>
+      <div style="
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 20px;
+        justify-content: center;
+      ">
+        ${materias.map(mat => `
+          <button class="auth-btn"
+            onclick="abrirAulas('${mat}')"
+            style="
+              min-width: 110px;
+              height: 60px;
+              display: flex;
+              align-items: center;
+              justify-content: center;
+              text-align: center;
+              white-space: normal;
+              word-break: break-word;
+              font-weight: bold;
+              padding: 10px;
+            "
+          >
+            ${mat}
+          </button>
+        `).join("")}
+      </div>
 
+      <button class="auth-link" style="margin-top: 30px;" onclick="renderMenuPrincipal()">← Voltar</button>
+    </div>
   `;
   animateCard();
 }
 
+
 function abrirAulas(materia) {
   const videos = {
     "Legislação": [
-      "https://www.youtube.com/embed/VIDEO_ID1",
-      "https://www.youtube.com/embed/VIDEO_ID2"
+      "https://www.youtube.com/embed/UNxVbj42Vmw",
+      "https://www.youtube.com/embed/UNxVbj42Vmw"
+      
     ],
-    "Direção Defensiva": [
-      "https://www.youtube.com/embed/VIDEO_ID3"
+    "Direção Defensiva": [  
+      "https://www.youtube.com/embed/8_TQ9XecThc",
+      "https://www.youtube.com/embed/ZfjS7Qwm90g"
     ],
+
+    "Sinalização": [
+      "https://www.youtube.com/embed/fRlX8zEkKTY",
+      "https://www.youtube.com/embed/LnQ071-bhfM"
+
+    ],
+
+    "Normas de Circulação": [
+      "https://www.youtube.com/embed/o4WyAXfECug",
+      "https://www.youtube.com/embed/96lyf5KvblM"
+
+    ],
+
+    "Mecânica": [
+      "https://www.youtube.com/embed/S0SQpzVPryA"
+    ],
+
+    "Meio Ambiente": [
+      "https://www.youtube.com/embed/0m9JnMq0b_Q"
+    ],
+
+    "Infrações": [
+      "https://www.youtube.com/embed/QI5QYjwkrko"
+    ],
+
+    "Primeiros Socorros": [
+      "https://www.youtube.com/embed/y3WEzqDoMz4"
+    ],
+
+
+
     // Adicione as demais matérias aqui...
   };
 
