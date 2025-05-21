@@ -260,10 +260,10 @@ function renderIntro() {
       <img src="carro-diamante.png" alt="Logo" style="width: 150px; height: auto; margin-bottom: 20px;" />
       <h2 style="font-size: 34px; color: #2E7D32; margin-bottom: 20px">Legmaster</h2>
       <h2 style="font-size: 24px; color:rgb(16, 82, 19); margin-bottom: 20px">Você no rumo certo!</h2>
-      <p style="margin-bottom: 20px; font-size: 17px; color: #444">Seja Bem vindo!</p>
+      <p style="margin-bottom: 20px; font-size: 17px; color: #444">Seja bem vindo!</p>
       <p style="margin-bottom: 20px; font-size: 17px; color: #444">Se você ainda não tem seu acesso de login:</p>
       <p style="margin-bottom: 20px; font-size: 17px; color: #444">Solicite pelo whatsapp: (35) 99847-5349</p>
-      <button class="auth-btn" onclick='renderLogin()'>Login</button>
+      <button class="auth-btn" onclick='renderLogin()'>Acessar</button>
       <p style='margin-top: 25px; font-size: 14px; color: #555;'>• Desenvolvedor e Instrutor de Trânsito, Jonas!</p>
     </div>
   `;
