@@ -187,7 +187,7 @@ function renderAulas() {
       </div>
 
       <button class="auth-link" style="margin-top: 30px;" onclick="renderMenuPrincipal()">← Voltar</button>
-      <p style='margin-top: 25px; font-size: 14px; color: #555;'>• Desenvolvedor e Instrutor de Trânsito Jonas</p>
+      <p style='margin-top: 25px; font-size: 14px; color: #555;'>• Desenvolvedor e Instrutor de Trânsito Jonas •</p>
 
     </div>
   `;
@@ -279,7 +279,7 @@ function renderSimulados() {
       </div>
       
       <button class="auth-link" style="margin-top: 20px;" onclick="renderMenuPrincipal()">← Voltar</button>
-      <p style='margin-top: 25px; font-size: 14px; color: #555;'>• Desenvolvedor e Instrutor de Trânsito Jonas</p>
+      <p style='margin-top: 25px; font-size: 14px; color: #555;'>• Desenvolvedor e Instrutor de Trânsito Jonas •</p>
     
     </div>
   `;
