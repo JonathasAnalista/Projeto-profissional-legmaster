@@ -68,7 +68,7 @@ async function validarAcessoPorPlanilha(email, senha) {
     const usuario = data.find(u => u.email?.toLowerCase() === email.toLowerCase());
 
     if (!usuario) {
-      alert("Este e-mail não está autorizado.");
+      mostrarAlerta("Este e-mail não está autorizado.");
       return false;
     }
 
@@ -78,7 +78,7 @@ async function validarAcessoPorPlanilha(email, senha) {
     }
 
     if (usuario.status.toLowerCase() !== "ativo") {
-      mostrarAlerta(`Olá ${usuario.nome}, seu acesso está inativo.\nEntre em contato para renovação.`);
+      mostrarAlerta(`Olá ${usuario.nome}, seu acesso está inativo.\nEntre em contato para renovação.\n(35)99847-5349`);
       return false;
     }
 
@@ -264,14 +264,16 @@ function renderSimulados() {
       <h2 style="color:#2E7D32; font-size: 26px; margin-bottom: 20px;">Olá, ${nome}!</h2>
       <p style="font-size: 18px; color: #444;">Escolha uma matéria para iniciar seu simulado:</p>
       <div style="display: flex; flex-direction: column; align-items: center; gap: 15px; margin-top: 30px;">
-        <button class="auth-btn" onclick="renderProvas('Legislação')">Legislação</button>
-        <button class="auth-btn" onclick="renderProvas('Direção Defensiva')">Direção Defensiva</button>
-        <button class="auth-btn" onclick="renderProvas('Primeiros Socorros')">Primeiros Socorros</button>
-        <button class="auth-btn" onclick="renderProvas('Meio Ambiente')">Meio Ambiente</button>
-        <button class="auth-btn" onclick="renderProvas('Mecânica')">Mecânica</button>
-        <button class="auth-btn" onclick="renderProvas('Infrações')">Infrações</button>
         <button class="auth-btn" onclick="renderProvas('Sinalização')">Sinalização</button>
         <button class="auth-btn" onclick="renderProvas('Normas de Circulação')">Normas de Circulação</button>
+        <button class="auth-btn" onclick="renderProvas('Direção Defensiva')">Direção Defensiva</button>
+        <button class="auth-btn" onclick="renderProvas('Legislação')">Legislação</button>
+        <button class="auth-btn" onclick="renderProvas('Primeiros Socorros')">Primeiros Socorros</button>
+        <button class="auth-btn" onclick="renderProvas('Mecânica')">Mecânica</button>
+        <button class="auth-btn" onclick="renderProvas('Meio Ambiente')">Meio Ambiente</button>
+        <button class="auth-btn" onclick="renderProvas('Infrações')">Infrações</button>
+        
+        
       </div>
       
       <button class="auth-link" style="margin-top: 20px;" onclick="renderMenuPrincipal()">← Voltar</button>
