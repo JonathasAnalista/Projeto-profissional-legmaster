@@ -2,6 +2,37 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+  <style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    transition: background 0.3s, color 0.3s;
+  }
+
+  body.light {
+    background: #f0f0f0;
+    color: #222;
+  }
+
+  body.dark {
+    background: #121212;
+    color: #eee;
+  }
+
+  .theme-toggle {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background: #2E7D32;
+    color: white;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    z-index: 9999;
+  }
+</style>
+
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Legmaster - Você no rumo certo</title>
@@ -53,6 +84,35 @@
       });
     }
   </script>
+
+  <button class="theme-toggle" onclick="toggleTheme()">🌗 Tema</button>
+
+<script>
+  
+  function toggleTheme() {
+    const body = document.body;
+    const isDark = body.classList.toggle('dark');
+    if (!isDark) {
+      body.classList.add('light');
+    } else {
+      body.classList.remove('light');
+    }
+    localStorage.setItem('tema', isDark ? 'dark' : 'light');
+  }
+
+  // Aplicar tema salvo ao carregar
+  const temaSalvo = localStorage.getItem('tema');
+  if (temaSalvo) {
+    document.body.classList.add(temaSalvo);
+  } else {
+    if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      document.body.classList.add('dark');
+    } else {
+      document.body.classList.add('light');
+    }
+  }
+</script>
+
 </body>
 
 

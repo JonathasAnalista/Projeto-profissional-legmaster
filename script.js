@@ -1,8 +1,12 @@
 
 let usuarios = JSON.parse(localStorage.getItem("usuarios") || "[]");
 let currentUser = JSON.parse(localStorage.getItem("usuarioLogado") || "null");
+const somAcerto = new Audio("sounds/acerto.mp3");
+const somErro = new Audio("sounds/erro.mp3");
+
 
 function renderLogin() {
+  localStorage.setItem("telaAtual", "login");
   document.getElementById("form-box").innerHTML = `
     <button onclick="renderIntro()" style="float:right; background:none; border:none; font-size:28px; color:#999; cursor:pointer;">&times;</button>
     <h2 class="auth-title">Login</h2>
@@ -16,9 +20,10 @@ function renderLogin() {
     </div>
     <button class="auth-btn" onclick="login()">Entrar</button>`;
   animateCard();
-      //Para ativar o button cadastrar cole esse codigo na linha de cima <button class="auth-link" onclick="renderCadastro()">Não tem conta? Cadastre-se</button>
+  }
+//Para ativar o button cadastrar cole esse codigo na linha de cima <button class="auth-link" onclick="renderCadastro()">Não tem conta? Cadastre-se</button>
 
-}
+
 
 // function renderCadastro() {
 //   document.getElementById("form-box").innerHTML = `
@@ -128,14 +133,17 @@ function fecharAlerta() {
 
 
 function renderMenuPrincipal() {
+  localStorage.setItem("telaAtual", "menu");
   const nome = currentUser && currentUser.nome ? currentUser.nome : 'Aluno';
   document.getElementById("form-box").innerHTML = `
     <div style="text-align: center;">
       <h2 style="color:#2E7D32; font-size: 26px; margin-bottom: 20px;">Bem-vindo, ${nome}!</h2>
       <div style="display: flex; flex-direction: column; align-items: center; gap: 30px; margin-top: 40px;">
-        <button class="auth-btn" style="font-size: 20px; padding: 20px;" onclick="renderAulas()">📚 Assistir às Aulas</button>
-        <button class="auth-btn" style="font-size: 20px; padding: 20px;" onclick="renderHome()">📝 Fazer Simulados</button>
-      </div>
+      <button class="auth-btn" style="font-size: 20px; padding: 20px;" onclick="renderAulas()">📚 Assistir às Aulas</button>
+      <button class="auth-btn" style="font-size: 20px; padding: 20px;" onclick="renderHome()">📝 Fazer Simulados</button>
+      <button class="auth-btn" style="font-size: 20px; padding: 20px;" onclick="renderDesempenho()">📊 Ver Desempenho</button>
+    </div>
+
       
     
     <button class="auth-link" style="margin-top: 25px;" onclick="logout()">Sair</button>
@@ -145,6 +153,7 @@ function renderMenuPrincipal() {
 }
 
 function renderAulas() {
+  localStorage.setItem("telaAtual", "aulas");
   const materias = [
     "Legislação",
     "Direção Defensiva",
@@ -256,10 +265,12 @@ function abrirAulas(materia) {
 }
 
 function renderHome() {
+  localStorage.setItem("telaAtual", "home");
   renderSimulados();
 }
 
 function renderSimulados() {
+  localStorage.setItem("telaAtual", "simulados");
   const nome = currentUser && currentUser.nome ? currentUser.nome : 'Aluno';
   document.getElementById("form-box").innerHTML = `
     <div style="text-align: center;">
@@ -287,18 +298,23 @@ function renderSimulados() {
 }
 
 function renderProvas(materia) {
-  const links = {
-    "Sinalização": [...Array(3)].map((_, i) => `https://simulado-sinalizacao-${i+1}.netlify.app/`),
-    "Normas de Circulação": [...Array(3)].map((_, i) => `https://simulado-normas-circulacao-${i+1}.netlify.app/`),
-    "Legislação": [...Array(3)].map((_, i) => `https://simulado-legislacao-${i+1}.netlify.app/`),
-    "Infrações": [...Array(3)].map((_, i) => `https://simulado-infracoes-${i+1}.netlify.app/`),
-    "Direção Defensiva": [...Array(3)].map((_, i) => `https://simulado-direcao-defensiva-${i+1}.netlify.app/`),
-    "Primeiros Socorros": [...Array(3)].map((_, i) => `https://simulado-primeiros-socorros-${i+1}.netlify.app/`),
-    "Meio Ambiente": [...Array(3)].map((_, i) => `https://simulado-meio-ambiente-${i+1}.netlify.app/`),
-    "Mecânica": [...Array(3)].map((_, i) => `https://simulado-mecanica-${i+1}.netlify.app/`)
+  localStorage.setItem("telaAtual", "provas");
+  const basePath = 'simulados'; // pasta onde estão suas provas locais
+
+  const nomes = {
+    "Sinalização": "sinalizacao",
+    "Normas de Circulação": "normas_circulacao",
+    "Legislação": "legislacao",
+    "Infrações": "infracoes",
+    "Direção Defensiva": "direcao_defensiva",
+    "Primeiros Socorros": "primeiros_socorros",
+    "Meio Ambiente": "meio_ambiente",
+    "Mecânica": "mecanica"
   };
 
-  const provas = links[materia] || [];
+  const prefixo = nomes[materia] || "";
+  const provas = [...Array(3)].map((_, i) => `${basePath}/${prefixo}-${i + 1}/index.html`);
+
   document.getElementById("form-box").innerHTML = `
     <div style="text-align: center;">
       <h2 style="color:#2E7D32; font-size: 24px; margin-bottom: 10px;">${materia}</h2>
@@ -313,6 +329,59 @@ function renderProvas(materia) {
   animateCard();
 }
 
+function renderDesempenho() {
+  localStorage.setItem("telaAtual", "desempenho");
+  const email = currentUser?.email;
+  const desempenho = JSON.parse(localStorage.getItem("desempenho") || "{}");
+  const dados = desempenho[email] || [];
+
+  let total = dados.reduce((sum, item) => sum + item.acertos, 0);
+
+  document.getElementById("form-box").innerHTML = `
+    <div style="text-align:center;">
+      <h2 style="color:#2E7D32; font-size: 24px;">📊 Desempenho</h2>
+      ${dados.length === 0 ? "<p>Nenhuma prova realizada ainda.</p>" : `
+        <table style="width: 100%; margin-top: 20px; border-collapse: collapse;">
+          <thead>
+            <tr style="background-color: #e0f2f1;">
+              <th style="padding: 8px; border: 1px solid #ccc;">Prova</th>
+              <th style="padding: 8px; border: 1px solid #ccc;">Acertos</th>
+              <th style="padding: 8px; border: 1px solid #ccc;">Data</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${dados.map(d => `
+              <tr>
+                <td style="padding: 8px; border: 1px solid #ccc;">${d.prova}</td>
+                <td style="padding: 8px; border: 1px solid #ccc;">${d.acertos}</td>
+                <td style="padding: 8px; border: 1px solid #ccc;">${d.data}</td>
+              </tr>`).join('')}
+          </tbody>
+        </table>
+        <button class="auth-btn" style="margin-top: 20px;" onclick="apagarHistorico()">🗑️ Apagar Histórico</button>
+      `}
+      <button class="auth-link" style="margin-top: 20px;" onclick="renderMenuPrincipal()">← Voltar</button>
+    </div>
+  `;
+  animateCard();
+}
+function apagarHistorico() {
+  if (!confirm("Tem certeza que deseja apagar todo o histórico de desempenho?")) return;
+
+  const email = currentUser?.email;
+  const desempenho = JSON.parse(localStorage.getItem("desempenho") || "{}");
+
+  delete desempenho[email];
+  localStorage.setItem("desempenho", JSON.stringify(desempenho));
+
+  alert("Histórico apagado com sucesso!");
+  renderDesempenho();
+}
+
+
+
+
+
 function logout() {
   localStorage.removeItem("usuarioLogado");
   currentUser = null;
@@ -321,6 +390,7 @@ function logout() {
 
 
 function renderIntro() {
+  localStorage.setItem("telaAtual", "intro");
   document.getElementById("form-box").innerHTML = `
     <div style="text-align: center">
       <img src="carro-diamante.png" alt="Logo" style="width: 150px; height: auto; margin-bottom: 20px;" />
@@ -333,13 +403,24 @@ function renderIntro() {
     </div>
   `;
   animateCard();
-        // Para ativar o botao cadastre-se na tela inicial cole o codigo abaixo na linha de cima
-        // <button class="auth-btn" onclick='renderCadastro()'>Cadastre-se</button>
+
 
 }
+
+
 function animateCard() {
   const box = document.getElementById("form-box");
   box.style.animation = "fadeIn 0.5s ease-in-out";
 }
 
-renderIntro();
+const tela = localStorage.getItem("telaAtual");
+
+switch (tela) {
+  case "login": renderLogin(); break;
+  case "menu": renderMenuPrincipal(); break;
+  case "desempenho": renderDesempenho(); break;
+  case "aulas": renderAulas(); break;
+  case "simulados": renderSimulados(); break;
+  default: renderIntro(); break;
+}
+
