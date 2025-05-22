@@ -29,6 +29,29 @@
     });
   }
 </script>
+<script>
+  if ('serviceWorker' in navigator) {
+    window.addEventListener('load', () => {
+      navigator.serviceWorker.register('service-worker.js').then(registration => {
+        console.log('Service Worker registrado:', registration.scope);
+
+        registration.onupdatefound = () => {
+          const newWorker = registration.installing;
+          newWorker.onstatechange = () => {
+            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+              alert('Nova versão disponível! Recarregando...');
+              window.location.reload();
+            }
+          };
+        };
+
+      }).catch(error => {
+        console.error('Falha ao registrar o Service Worker:', error);
+      });
+    });
+  }
+</script>
+
 </body>
 
 
