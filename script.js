@@ -107,10 +107,15 @@ function login() {
   const senha = document.getElementById("senha").value;
 
   validarAcessoPorPlanilha(email, senha).then(valido => {
-    if (valido) renderMenuPrincipal();
-  });
+    if (valido) {
+      // ✅ Atualiza a variável global corretamente
+      currentUser = JSON.parse(localStorage.getItem("usuarioLogado"));
+      console.log("Usuário logado:", currentUser); // opcional para debug
 
-}
+      renderMenuPrincipal(); // Agora com o nome certo
+}})
+  }
+
 
 function mostrarAlerta(mensagem) {
   document.getElementById("alert-message").innerText = mensagem;
@@ -192,7 +197,7 @@ function abrirAulas(materia) {
   const videos = {
     "Legislação": [
       "https://www.youtube.com/embed/UNxVbj42Vmw",
-      "https://www.youtube.com/embed/UNxVbj42Vmw"
+      "https://www.youtube.com/embed/xmPJDRS8FOg"
       
     ],
     "Direção Defensiva": [  
