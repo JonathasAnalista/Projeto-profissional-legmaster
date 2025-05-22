@@ -68,7 +68,7 @@ async function validarAcessoPorPlanilha(email, senha) {
     const usuario = data.find(u => u.email?.toLowerCase() === email.toLowerCase());
 
     if (!usuario) {
-      mostrarAlerta("Este e-mail não está autorizado.");
+      mostrarAlerta("Atenção verifique o campo de email e senha!.");
       return false;
     }
 
