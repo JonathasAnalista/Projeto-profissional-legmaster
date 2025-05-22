@@ -329,7 +329,7 @@ function renderIntro() {
       <h2 style="font-size: 18px; color:rgb(10, 22, 10); margin-bottom: 20px">Solicite seu login pelo Whatapp</h2>
       <h2 style="font-size: 24px; color:rgb(255, 0, 0); margin-bottom: 20px"> →→ (35) 99847-5349 ←←</h2> 
       <button class="auth-btn" onclick='renderLogin()'>Acessar</button>
-      <p style='margin-top: 25px; font-size: 14px; color: #555;'>• Instrutor de Trânsito, Jonas! Desde 2020.</p>
+      <p style='margin-top: 25px; font-size: 14px; color: #555;'>• Instrutor de Trânsito, Jonas! Desde 2020 •</p>
     </div>
   `;
   animateCard();
