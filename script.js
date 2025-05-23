@@ -520,38 +520,35 @@ if (!currentUser && tela !== "intro" && tela !== "login") {
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/service-worker.js')
-      .then(reg => {
-        console.log("✔ Service Worker registrado com sucesso!");
+    // Só registra se ainda não recarregou
+    if (!sessionStorage.getItem('sw-reloaded')) {
+      navigator.serviceWorker.register('/service-worker.js')
+        .then(reg => {
+          console.log("✔ Service Worker registrado com sucesso!");
 
-        reg.onupdatefound = () => {
-          const newWorker = reg.installing;
+          reg.onupdatefound = () => {
+            const newWorker = reg.installing;
 
-          newWorker.onstatechange = () => {
-            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-              newWorker.postMessage({ action: 'skipWaiting' });
+            newWorker.onstatechange = () => {
+              if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                newWorker.postMessage({ action: 'skipWaiting' });
 
-              // Detecta troca de controle pelo novo SW
-              navigator.serviceWorker.addEventListener('controllerchange', () => {
-                // ⚠️ Verifica se já recarregou nesta sessão
-                if (!sessionStorage.getItem('sw-reloaded')) {
-                  sessionStorage.setItem('sw-reloaded', 'true'); // Marca como recarregado
-                  alert("Nova versão disponível! Recarregando...");
-                  location.reload();
-                }
-              });
-            }
+                navigator.serviceWorker.addEventListener('controllerchange', () => {
+                  if (!sessionStorage.getItem('sw-reloaded')) {
+                    sessionStorage.setItem('sw-reloaded', 'true');
+                    alert("Nova versão disponível! Recarregando...");
+                    location.reload();
+                  }
+                });
+              }
+            };
           };
-        };
-      })
-      .catch(err => {
-        console.error("❌ Falha ao registrar o Service Worker:", err);
-      });
+        })
+        .catch(err => {
+          console.error("❌ Falha ao registrar o Service Worker:", err);
+        });
+    }
   });
 }
-
-window.addEventListener('beforeunload', () => {
-  sessionStorage.removeItem('sw-reloaded');
-});
 
 
