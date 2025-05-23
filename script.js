@@ -276,13 +276,7 @@ function renderSimulados() {
   localStorage.setItem("telaAtual", "simulados");
   const nome = currentUser && currentUser.nome ? currentUser.nome : 'Aluno';
   document.getElementById("form-box").innerHTML = `
-    <div id="depoimento" style="margin: 20px 0; font-size: 14px; text-align: center; font-style: italic; color: #555;">
-      <p id="depoimento-texto">“...”</p>
-      <strong id="depoimento-autor">– ...</strong>
-    </div>
-
-
-    <div style="text-align: center;">
+      <div style="text-align: center;">
       <h2 style="color:#2E7D32; font-size: 26px; margin-bottom: 20px;">Olá, ${nome}!</h2>
       <p style="font-size: 18px; color: #444;">Escolha uma matéria para iniciar seu simulado:</p>
       <div style="display: flex; flex-direction: column; align-items: center; gap: 15px; margin-top: 30px;">
@@ -304,11 +298,7 @@ function renderSimulados() {
     </div>
   `;
 
-      const depoimentos = [
-      { texto: "Passei de primeira graças à plataforma Legmaster!", autor: "– Carla, MG" },
-      { texto: "Excelente metodologia, me senti muito preparado!", autor: "– João, SP" },
-      { texto: "As aulas são claras e objetivas. Aprovada!", autor: "– Marina, RJ" }
-    ];
+      
 
     let indexAtual = 0;
 
@@ -425,7 +415,11 @@ function logout() {
 
 function renderIntro() {
   localStorage.setItem("telaAtual", "intro");
-  document.getElementById("form-box").innerHTML = `
+  document.getElementById("form-box").innerHTML = `  
+
+    
+
+
     <div style="text-align: center">
 
       <img src="carro-diamante.png" alt="Logo" style="width: 150px; height: auto; margin-bottom: 20px;" />
@@ -449,14 +443,19 @@ function renderIntro() {
       <br><br>
 
       <a href="https://wa.me/5535998475349?text=Olá%20Instrutor%20Jonas!%20Gostaria%20de%20solicitar%20acesso%20à%20plataforma%20Legmaster. Como funciona?" target="_blank">
-        <button class="auth-btn" style="transition: all 0.3s ease; background-color: #2E7D32;">
+        <button class="auth-btn" style="transition: all 0.3s ease; background-color:rgb(51, 139, 139);">
           Solicitar Acesso
         </button>
       </a>
 
+      <div id="depoimento" style="margin: 20px 0; font-size: 14px; text-align: center; font-style: italic; color: #555;">
+      <p id="depoimento-texto">“...”</p>
+      <strong id="depoimento-autor">– ...</strong>
+      </div>
+
      
     </div>
-
+    
     <div style="margin-top: 20px; font-size: 13px; color: #444; text-align: center;">
       <img src="jonas.png" alt="Instrutor Jonas" style="width: 120px; display: block; margin: 0 auto 10px;">
       <p><em>“Sou o Jonas, Instrutor de Trânsito desde 2020. Já ajudei mais de 1.000 alunos a passar no Detran!”</em></p>
@@ -465,6 +464,30 @@ function renderIntro() {
     
 
   `;
+      const depoimentos = [
+      { texto: "Os simulados com perguntas reais da prova me ajudou a passar, tirei 27 pontos", autor: "– Maria, Jacutinga MG" },
+      { texto: "O legal é que os simulados são objetivos e interativos. consegui minha aprovação", autor: "– Gabriel, Campinas SP" },
+      { texto: "As aulas, as correções de provas e o simulado são ótimos! vai ajudar muita gente.", autor: "– Joyce, Monte sião MG" },
+      { texto: "Passei de primeira graças à plataforma Legmaster!", autor: "– Carla, Ouro fino MG" },
+      { texto: "Excelente metodologia, me senti muito preparado!", autor: "– João, Osasco SP" },
+      { texto: "As aulas são claras e objetivas. Aprovada!", autor: "– Marina, Jacutinga MG" }
+    ];
+
+    let indexAtual = 0;
+
+    function mostrarProximoDepoimento() {
+      const texto = document.getElementById("depoimento-texto");
+      const autor = document.getElementById("depoimento-autor");
+
+      if (texto && autor) {
+        texto.textContent = `“${depoimentos[indexAtual].texto}”`;
+        autor.textContent = depoimentos[indexAtual].autor;
+        indexAtual = (indexAtual + 1) % depoimentos.length;
+      }
+    }
+
+    setInterval(mostrarProximoDepoimento, 5000);
+
   animateCard();
 }
 
