@@ -410,11 +410,12 @@ function renderIntro() {
       <button class="auth-btn">Solicitar Acesso</button>
       </a>
 
-      <div style="margin-top: 20px; font-size: 14px; color: #333; line-height: 1.6;">
+      <div style="margin-top: 20px; padding-left: 30px; text-align: left; font-size: 14px; color: #333; line-height: 1.8;">
         <p>✔️ Aulas atualizadas com o CTB</p>
         <p>✔️ Simulados com questões reais</p>
         <p>✔️ Método validado por +2.000 alunos</p>
       </div>
+
 
 
       <p style='margin-top: 25px; font-size: 14px; color: #555;'>• Instrutor de Trânsito, Jonas! Desde 2020 •</p>
