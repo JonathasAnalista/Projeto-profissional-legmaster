@@ -530,11 +530,13 @@ if ('serviceWorker' in navigator) {
             if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
               newWorker.postMessage({ action: 'skipWaiting' });
 
-              // Aguarde o novo SW ativar antes de recarregar
               navigator.serviceWorker.addEventListener('controllerchange', () => {
-                console.log("Novo service worker ativado. Recarregando...");
-                alert("Nova versão disponível! Recarregando...");
-                location.reload();
+                // Impede recarregamento infinito
+                if (!sessionStorage.getItem('sw-updated')) {
+                  sessionStorage.setItem('sw-updated', 'true');
+                  alert("Nova versão disponível! Recarregando...");
+                  location.reload();
+                }
               });
             }
           };
@@ -545,6 +547,7 @@ if ('serviceWorker' in navigator) {
       });
   });
 }
+
 
 
 
