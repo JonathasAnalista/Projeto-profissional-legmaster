@@ -418,7 +418,11 @@ function renderIntro() {
 
 
 
-      <p style='margin-top: 25px; font-size: 14px; color: #555;'>• Instrutor de Trânsito, Jonas! Desde 2020 •</p>
+      <div style="margin-top: 20px; font-size: 13px; color: #444;">
+        <img src="avatar.png" alt="Instrutor Jonas" style="width: 60px; border-radius: 50%;">
+        <p><em>“Sou o Jonas, Instrutor de Trânsito desde 2020. Já ajudei mais de 2.000 alunos a passar no Detran!”</em></p>
+      </div>
+
     </div>
   `;
   animateCard();
