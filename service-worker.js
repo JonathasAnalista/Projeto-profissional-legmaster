@@ -1,4 +1,4 @@
-const CACHE_NAME = 'legmaster-cache-v3';
+const CACHE_NAME = 'legmaster-cache-v6';
 const urlsToCache = [
   '/',
   '/index.html',
@@ -6,6 +6,13 @@ const urlsToCache = [
   '/script.js',
   '/manifest.json'
 ];
+
+self.addEventListener('message', event => {
+  if (event.data.action === 'skipWaiting') {
+    self.skipWaiting();
+  }
+});
+
 
 // Instalando o Service Worker e adicionando arquivos ao cache
 self.addEventListener('install', event => {

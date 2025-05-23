@@ -525,15 +525,24 @@ if ('serviceWorker' in navigator) {
 
         reg.onupdatefound = () => {
           const newWorker = reg.installing;
+
           newWorker.onstatechange = () => {
             if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-              console.log('⚠ Nova versão disponível. Recarregando...');
-              location.reload(); // força nova versão
+              newWorker.postMessage({ action: 'skipWaiting' });
+
+              // Aguarde o novo SW ativar antes de recarregar
+              navigator.serviceWorker.addEventListener('controllerchange', () => {
+                console.log("Novo service worker ativado. Recarregando...");
+                alert("Nova versão disponível! Recarregando...");
+                location.reload();
+              });
             }
           };
         };
       })
-      .catch(err => console.error("Erro ao registrar SW:", err));
+      .catch(err => {
+        console.error("❌ Falha ao registrar o Service Worker:", err);
+      });
   });
 }
 
