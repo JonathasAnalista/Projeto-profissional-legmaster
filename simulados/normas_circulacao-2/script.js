@@ -1,315 +1,184 @@
 
+const somAcerto = new Audio("acerto.mp3");
+const somErro = new Audio("erro.mp3");
+
+function habilitarAudios() {
+  somAcerto.volume = 0;
+  somErro.volume = 0;
+
+  somAcerto.play().catch(() => {});
+  somErro.play().catch(() => {});
+
+  setTimeout(() => {
+    somAcerto.pause(); somErro.pause();
+    somAcerto.currentTime = 0; somErro.currentTime = 0;
+    somAcerto.volume = 1; somErro.volume = 1;
+  }, 200);
+
+  document.body.onclick = null;
+}
+
+
 const questions = [
   {
-    "question": "De quem é a preferência de passagem?",
-    "image": "quest-1",
-    "options": [
-      "Do veículo 1, pois trafega em linha reta.",
-      "Do veículo 2, pois está à direita do veículo 1.",
-      "Do veículo 1, pois está à direita do veículo 2.",
-      "Do veículo 2, pois trafega em preferencial."
-    ],
-    "answer": 2
-  },
-  {
-    "question": "Manter o veículo imobilizado apenas pelo tempo necessário para embarque e desembarque de pessoas, caracteriza-se como:",
-    "options": [
-      "Parada para carga e descarga.",
-      "Parada.",
-      "Estacionamento para carga e descarga.",
-      "Estacionamento."
-    ],
-    "answer": 1
-  },
-  {
-    "question": "O uso do farol baixo é:",
-    "options": [
-      "Obrigatório para motocicletas, motonetas e ciclomotores durante o dia e a noite.",
-      "Recomendado para ônibus, durante o dia, se estiver em faixa exclusiva.",
-      "Obrigatório para automóveis, em qualquer via, mesmo durante o dia.",
-      "Recomendado para ciclomotores durante o dia."
-    ],
+    "question": "O condutor deve sinalizar e deslocar com antecedência seu veículo para a faixa mais à direita da sua mão de direção para:",
+    "options": ["Entrar à direita.", "Mudar de faixa de trânsito.", "Para retornar pela mesma via.", "Entrar à esquerda."],
     "answer": 0
   },
   {
-    "question": "De acordo com o desenho, marque a resposta correta:",
-    "image": "quest-4",
-    "options": [
-      "O veículo 1 perde a preferência por fazer uma conversão à esquerda.",
-      "O veículo 2 tem a preferência por trafegar na principal.",
-      "O veículo 1 tem a preferência por trafegar à direita do 2.",
-      "O veículo 2 tem a preferência por trafegar em linha reta."
-    ],
+    "question": "Todo condutor de veículo deve dar preferência de passagem ao pedestre:",
+    "options": ["Somente quando se tratar de deficiente físico.", "Somente quando se tratar de idosos e crianças.", "Em qualquer situação.", "Somente nas faixas de segurança."],
     "answer": 2
   },
   {
-    "question": "Quando inexistir uma faixa especial, um veículo de tração animal deverá ocupar:",
-    "options": [
-      "A faixa mais à esquerda da pista de rolamento.",
-      "A faixa mais à direita da pista de rolamento.",
-      "Qualquer faixa, desde que facilite o trânsito.",
-      "A faixa da direita ou da esquerda, dependendo da categoria do veículo."
-    ],
+    "question": "Em uma rua de duplo sentido de circulação não sinalizada, o condutor que quiser virar à direita deverá:",
+    "options": ["Atingir o ponto central do cruzamento e convergir.", "Parar o seu veículo, observar e convergir, atingindo o eixo central.", "Aproximar-se o máximo possível do bordo direito da pista e fazer a conversão em velocidade segura.", "Posicionar-se junto ao meio-fio da esquerda, acelerando a marcha."],
+    "answer": 2
+  },
+  {
+    "question": "O condutor que estiver circulando pela faixa do meio, em uma pista de rolamento de três faixas, ao perceber que outro que o segue tem o propósito de ultrapassá-lo, deverá:",
+    "options": ["Deslocar-se para a faixa da direita, acelerando a marcha.", "Manter-se naquela na qual está circulando, sem acelerar a marcha.", "Manter-se na pista, acelerando a marcha.", "Deslocar-se para a faixa da esquerda, acelerando a marcha."],
     "answer": 1
   },
   {
-    "question": "O condutor poderá ultrapassar outro veículo pela direita quando:",
-    "options": [
-      "O veículo da frente autorizar.",
-      "A via for de mão única com entrada à esquerda e o condutor do veículo a ser ultrapassado indicar, por sinal, que vai entrar para esse lado.",
-      "A via for de mão única com retorno ou entrada à direita e o condutor do veículo que estiver à direita indicar, por sinal, que vai entrar para esse lado.",
-      "A via for de mão dupla com retorno ou entrada à esquerda e apenas uma faixa de trânsito."
-    ],
+    "question": "A transposição de faixas, movimentos de conversão à direita e esquerda e retornos denomina-se:",
+    "options": ["Conversão.", "Ultrapassagem.", "Passagem.", "Deslocamento lateral."],
+    "answer": 3
+  },
+  {
+    "question": "Assinale, quanto às normas de circulação, a alternativa errada:",
+    "options": ["A circulação será feita pelo lado direito da via, admitidas as exceções devidamente sinalizadas.", "Os veículos precedidos de batedores terão prioridade de passagem.", "A ultrapassagem deve ser feita somente pela direita.", "Os veículos de socorro têm prioridade de passagem, gozam de livre circulação, estacionamento e parada quando identificados por alarme sonoro e iluminação vermelha intermitente."],
+    "answer": 2
+  },
+  {
+    "question": "A alternância entre luz alta e baixa por um curto período de tempo e de forma intermitente somente poderá ser usada para:",
+    "options": ["Sinalizar a intenção de ultrapassar o veículo à frente ou para indicar risco à segurança para os veículos em sentido contrário.", "Indicar conversões e retornos em rodovias e estradas.", "Sinalizar frenagem de emergência.", "Embarque e desembarque de passageiros."],
+    "answer": 0
+  },
+  {
+    "question": "Todo condutor de veículo automotor deve guardar distância, exceto:",
+    "options": ["Frontal e lateral, entre o seu e os demais veículos, bem como em relação ao bordo da pista.", "Lateral em 1,5 m ao ultrapassar ciclistas.", "Frontal em 3 metros, sob qualquer circunstância.", "Verificando sempre a velocidade e as condições do local, do veículo e as condições climáticas."],
+    "answer": 2
+  },
+  {
+    "question": "É direito dos pedestres:",
+    "options": ["A utilização das calçadas públicas, passarelas, passagens próprias e acostamentos de vias rurais.", "Andar nas pistas de rolamento, quando houver calçada.", "Realizar travessia em túneis e viadutos, ainda que não haja passagem exclusiva.", "Transitar em desacordo com a sinalização."],
+    "answer": 0
+  },
+  {
+    "question": "Sobre a classificação das vias e suas características, é falso afirmar:",
+    "options": ["As vias coletoras destinam-se a coletar e distribuir o trânsito para vias de maior fluxo.", "A velocidade máxima permitida em vias locais não sinalizadas é 30 km/h.", "As vias rurais são divididas em estradas e vias de trânsito rápido.", "A velocidade máxima permitida em rodovias não sinalizadas é determinada conforme o porte do potencial do veículo."],
+    "answer": 2
+  },
+  {
+    "question": "É permitido estacionar:",
+    "options": ["Afastado da guia da calçada a mais de 50 centímetros.", "De acordo com as condições regulamentadas especificamente pela sinalização.", "Nas pistas de rolamentos.", "Sobre a calçada."],
     "answer": 1
   },
   {
-    "question": "Onde não houver sinalização regulamentadora, a velocidade máxima nas vias locais será de:",
-    "options": [
-      "30 km/h.",
-      "20 km/h.",
-      "50 km/h.",
-      "40 km/h."
-    ],
-    "answer": 0
-  },
-  {
-    "question": "Na interseção acima, defina a preferência de acordo com a regra:",
-    "image": "quest-8",
-    "options": [
-      "A preferência é do veículo 2 porque trafega à direita do veículo 1.",
-      "A preferência é do veículo 1 porque trafega em linha reta.",
-      "A preferência é do veículo 1 porque trafega em rodovia.",
-      "A preferência é do veículo 2 porque se aproxima de interseção em T."
-    ],
-    "answer": 2
-  },
-  {
-    "question": "Onde não houver sinalização regulamentadora, a velocidade máxima será de:",
-    "options": [
-      "20 Km/h nas vias locais.",
-      "80 Km/h nas estradas.",
-      "60 Km/h nas vias de trânsito rápido.",
-      "60 Km/h nas estradas."
-    ],
-    "answer": 3
-  },
-  {
-    "question": "Após priorizarem a passagem do veículo em emergência (1), de quem é a preferência?",
-    "image": "quest-10",
-    "options": [
-      "Do veículo 2, pois ele passaria na sequência.",
-      "Do veículo 3, pois está na mesma via que a ambulância.",
-      "Do veículo 2, pois está à direita da ambulância.",
-      "Do veículo 3, pois trafega à direita do veículo 2."
-    ],
-    "answer": 3
-  },
-  {
-    "question": "É velocidade permitida em vias de trânsito rápido quando não há sinalização de regulamentação:",
-    "options": [
-      "60 km/h.",
-      "80 km/h.",
-      "90 km/h.",
-      "110 km/h."
-    ],
+    "question": "Assinale, quanto às normas de circulação, a alternativa errada:",
+    "options": ["A circulação será feita pelo lado direito da via, admitidas as exceções devidamente sinalizadas.", "O condutor que for ingressar numa via procedente de lote lindeiro a essa via, tem prioridade sobre pedestres e veículos.", "Ao efetuar ultrapassagem, todo condutor deve afastar-se dos veículos que ultrapassa, mantendo distância lateral.", "Os veículos precedidos de batedores terão prioridade de passagem, respeitadas as demais normas de circulação."],
     "answer": 1
   },
   {
-    "question": "Para convergir à esquerda em rodovias dotadas de acostamento é preciso:",
-    "options": [
-      "Diminuir a velocidade e observar as regras de segurança.",
-      "Aumentar a velocidade para fazer a conversão antes que venham veículos no sentido contrário.",
-      "Manter a velocidade e observar o fluxo contrário com vistas à segurança.",
-      "Parar no acostamento."
-    ],
-    "answer": 3
-  },
-  {
-    "question": "É procedimento para se convergir à direita:",
-    "options": [
-      "Sinalizar à direita e observar o trânsito, deslocar-se para o centro da faixa e realizar a conversão.",
-      "Sinalizar e parar à direita da via com vistas à observação das normas de segurança.",
-      "Sinalizar e deslocar-se para o bordo direito da pista para convergir usando o menor espaço possível.",
-      "Sinalizar e deslocar-se para junto da faixa divisória da pista e realizar a conversão respeitando as regras de preferência."
-    ],
-    "answer": 2
-  },
-  {
-    "question": "Quando for preciso transportar num veículo de passeio, quatro crianças, três delas serão acomodadas no banco traseiro. Qual criança será colocada no banco dianteiro do veículo?",
-    "options": [
-      "A mais velha das quatro.",
-      "A mais pesada das quatro.",
-      "A de maior estatura entre as quatro.",
-      "Qualquer uma desde que utilize o dispositivo de retenção."
-    ],
-    "answer": 3
-  },
-  {
-    "question": "A velocidade máxima permitida em uma via arterial sem sinalização é de:",
-    "options": [
-      "60 km/hora.",
-      "30 km/hora.",
-      "80 km/hora.",
-      "40 km/hora."
-    ],
+    "question": "Na mudança de direção o condutor deve:",
+    "options": ["Sinalizar e deslocar para a faixa apropriada com antecedência.", "Aguardar no acostamento para convergir à esquerda, em qualquer situação.", "Aproximar-se do bordo da pista esquerda, ao sair de uma pista dupla pelo esquerdo.", "Piscar o farol, se não se tratar de um deslocamento lateral."],
     "answer": 0
   },
   {
-    "question": "As vias rurais se subdividem em:",
-    "options": [
-      "Rodovias e vias locais.",
-      "Rodovias e estradas.",
-      "Vias de trânsito rápido, vias coletoras e rodovias.",
-      "Vias urbanas e vias rurais."
-    ],
+    "question": "Com relação ao movimento realizado pelo veículo 2, é correto afirmar:",
+    "image":"quest-14.png",
+    "options": ["É uma ultrapassagem permitida, desde que seja sinalizada e clara.", "É uma ultrapassagem perigosa, porém permitida, se feita com segurança.", "É uma ultrapassagem permitida, pois o veículo retoma a sua faixa após a ultrapassagem.", "É uma ultrapassagem proibida, pois a sinalização horizontal não permiti transposição de faixas."],
+    "answer": 3
+  },
+  {
+    "question": "Tem prioridade no trânsito:",
+    "options": ["O motociclista, pois trafega em maior velocidade.", "O condutor de transporte coletivo, por ser maior.", "O pedestre idoso ou gestante.", "O pedestre, pois é a estrutura mais frágil do trânsito."],
+    "answer": 3
+  },
+  {
+    "question": "Como se classificam as vias públicas?",
+    "options": ["Arteriais e coletoras.", "Rodovias e estradas.", "Urbanas e rurais.", "Ruas e avenidas."],
+    "answer": 2
+  },
+  {
+    "question": "Sobre estacionamento é correto afirmar:",
+    "options": ["É proibido estacionar junto a hidrantes, registro de água ou acessos a galerias subterrâneas.", "É a imobilização do veículo com finalidade e tempo estritamente necessário para embarque e desembarque de passageiro.", "É permitido estacionar em viadutos, pontes e túneis.", "Sempre quando existem proibições de estacionamento, necessariamente existem proibições de parada."],
+    "answer": 0
+  },
+  {
+    "question": "De acordo com a figura acima, qual veículo deverá passar primeiro?",
+    "image":"quest-18.png",
+    "options": ["O veículo 1, pois existe sinalização para os demais veículos.", "O veículo 2, pois está à direita dos demais.", "A ambulância.", "O veículo 1 passará primeiro somente se um pedestre iniciar travessia diante do veículo 2."],
+    "answer": 0
+  },
+  {
+    "question": "Chamam-se interseções a todo cruzamento:",
+    "options": ["Semaforizado.", "Em nível, entroncamento ou bifurcação.", "Sobre ferrovias.", "Com rotatória."],
     "answer": 1
   },
   {
-    "question": "Sobre o desenho acima, é correto afirmar:",
-    "image":"quest-17",
-    "options": [
-      "A preferência é do veículo 2 por estar à direita do 3.",
-      "O veículo 1 tem a preferência por estar à direita do 2.",
-      "O veículo 1 tem preferência sobre o veículo 3.",
-      "O veículo 2 tem a preferência para virar à esquerda."
-    ],
-    "answer": 0
-  },
-  {
-    "question": "De acordo com as regras gerais de circulação, quando o condutor tem preferência de passagem em um cruzamento?",
-    "options": [
-      "Quando cruzar com veículos em missão de urgência.",
-      "Quando for adentrar em uma rodovia.",
-      "Quando em cruzamento não sinalizado e este seguir à direita do outro condutor.",
-      "Todas as alternativas estão corretas."
-    ],
-    "answer": 2
-  },
-  {
-    "question": "As marcas de canalização (MC) orientam os fluxos de tráfego em uma via, além de regulamentar áreas de pavimento não utilizáveis. A marca MC-04 regulamenta:",
-    "image":"quest-19",
-    "options": [
-      "Ordenação para movimento em retorno.",
-      "Fluxos de trânsito de sentidos opostos.",
-      "Proteção em áreas de estacionamento.",
-      "Acomodação para início de canteiro central."
-    ],
+    "question": "Quando uma via comportar várias faixas no mesmo sentido, são as da direita destinadas:",
+    "options": ["Aos veículos mais rápidos e à ultrapassagem.", "Às bicicletas.", "Às motocicletas.", "Aos veículos mais lentos e de grande porte."],
     "answer": 3
   },
   {
-    "question": "Na interseção, qual veículo tem a preferência de passagem:",
-    "image":"quest-20",
-    "options": [
-      "O veículo 1, pois trafega à direita da via.",
-      "O veículo 2, pois o veículo 1 antes de convergir, deve parar cedendo-lhe a passagem.",
-      "O veículo 1, pois irá adentrar na via preferencial.",
-      "O veículo 2, pois trafega na via principal."
-    ],
+    "question": "Veículos de tração e propulsão humana, quando na ausência de pista própria ou acostamento, devem circular:",
+    "options": ["Pelo bordo da pista, à direita.", "Pelo bordo da pista, à esquerda.", "Pelo centro da pista.", "Pela calçada, faixa de trânsito mais à direita da pista de rolamento."],
+    "answer": 0
+  },
+  {
+    "question": "Verificar se o espaço é suficiente, sinalizar com antecedência e retomar a posição anterior, são procedimentos para executar:",
+    "options": ["Passagem e retorno com o veículo em movimento.", "A transposição de faixa.", "Passagem e conversão com o veículo em movimento.", "Ultrapassagem."],
+    "answer": 3
+  },
+  {
+    "question": "Nas vias providas de acostamento e sem locais apropriados para manobras de retorno, o condutor deverá:",
+    "options": ["Seguir em frente até encontrar um cruzamento.", "Fazer o sinal regulamentar de braço, diminuir a velocidade na faixa da direita e convergir com segurança.", "Aguardar no acostamento à direita para cruzar a pista com segurança.", "Aproximar-se do eixo central da pista, sem atingir a contramão de direção e convergir com segurança."],
+    "answer": 2
+  },
+  {
+    "question": "Em uma rodovia dotada de acostamento, para entrar à esquerda, o condutor deve:",
+    "options": ["Seguir até encontrar um cruzamento.", "Atingir o ponto central.", "Deslocar seu veículo para a esquerda sem atingir a contramão.", "Aguardar no acostamento, à direita, para cruzar a pista com segurança."],
+    "answer": 3
+  },
+  {
+    "question": "O condutor deve sinalizar e deslocar, com antecedência, o seu veículo para a faixa mais à esquerda da sua mão de direção para:",
+    "options": ["Fazer uma ultrapassagem.", "Mudar de faixa de direção.", "Aumentar a velocidade.", "Entrar à esquerda."],
+    "answer": 3
+  },
+  {
+    "question": "Quanto ao uso de luzes em veículos, é correto afirmar:",
+    "options": ["É necessário, que todos os veículos em circulação pública, mantenham o alerta de luz, os faróis acesos.", "O condutor deve utilizar o pisca-alerta em imobilização ou em situação de emergência.", "Nos túneis providos de iluminação pública não poderá manter acesos os faróis do veículo.", "Durante a noite, em circulação, se necessário, manterá acesa a luz de placa."],
     "answer": 1
   },
   {
-    "question": "Nas vias rurais, o pedestre deve transitar:",
-    "options": [
-      "Pela direita no sentido do fluxo de veículos.",
-      "No acostamento junto ao bordo esquerdo.",
-      "Pela esquerda do fluxo de veículos.",
-      "No acostamento à direita e no contrafluxo dos veículos."
-    ],
-    "answer": 3
-  },
-  {
-    "question": "Assinale a alternativa correta:",
-    "image":"quest-22",
-    "options": [
-      "Entre os veículos 2 e 4, a prioridade de passagem é do veículo 4.",
-      "Entre os veículos 2 e 3, a preferência é do veículo 3.",
-      "Entre os veículos 1, 3 e 4, a ordem de passagem na interseção é 3, 4 e 1.",
-      "Entre os veículos 2, 4 e 1, a ordem de passagem na interseção é 1, 2 e 4."
-    ],
+    "question": "Durante o dia, o uso de buzina é permitido:",
+    "options": ["Em qualquer situação.", "Em qualquer situação, desde que em toque breve.", "Para alertar sobre perigo, desde que em toque breve.", "Em área hospitalar e escolar."],
     "answer": 2
   },
   {
-    "question": "Quando uma via comportar duas ou mais faixas de trânsito e a da direita for destinada ao uso exclusivo de outro tipo de veículo, os demais veículos deverão circular pela faixa:",
-    "options": [
-      "Da direita.",
-      "Da esquerda.",
-      "Adjacente à da esquerda.",
-      "Adjacente à da direita."
-    ],
+    "question": "Os veículos lentos, quando transitando em fila, deverão:",
+    "options": ["Andar próximos um ao outro, para evitar que outros veículos ultrapassem.", "Manter distância suficiente entre eles para que os veículos que os ultrapassam possam se intercalar na fila com segurança.", "Andar sempre na esquerda da via esperando da pista de rolamento, sob todas as condições.", "Parar toda vez que outro condutor começar a ultrapassá-lo."],
+    "answer": 1
+  },
+  {
+    "question": "São deslocamentos laterais, exceto:",
+    "options": ["Ultrapassagem.", "Passagem.", "Retorno.", "Conversão."],
+    "answer": 1
+  },
+  {
+    "question": "Possui preferência em cruzamentos não sinalizados, exceto:",
+    "options": ["O veículo que transita por rodovia, sobre o de via que pretende segui-la.", "O veículo que já estiver circulando, sobre o veículo que pretende adentrá-la.", "O veículo que vem pela direita.", "Os caminhões e coletivos ou ônibus."],
     "answer": 3
-  },
-  {
-    "question": "Assinale a alternativa errada quanto às normas de circulação:",
-    "options": [
-      "A circulação será feita pelo lado direito da via, admitidas exceções devidamente sinalizadas.",
-      "A ultrapassagem deve ser feita somente pela esquerda, exceto quando o veículo a ser ultrapassado estiver sinalizando com o propósito de entrar à esquerda.",
-      "Os veículos de socorro e polícia têm preferência de passagem.",
-      "Os veículos precedidos de batedores terão prioridade de passagem."
-    ],
-    "answer": 2
-  },
-  {
-    "question": "Local onde é permitido realizar parada:",
-    "options": [
-      "Nas entradas e saídas de veículos em garagens.",
-      "A menos de cinco metros das esquinas.",
-      "Na área da interseção de fluxos.",
-      "Nas marcas de canalização de fluxos."
-    ],
-    "answer": 0
-  },
-  {
-    "question": "Assinale, quanto às normas de circulação, a alternativa correta:",
-    "options": [
-      "A circulação será feita sempre pelo lado direito da via.",
-      "Os veículos precedidos de batedores terão preferência absoluta na passagem.",
-      "Veículos de socorro têm prioridade de passagem, quando acionarem o alarme sonoro e a luz vermelha intermitente.",
-      "A ultrapassagem deve ser feita somente pela direita."
-    ],
-    "answer": 2
-  },
-  {
-    "question": "Observe o desenho acima e responda. O condutor do veículo 1 para ingressar em outra via deverá:",
-    "image":"quest-27",
-    "options": [
-      "Apenas aguardar a passagem do veículo 2.",
-      "Aguardar a passagem do veículo 3.",
-      "Entrar diretamente na via, sem utilizar a faixa de aceleração.",
-      "Utilizar a faixa de aceleração, dando preferência ao veículo 2."
-    ],
-    "answer": 3
-  },
-  {
-    "question": "Onde não houver sinalização regulamentadora, a velocidade máxima será de:",
-    "options": [
-      "20 Km/h nas vias locais.",
-      "80 Km/h nas estradas.",
-      "60 Km/h nas vias de trânsito rápido.",
-      "40 Km/h nas vias coletoras."
-    ],
-    "answer": 3
-  },
-  {
-    "question": "Em locais onde o estacionamento é proibido, você deverá:",
-    "options": [
-      "Parar apenas pelo tempo estritamente necessário para embarque ou desembarque.",
-      "Cuidar que seus passageiros não abram ou deixem as portas do veículo abertas.",
-      "Cuidar para que o embarque e desembarque dos passageiros ocorram sempre do lado da calçada.",
-      "Nenhuma das respostas está correta."
-    ],
-    "answer": 0
-  },
-  {
-    "question": "Segundo a classificação do Código de Trânsito Brasileiro, uma via que não possui interseções e passagem de pedestre em nível é chamada de:",
-    "options": [
-      "Via preferencial.",
-      "Via local.",
-      "Via de trânsito rápido.",
-      "Via arterial."
-    ],
-    "answer": 2
   }
 ];
+
+
+
+
+
+
 
 
 
@@ -342,7 +211,7 @@ function showQuestion() {
 if (q.image) {
   qDiv.innerHTML += `
     <div style="text-align: center;  ">
-      <img src="${q.image}" alt="Imagem da questão" img.className = "question-image" style="max-width: 350px; height: auto; display: block; margin: 5px auto 5px">
+      <img src="${q.image}" alt="Imagem da questão" img.className = "question-image" style="max-width: 250px; height: auto; display: block; margin: 5px auto 5px">
     </div>`;
 }
 
@@ -374,7 +243,7 @@ qDiv.innerHTML += `<p style="font-size: 23px;"><strong>${q.question}</strong></p
   container.appendChild(qDiv);
 
   const motivacao = document.createElement("p");
-  motivacao.textContent = "💡 Dica: Caso erre a questão, leia novamente a pergunta e a resposta correta para memorizar melhor.";
+  motivacao.textContent = "💡 Dica: Se errar, leia a questão errada 2X para memorizar a correta.";
   motivacao.style.marginTop = "15px";
   motivacao.style.fontStyle = "italic";
   motivacao.style.color = "#555";
@@ -382,23 +251,30 @@ qDiv.innerHTML += `<p style="font-size: 23px;"><strong>${q.question}</strong></p
 
   const radios = container.querySelectorAll("input[type=radio]");
   radios.forEach(radio => {
-    radio.addEventListener("change", () => {
-      const selected = parseInt(document.querySelector("input[name='question']:checked").value);
-      if (selected === q.answer) {
-        radios[selected].parentElement.classList.add("correct");
-        score++;
-        feedbackP.className = "correct";
-        feedbackP.textContent = "✔ Correto!";
-      } else {
-        radios[selected].parentElement.classList.add("incorrect");
-        radios[q.answer].parentElement.classList.add("correct");
-        feedbackP.className = "incorrect";
-        feedbackP.textContent = `❌ Incorreto. A resposta correta é: ${String.fromCharCode(65 + q.answer)}`;
-      }
-      radios.forEach(r => r.disabled = true);
-      btn.style.display = "inline-block";
-    });
+  radio.addEventListener("click", () => {
+    const selected = parseInt(document.querySelector("input[name='question']:checked").value);
+    if (selected === q.answer) {
+      somAcerto.cloneNode().play();
+      radios[selected].parentElement.classList.add("correct");
+      score++;
+      feedbackP.className = "correct ";
+      feedbackP.textContent = "✔ Correto!";
+    } else {
+      somErro.cloneNode().play();
+      feedbackP.className = "incorrect ";
+      feedbackP.textContent = `❌ Incorreto. A resposta correta é: ${String.fromCharCode(65 + q.answer)}`;
+    }
+
+    radios.forEach((r, i) => {
+    const label = r.closest("label");
+      if (i === selected && i !== q.answer) label.classList.add("incorrect-answer");
+      if (i === q.answer) label.classList.add("correct-answer");
+      });
+    btn.style.display = "inline-block";
   });
+}); // <-- FECHAMENTO correto aqui
+
+
 
   btn.addEventListener("click", () => {
     currentQuestion++;
@@ -431,7 +307,7 @@ function showResult() {
         msg.style.color = "green";
     }
     
-    salvarDesempenho("Normas de Circulação - Prova 2", score);
+    salvarDesempenho("Direção Defensiva - Prova 1", score);
 
     
 }

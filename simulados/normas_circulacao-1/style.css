@@ -101,3 +101,21 @@ h3 {
   font-size: 22px;
   color: blue;
 }
+
+.correct-answer {
+  background-color: #9cefaf; /* Verde claro */
+  border-left: 6px solid #28a745;
+  border-radius: 6px;
+  padding: 10px;
+  margin: 5px 0;
+  font-weight: bold;
+}
+
+.incorrect-answer {
+  background-color: #efa6ac; /* Vermelho claro */
+  border-left: 6px solid #dc3545;
+  border-radius: 6px;
+  padding: 10px;
+  margin: 5px 0;
+  font-weight: bold;
+}

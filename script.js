@@ -5,6 +5,9 @@ const somAcerto = new Audio("sounds/acerto.mp3");
 const somErro = new Audio("sounds/erro.mp3");
 
 
+
+
+
 function renderLogin() {
   localStorage.setItem("telaAtual", "login");
   document.getElementById("form-box").innerHTML = `
@@ -340,7 +343,8 @@ function renderDesempenho() {
   document.getElementById("form-box").innerHTML = `
     <div style="text-align:center;">
       <h2 style="color:#2E7D32; font-size: 24px;">📊 Desempenho</h2>
-      ${dados.length === 0 ? "<p>Nenhuma prova realizada ainda.</p>" : `
+      <br>
+      ${dados.length === 0 ? "<p class='desempenho-vazio'>Nenhuma prova realizada ainda.</p>" : `
         <table style="width: 100%; margin-top: 20px; border-collapse: collapse;">
           <thead>
             <tr style="background-color: #e0f2f1;">
@@ -382,6 +386,7 @@ function apagarHistorico() {
 
 
 
+
 function logout() {
   localStorage.removeItem("usuarioLogado");
   currentUser = null;
@@ -396,16 +401,22 @@ function renderIntro() {
       <img src="carro-diamante.png" alt="Logo" style="width: 150px; height: auto; margin-bottom: 20px;" />
       <h2 style="font-size: 36px; color: #2E7D32; margin-bottom: 20px">Legmaster</h2>
       <h2 style="font-size: 24px; color:rgb(16, 82, 19); margin-bottom: 20px">Você no rumo certo!</h2>
-      <h2 style="font-size: 18px; color:rgb(10, 22, 10); margin-bottom: 20px">Solicite seu login pelo Whatapp</h2>
-      <h2 style="font-size: 24px; color:rgb(255, 0, 0); margin-bottom: 20px"> →→ (35) 99847-5349 ←←</h2> 
+      <h2 style="font-size: 18px; color:rgb(10, 22, 10); margin-bottom: 10px"></h2>
+      <h2 style="font-size: 24px; color:rgb(255, 0, 0); margin-bottom: 20px"></h2> 
+
       <button class="auth-btn" onclick='renderLogin()'>Acessar</button>
+      <br><br>
+      <a href="https://wa.me/5535998475349?text=Olá%20Instrutor%20Jonas!%20Gostaria%20de%20solicitar%20acesso%20à%20plataforma%20Legmaster. Como funciona?" target="_blank">
+      <button class="auth-btn">Solicitar Acesso</button>
+      </a>
+
+
       <p style='margin-top: 25px; font-size: 14px; color: #555;'>• Instrutor de Trânsito, Jonas! Desde 2020 •</p>
     </div>
   `;
   animateCard();
-
-
 }
+
 
 
 function animateCard() {
@@ -415,12 +426,21 @@ function animateCard() {
 
 const tela = localStorage.getItem("telaAtual");
 
-switch (tela) {
-  case "login": renderLogin(); break;
-  case "menu": renderMenuPrincipal(); break;
-  case "desempenho": renderDesempenho(); break;
-  case "aulas": renderAulas(); break;
-  case "simulados": renderSimulados(); break;
-  default: renderIntro(); break;
+
+
+// Se não estiver logado, força para tela inicial
+if (!currentUser && tela !== "intro" && tela !== "login") {
+  renderIntro();
+} else {
+  switch (tela) {
+    case "login": renderLogin(); break;
+    case "menu": renderMenuPrincipal(); break;
+    case "desempenho": renderDesempenho(); break;
+    case "aulas": renderAulas(); break;
+    case "simulados": renderSimulados(); break;
+    default: renderIntro(); break;
+  }
 }
+
+
 

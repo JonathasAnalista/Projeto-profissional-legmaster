@@ -1,3 +1,23 @@
+const somAcerto = new Audio("acerto.mp3");
+const somErro = new Audio("erro.mp3");
+
+function habilitarAudios() {
+  somAcerto.volume = 0;
+  somErro.volume = 0;
+
+  somAcerto.play().catch(() => {});
+  somErro.play().catch(() => {});
+
+  setTimeout(() => {
+    somAcerto.pause(); somErro.pause();
+    somAcerto.currentTime = 0; somErro.currentTime = 0;
+    somAcerto.volume = 1; somErro.volume = 1;
+  }, 200);
+
+  document.body.onclick = null;
+}
+
+
 const questions = [
   {
     question: "O sistema que tem por função ligar e desligar a força motriz do motor da parte restante da transmissão é o(a):",
@@ -218,7 +238,7 @@ qDiv.innerHTML += `<p style="font-size: 23px;"><strong>${q.question}</strong></p
   container.appendChild(qDiv);
 
   const motivacao = document.createElement("p");
-  motivacao.textContent = "💡 Dica: Caso erre a questão, leia novamente a pergunta e a resposta correta para memorizar melhor.";
+  motivacao.textContent = "💡 Dica: Se errar, leia a questão errada 2X para memorizar a correta.";
   motivacao.style.marginTop = "15px";
   motivacao.style.fontStyle = "italic";
   motivacao.style.color = "#555";
@@ -226,23 +246,30 @@ qDiv.innerHTML += `<p style="font-size: 23px;"><strong>${q.question}</strong></p
 
   const radios = container.querySelectorAll("input[type=radio]");
   radios.forEach(radio => {
-    radio.addEventListener("change", () => {
-      const selected = parseInt(document.querySelector("input[name='question']:checked").value);
-      if (selected === q.answer) {
-        radios[selected].parentElement.classList.add("correct");
-        score++;
-        feedbackP.className = "correct";
-        feedbackP.textContent = "✔ Correto!";
-      } else {
-        radios[selected].parentElement.classList.add("incorrect");
-        radios[q.answer].parentElement.classList.add("correct");
-        feedbackP.className = "incorrect";
-        feedbackP.textContent = `❌ Incorreto. A resposta correta é: ${String.fromCharCode(65 + q.answer)}`;
-      }
-      radios.forEach(r => r.disabled = true);
-      btn.style.display = "inline-block";
-    });
+  radio.addEventListener("click", () => {
+    const selected = parseInt(document.querySelector("input[name='question']:checked").value);
+    if (selected === q.answer) {
+      somAcerto.cloneNode().play();
+      radios[selected].parentElement.classList.add("correct");
+      score++;
+      feedbackP.className = "correct ";
+      feedbackP.textContent = "✔ Correto!";
+    } else {
+      somErro.cloneNode().play();
+      feedbackP.className = "incorrect ";
+      feedbackP.textContent = `❌ Incorreto. A resposta correta é: ${String.fromCharCode(65 + q.answer)}`;
+    }
+
+    radios.forEach((r, i) => {
+    const label = r.closest("label");
+      if (i === selected && i !== q.answer) label.classList.add("incorrect-answer");
+      if (i === q.answer) label.classList.add("correct-answer");
+      });
+    btn.style.display = "inline-block";
   });
+}); // <-- FECHAMENTO correto aqui
+
+
 
   btn.addEventListener("click", () => {
     currentQuestion++;
@@ -275,7 +302,7 @@ function showResult() {
         msg.style.color = "green";
     }
     
-    salvarDesempenho("Mecânica - Prova 1", score);
+    salvarDesempenho("Direção Defensiva - Prova 1", score);
 
     
 }
