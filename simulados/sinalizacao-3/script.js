@@ -204,7 +204,7 @@ function showQuestion() {
 if (q.image) {
   qDiv.innerHTML += `
     <div style="text-align: center;  ">
-      <img src="${q.image}" alt="Imagem da questão" img.className = "question-image" style="max-width: 350px; height: auto; display: block; margin: 5px auto 5px">
+      <img src="${q.image}" alt="Imagem da questão" img.className = "question-image" style="max-width: 180px; height: auto; display: block; margin: 5px auto 5px">
     </div>`;
 }
 
@@ -236,7 +236,7 @@ qDiv.innerHTML += `<p style="font-size: 23px;"><strong>${q.question}</strong></p
   container.appendChild(qDiv);
 
   const motivacao = document.createElement("p");
-  motivacao.textContent = "💡 Dica: Se errar, leia a questão errada 2X para memorizar a correta.";
+  motivacao.textContent = "💡 Dica: Se errar, leia a questão completa e memorize a alternativa correta.";
   motivacao.style.marginTop = "15px";
   motivacao.style.fontStyle = "italic";
   motivacao.style.color = "#555";
