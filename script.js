@@ -276,6 +276,12 @@ function renderSimulados() {
   localStorage.setItem("telaAtual", "simulados");
   const nome = currentUser && currentUser.nome ? currentUser.nome : 'Aluno';
   document.getElementById("form-box").innerHTML = `
+    <div id="depoimento" style="margin: 20px 0; font-size: 14px; text-align: center; font-style: italic; color: #555;">
+      <p id="depoimento-texto">“...”</p>
+      <strong id="depoimento-autor">– ...</strong>
+    </div>
+
+
     <div style="text-align: center;">
       <h2 style="color:#2E7D32; font-size: 26px; margin-bottom: 20px;">Olá, ${nome}!</h2>
       <p style="font-size: 18px; color: #444;">Escolha uma matéria para iniciar seu simulado:</p>
@@ -297,6 +303,29 @@ function renderSimulados() {
     
     </div>
   `;
+
+      const depoimentos = [
+      { texto: "Passei de primeira graças à plataforma Legmaster!", autor: "– Carla, MG" },
+      { texto: "Excelente metodologia, me senti muito preparado!", autor: "– João, SP" },
+      { texto: "As aulas são claras e objetivas. Aprovada!", autor: "– Marina, RJ" }
+    ];
+
+    let indexAtual = 0;
+
+    function mostrarProximoDepoimento() {
+      const texto = document.getElementById("depoimento-texto");
+      const autor = document.getElementById("depoimento-autor");
+
+      if (texto && autor) {
+        texto.textContent = `“${depoimentos[indexAtual].texto}”`;
+        autor.textContent = depoimentos[indexAtual].autor;
+        indexAtual = (indexAtual + 1) % depoimentos.length;
+      }
+    }
+
+    setInterval(mostrarProximoDepoimento, 5000); // troca a cada 5s
+
+
   animateCard();
 }
 
@@ -398,34 +427,47 @@ function renderIntro() {
   localStorage.setItem("telaAtual", "intro");
   document.getElementById("form-box").innerHTML = `
     <div style="text-align: center">
-      <img src="carro-diamante.png" alt="Logo" style="width: 150px; height: auto; margin-bottom: 20px;" />
-      <h2 style="font-size: 36px; color: #2E7D32; margin-bottom: 20px">Legmaster</h2>
-      <h2 style="font-size: 24px; color:rgb(16, 82, 19); margin-bottom: 20px">“Simulados e aulas que garantem sua aprovação no Detran!”</h2>
-      <h2 style="font-size: 18px; color:rgb(10, 22, 10); margin-bottom: 10px"></h2>
-      <h2 style="font-size: 24px; color:rgb(255, 0, 0); margin-bottom: 20px"></h2> 
 
-      <button class="auth-btn" onclick='renderLogin()'>Acessar</button>
-      <br><br>
-      <a href="https://wa.me/5535998475349?text=Olá%20Instrutor%20Jonas!%20Gostaria%20de%20solicitar%20acesso%20à%20plataforma%20Legmaster. Como funciona?" target="_blank">
-      <button class="auth-btn">Solicitar Acesso</button>
-      </a>
+      <img src="carro-diamante.png" alt="Logo" style="width: 150px; height: auto; margin-bottom: 20px;" />
+
+      <h2 style="font-size: 36px; color: #2E7D32; margin-bottom: 20px">Legmaster</h2>
+
+      <h2 style="font-size: 20px; color: rgb(16, 82, 19); margin-bottom: 20px">
+        “Simulados e aulas que garantem sua aprovação no Detran!”
+      </h2>
 
       <div style="margin-top: 20px; padding-left: 30px; text-align: left; font-size: 14px; color: #333; line-height: 1.8;">
         <p>✔️ Aulas atualizadas com o CTB</p>
         <p>✔️ Simulados com questões reais</p>
-        <p>✔️ Método validado por +2.000 alunos</p>
+        <p>✔️ Método validado por +1.000 alunos</p>
+        <br>
       </div>
+      
 
+
+      <button class="auth-btn" onclick='renderLogin()'>Acessar</button>
+      <br><br>
+
+      <a href="https://wa.me/5535998475349?text=Olá%20Instrutor%20Jonas!%20Gostaria%20de%20solicitar%20acesso%20à%20plataforma%20Legmaster. Como funciona?" target="_blank">
+        <button class="auth-btn" style="transition: all 0.3s ease; background-color: #2E7D32;">
+          Solicitar Acesso
+        </button>
+      </a>
+
+     
     </div>
 
     <div style="margin-top: 20px; font-size: 13px; color: #444; text-align: center;">
-      <img src="jonas.png" alt="Instrutor Jonas" style="width: 60px; border-radius: 50%; display: inline-block;">
+      <img src="jonas.png" alt="Instrutor Jonas" style="width: 120px; display: block; margin: 0 auto 10px;">
       <p><em>“Sou o Jonas, Instrutor de Trânsito desde 2020. Já ajudei mais de 2.000 alunos a passar no Detran!”</em></p>
     </div>
+
+    
 
   `;
   animateCard();
 }
+
 
 
 
