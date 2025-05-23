@@ -426,9 +426,9 @@ function renderIntro() {
 
       <h2 style="font-size: 36px; color: #2E7D32; margin-bottom: 20px">Legmaster</h2>
 
-      <h2 style="font-size: 20px; color: rgb(16, 82, 19); margin-bottom: 20px">
+      <h3 style="font-size: 20px; color: rgb(2, 147, 173); margin-bottom: 20px">
         “Simulados e aulas que garantem sua aprovação no Detran!”
-      </h2>
+      </h3>
 
       <div style="margin-top: 20px; padding-left: 30px; text-align: left; font-size: 14px; color: #333; line-height: 1.8;">
         <p>✔️ Aulas atualizadas com o CTB</p>
@@ -516,6 +516,27 @@ if (!currentUser && tela !== "intro" && tela !== "login") {
     default: renderIntro(); break;
   }
 }
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/service-worker.js')
+      .then(reg => {
+        console.log("✔ Service Worker registrado com sucesso!");
+
+        reg.onupdatefound = () => {
+          const newWorker = reg.installing;
+          newWorker.onstatechange = () => {
+            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+              console.log('⚠ Nova versão disponível. Recarregando...');
+              location.reload(); // força nova versão
+            }
+          };
+        };
+      })
+      .catch(err => console.error("Erro ao registrar SW:", err));
+  });
+}
+
 
 
 

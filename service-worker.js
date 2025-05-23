@@ -1,21 +1,25 @@
-const CACHE_NAME = 'legmaster-cache-v5';
+const CACHE_NAME = 'legmaster-cache-v7'; // Atualize a versão sempre que fizer push
 const urlsToCache = [
   '/',
   '/index.html',
   '/style.css',
   '/script.js',
-  '/manifest.json'
+  '/manifest.json',
+  '/carro-diamante.png',
+  '/jonas.png',
+  // adicione outros arquivos importantes aqui
 ];
 
-// Instalando o Service Worker e adicionando arquivos ao cache
+// Instala e armazena no cache
 self.addEventListener('install', event => {
-  self.skipWaiting(); // força a ativação imediata
+  self.skipWaiting(); // força ativação imediata
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache))
+    caches.open(CACHE_NAME)
+      .then(cache => cache.addAll(urlsToCache))
   );
 });
 
-// Ativando e limpando caches antigos
+// Remove caches antigos na ativação
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys().then(cacheNames => {
@@ -24,15 +28,17 @@ self.addEventListener('activate', event => {
           .filter(name => name !== CACHE_NAME)
           .map(name => caches.delete(name))
       );
-    })
+    }).then(() => self.clients.claim())
   );
 });
 
-// Interceptando requisições
+// Intercepta requisições e responde do cache ou da rede
 self.addEventListener('fetch', event => {
   event.respondWith(
-    caches.match(event.request).then(response => {
-      return response || fetch(event.request);
-    })
+    fetch(event.request)
+      .then(response => {
+        return response;
+      })
+      .catch(() => caches.match(event.request))
   );
 });
