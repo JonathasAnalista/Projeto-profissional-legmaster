@@ -391,9 +391,12 @@ qDiv.innerHTML += `<p style="font-size: 24px;"><strong>${q.question}</strong></p
   btn.textContent = currentQuestion === questions.length - 1 ? "Finalizar Simulado" : "Próxima";
   btn.style.display = "none";
 
+ 
+  
   qDiv.appendChild(optionsDiv);
-
   qDiv.appendChild(btn);
+
+ 
   container.appendChild(qDiv);
 
   const motivacao = document.createElement("p");
