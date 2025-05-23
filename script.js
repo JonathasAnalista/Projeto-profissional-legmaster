@@ -3,7 +3,6 @@ let usuarios = JSON.parse(localStorage.getItem("usuarios") || "[]");
 let currentUser = JSON.parse(localStorage.getItem("usuarioLogado") || "null");
 const somAcerto = new Audio("sounds/acerto.mp3");
 const somErro = new Audio("sounds/erro.mp3");
-sessionStorage.removeItem('sw-updated');
 
 
 
@@ -520,9 +519,6 @@ if (!currentUser && tela !== "intro" && tela !== "login") {
 }
 
 if ('serviceWorker' in navigator) {
-  // Limpa a flag ao iniciar a sessão
-  sessionStorage.removeItem('sw-reloaded');
-
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('/service-worker.js')
       .then(reg => {
@@ -533,13 +529,13 @@ if ('serviceWorker' in navigator) {
 
           newWorker.onstatechange = () => {
             if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-              // Envia comando para ativar imediatamente
               newWorker.postMessage({ action: 'skipWaiting' });
 
+              // Detecta troca de controle pelo novo SW
               navigator.serviceWorker.addEventListener('controllerchange', () => {
-                // Verifica se já recarregou na sessão
+                // ⚠️ Verifica se já recarregou nesta sessão
                 if (!sessionStorage.getItem('sw-reloaded')) {
-                  sessionStorage.setItem('sw-reloaded', 'true');
+                  sessionStorage.setItem('sw-reloaded', 'true'); // Marca como recarregado
                   alert("Nova versão disponível! Recarregando...");
                   location.reload();
                 }
@@ -551,6 +547,11 @@ if ('serviceWorker' in navigator) {
       .catch(err => {
         console.error("❌ Falha ao registrar o Service Worker:", err);
       });
-  }); // <- ESTA CHAVE FALTAVA
+  });
 }
+
+window.addEventListener('beforeunload', () => {
+  sessionStorage.removeItem('sw-reloaded');
+});
+
 
