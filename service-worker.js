@@ -1,4 +1,4 @@
-const CACHE_NAME = 'legmaster-cache-v7'; // Atualize a versão sempre que fizer push
+const CACHE_NAME = 'legmaster-cache-v5'; // Atualize a versão sempre que fizer push
 const urlsToCache = [
   '/',
   '/index.html',
