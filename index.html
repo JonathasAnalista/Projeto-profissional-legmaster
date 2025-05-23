@@ -39,8 +39,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Legmaster - Você no rumo certo</title>
-  <link rel="stylesheet" href="style.css?v=1.0.4" />
-  <link rel="manifest" href="manifest.json?v=1.0.4" />
+  <link rel="stylesheet" href="style.css?v=1.0.5" />
+  <link rel="manifest" href="manifest.json?v=1.0.5" />
   <meta name="theme-color" content="#2E7D32" />
 </head>
 <body>
@@ -53,12 +53,12 @@
 
 <body>
   <div class="auth-card" id="form-box"></div>
-  <script src="script.js?v=1.0.4"></script>
+  <script src="script.js?v=1.0.5"></script>
 
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('service-worker.js?v=1.0.4')
+        navigator.serviceWorker.register('service-worker.js?v=1.0.5')
           .then(reg => console.log("Service Worker registrado:", reg.scope))
           .catch(err => console.log("Erro no Service Worker:", err));
       });
@@ -68,7 +68,7 @@
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
-        navigator.serviceWorker.register('service-worker.js?v=1.0.4').then(registration => {
+        navigator.serviceWorker.register('service-worker.js?v=1.0.5').then(registration => {
           console.log('Service Worker registrado:', registration.scope);
 
           registration.onupdatefound = () => {

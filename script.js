@@ -400,7 +400,7 @@ function renderIntro() {
     <div style="text-align: center">
       <img src="carro-diamante.png" alt="Logo" style="width: 150px; height: auto; margin-bottom: 20px;" />
       <h2 style="font-size: 36px; color: #2E7D32; margin-bottom: 20px">Legmaster</h2>
-      <h2 style="font-size: 24px; color:rgb(16, 82, 19); margin-bottom: 20px">Você no rumo certo!</h2>
+      <h2 style="font-size: 24px; color:rgb(16, 82, 19); margin-bottom: 20px">“Simulados e aulas que garantem sua aprovação no Detran!”</h2>
       <h2 style="font-size: 18px; color:rgb(10, 22, 10); margin-bottom: 10px"></h2>
       <h2 style="font-size: 24px; color:rgb(255, 0, 0); margin-bottom: 20px"></h2> 
 
