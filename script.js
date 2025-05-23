@@ -520,6 +520,9 @@ if (!currentUser && tela !== "intro" && tela !== "login") {
 }
 
 if ('serviceWorker' in navigator) {
+  // Limpa a flag ao iniciar a sessão
+  sessionStorage.removeItem('sw-reloaded');
+
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('/service-worker.js')
       .then(reg => {
@@ -530,12 +533,13 @@ if ('serviceWorker' in navigator) {
 
           newWorker.onstatechange = () => {
             if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+              // Envia comando para ativar imediatamente
               newWorker.postMessage({ action: 'skipWaiting' });
 
               navigator.serviceWorker.addEventListener('controllerchange', () => {
-                // Impede recarregamento infinito
-                if (!sessionStorage.getItem('sw-updated')) {
-                  sessionStorage.setItem('sw-updated', 'true');
+                // Verifica se já recarregou na sessão
+                if (!sessionStorage.getItem('sw-reloaded')) {
+                  sessionStorage.setItem('sw-reloaded', 'true');
                   alert("Nova versão disponível! Recarregando...");
                   location.reload();
                 }
@@ -547,10 +551,6 @@ if ('serviceWorker' in navigator) {
       .catch(err => {
         console.error("❌ Falha ao registrar o Service Worker:", err);
       });
-  });
+  }); // <- ESTA CHAVE FALTAVA
 }
-
-
-
-
 
