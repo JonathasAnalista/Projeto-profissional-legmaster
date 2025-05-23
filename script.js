@@ -459,7 +459,7 @@ function renderIntro() {
 
     <div style="margin-top: 20px; font-size: 13px; color: #444; text-align: center;">
       <img src="jonas.png" alt="Instrutor Jonas" style="width: 120px; display: block; margin: 0 auto 10px;">
-      <p><em>“Sou o Jonas, Instrutor de Trânsito desde 2020. Já ajudei mais de 2.000 alunos a passar no Detran!”</em></p>
+      <p><em>“Sou o Jonas, Instrutor de Trânsito desde 2020. Já ajudei mais de 1.000 alunos a passar no Detran!”</em></p>
     </div>
 
     
