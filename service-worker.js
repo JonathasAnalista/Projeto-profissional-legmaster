@@ -1,4 +1,4 @@
-const CACHE_NAME = 'legmaster-v2';
+const CACHE_NAME = 'legmaster-v3';
 const urlsToCache = [
   '/',
   '/index.html',

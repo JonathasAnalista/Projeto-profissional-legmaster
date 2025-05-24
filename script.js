@@ -522,28 +522,36 @@ if (!currentUser && tela !== "intro" && tela !== "login") {
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    // Só registra o SW se ainda não atualizou nesta sessão
     navigator.serviceWorker.register('/service-worker.js')
-      .then(registration => {
-        console.log("✔ Service Worker registrado com sucesso!");
+      .then(reg => {
+        console.log("✔ Service Worker registrado!");
 
-        registration.onupdatefound = () => {
-          const newWorker = registration.installing;
+        // Detecta nova versão
+        reg.onupdatefound = () => {
+          const newSW = reg.installing;
 
-          newWorker.onstatechange = () => {
-            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-              // Impede loop: só recarrega se nunca recarregou nesta sessão
-              if (!localStorage.getItem('sw-reloaded')) {
-                localStorage.setItem('sw-reloaded', 'true');
-                alert("🚀 Nova versão disponível! Recarregando...");
-                location.reload();
-              }
+          newSW.onstatechange = () => {
+            if (
+              newSW.state === 'installed' &&
+              navigator.serviceWorker.controller
+            ) {
+              // Informa ao SW que pode ativar agora
+              newSW.postMessage({ action: 'skipWaiting' });
             }
           };
         };
+
+        // Detecta quando o novo SW toma controle
+        let refreshing = false;
+        navigator.serviceWorker.addEventListener('controllerchange', () => {
+          if (refreshing) return;
+          refreshing = true;
+          alert("🚀 Nova versão disponível! Recarregando...");
+          location.reload();
+        });
       })
-      .catch(error => {
-        console.error("❌ Falha ao registrar o Service Worker:", error);
+      .catch(err => {
+        console.error("Erro ao registrar o SW:", err);
       });
   });
 }
