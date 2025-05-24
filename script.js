@@ -4,8 +4,7 @@ let currentUser = JSON.parse(localStorage.getItem("usuarioLogado") || "null");
 const somAcerto = new Audio("sounds/acerto.mp3");
 const somErro = new Audio("sounds/erro.mp3");
 
-// Versão para controle manual de atualização
-const VERSAO_ATUAL = '1.0.9';
+const VERSAO_ATUAL = '1.0.11'; // defina sua versão atual aqui
 
 const versaoSalva = localStorage.getItem('versao_legmaster');
 if (versaoSalva !== VERSAO_ATUAL) {
@@ -40,6 +39,7 @@ window.addEventListener('beforeinstallprompt', (e) => {
     document.body.appendChild(btn);
   }
 });
+
 
 
 
