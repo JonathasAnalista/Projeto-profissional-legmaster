@@ -22,6 +22,7 @@ if ('serviceWorker' in navigator) {
 
 
 
+
 function renderLogin() {
   localStorage.setItem("telaAtual", "login");
   document.getElementById("form-box").innerHTML = `
@@ -446,7 +447,7 @@ function renderIntro() {
       <div style="margin-top: 20px; padding-left: 30px; text-align: left; font-size: 14px; color: #333; line-height: 1.8;">
         <p>✔️ Aulas atualizadas com o CTB</p>
         <p>✔️ Simulados com questões reais</p>
-        <p>✔️ Método validado por +1.000 alunos</p>
+        <p>✔️ Método validado por +700 alunos</p>
         <br>
       </div>
       
@@ -476,10 +477,10 @@ function renderIntro() {
   `;
       const depoimentos = [
       { texto: "Os simulados com perguntas reais da prova me ajudou a passar, tirei 27 pontos", autor: "– Maria, Jacutinga MG" },
-      { texto: "O legal é que os simulados são objetivos e interativos. consegui minha aprovação", autor: "– Gabriel, Campinas SP" },
+      { texto: "O legal é que os simulados são objetivos e interativos. consegui minha aprovação", autor: "– Gabriel,Jacutinga MG" },
       { texto: "As aulas, as correções de provas e o simulado são ótimos! vai ajudar muita gente.", autor: "– Joyce, Monte sião MG" },
-      { texto: "Passei de primeira graças à plataforma Legmaster!", autor: "– Carla, Ouro fino MG" },
-      { texto: "Excelente metodologia, me senti muito preparado!", autor: "– João, Osasco SP" },
+      { texto: "Passei de primeira graças à plataforma Legmaster!", autor: "– Carla, Jacutinga MG" },
+      { texto: "Excelente metodologia, me senti muito preparado!", autor: "– João, Jacutinga MG" },
       { texto: "As aulas são claras e objetivas. Aprovada!", autor: "– Marina, Jacutinga MG" }
     ];
 
@@ -528,4 +529,30 @@ if (!currentUser && tela !== "intro" && tela !== "login") {
 }
 
 
+if ('serviceWorker' in navigator) {
+  let refreshing = false;
+
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/service-worker.js')
+      .then(reg => {
+        console.log("✔ Service Worker registrado.");
+
+        reg.onupdatefound = () => {
+          const newWorker = reg.installing;
+          newWorker.onstatechange = () => {
+            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+              newWorker.postMessage({ action: 'skipWaiting' });
+            }
+          };
+        };
+      });
+
+    navigator.serviceWorker.addEventListener('controllerchange', () => {
+      if (refreshing) return;
+      refreshing = true;
+      alert("Nova versão disponível! Recarregando...");
+      location.reload();
+    });
+  });
+}
 
