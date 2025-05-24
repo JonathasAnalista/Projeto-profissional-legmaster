@@ -4,6 +4,39 @@ let currentUser = JSON.parse(localStorage.getItem("usuarioLogado") || "null");
 const somAcerto = new Audio("sounds/acerto.mp3");
 const somErro = new Audio("sounds/erro.mp3");
 
+const VERSAO_ATUAL = '1.0.7'; // <-- Você só muda isso quando publicar uma nova versão
+
+const versaoSalva = localStorage.getItem('versao_legmaster');
+
+if (versaoSalva !== VERSAO_ATUAL) {
+  localStorage.setItem('versao_legmaster', VERSAO_ATUAL);
+  alert("🚀 Uma nova versão da plataforma está disponível! Recarregando...");
+  location.reload();
+}
+
+
+let deferredPrompt;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault(); // Impede o prompt automático
+  deferredPrompt = e;
+
+  if (!localStorage.getItem('pwaInstalado')) {
+    const confirmar = confirm("📱 Deseja instalar este site como um app no seu celular?");
+    if (confirmar) {
+      deferredPrompt.prompt();
+
+      deferredPrompt.userChoice.then(choice => {
+        if (choice.outcome === 'accepted') {
+          console.log("✅ Aplicativo instalado com sucesso");
+          localStorage.setItem('pwaInstalado', 'true');
+        } else {
+          console.log("❌ Usuário recusou a instalação");
+        }
+      });
+    }
+  }
+});
 
 
 
