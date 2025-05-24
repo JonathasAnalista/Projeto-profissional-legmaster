@@ -4,7 +4,7 @@ let currentUser = JSON.parse(localStorage.getItem("usuarioLogado") || "null");
 const somAcerto = new Audio("sounds/acerto.mp3");
 const somErro = new Audio("sounds/erro.mp3");
 
-const VERSAO_ATUAL = '1.0.8'; // <-- Você só muda isso quando publicar uma nova versão
+const VERSAO_ATUAL = '1.0.4'; // <-- Você só muda isso quando publicar uma nova versão
 
 const versaoSalva = localStorage.getItem('versao_legmaster');
 
@@ -543,3 +543,12 @@ window.addEventListener('beforeinstallprompt', (e) => {
   }
 });
 
+function atualizarUserIDAnalytics() {
+  const usuario = JSON.parse(localStorage.getItem("usuarioLogado") || "null");
+
+  if (usuario && (usuario.email || usuario.nome)) {
+    const id = usuario.email || usuario.nome;
+    gtag('config', 'G-XXXXXXXXXX', { user_id: id });
+    console.log("✅ user_id enviado ao Analytics:", id);
+  }
+}
