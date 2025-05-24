@@ -19,16 +19,7 @@ function habilitarAudios() {
 }
 
 const questions = [
-  {
-    question: "Pontos cegos são regiões da via em que veículos podem ficar escondidos momentaneamente do campo de visão dos espelhos, levando a situações de risco no trânsito. O procedimento que pode contribuir para minimizar esse problema é o ajuste",
-    options: [
-      "do espelho externo, apenas, para que o condutor tenha um maior campo de visão lateral do veículo",
-      "dos espelhos externos e internos para que o condutor tenha um maior campo de visão traseira e lateral do veículo",
-      "do espelho interno, apenas, para que o condutor tenha um maior campo de visão traseira do veículo",
-      "do espelho interno voltado para a lateral esquerda do veículo, para que o condutor tenha um maior campo de visão lateral do veículo"
-    ],
-    answer: 1
-  },
+ 
   {
     question: "São situações de risco que reduzem o atrito e, consequentemente, a aderência entre os pneus e a pista, dificultando o controle do veículo em frenagens, as seguintes condições",
     options: [
@@ -38,6 +29,17 @@ const questions = [
       "barro em estradas de terra e lâmina de água sobre a pista pavimentada"
     ],
     answer: 3
+  },
+  
+   {
+    question: "Pontos cegos são regiões da via em que veículos podem ficar escondidos momentaneamente do campo de visão dos espelhos, levando a situações de risco no trânsito. O procedimento que pode contribuir para minimizar esse problema é o ajuste",
+    options: [
+      "do espelho externo, apenas, para que o condutor tenha um maior campo de visão lateral do veículo",
+      "dos espelhos externos e internos para que o condutor tenha um maior campo de visão traseira e lateral do veículo",
+      "do espelho interno, apenas, para que o condutor tenha um maior campo de visão traseira do veículo",
+      "do espelho interno voltado para a lateral esquerda do veículo, para que o condutor tenha um maior campo de visão lateral do veículo"
+    ],
+    answer: 1
   },
   
     {
