@@ -44,8 +44,7 @@
   <meta name="theme-color" content="#2E7D32" />
 
 <!-- Google tag (gtag.js) -->
-<!-- Google Analytics com identificação do usuário -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JRMEXEF83Z"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){ dataLayer.push(arguments); }
@@ -55,12 +54,11 @@
 
   if (usuarioLogado && (usuarioLogado.email || usuarioLogado.nome)) {
     const id = usuarioLogado.email || usuarioLogado.nome;
-    gtag('config', 'G-XXXXXXXXXX', { user_id: id });
+    gtag('config', 'G-JRMEXEF83Z', { user_id: id });
   } else {
-    gtag('config', 'G-XXXXXXXXXX');
+    gtag('config', 'G-JRMEXEF83Z');
   }
 </script>
-
 
 
 
@@ -81,17 +79,7 @@
   <div class="auth-card" id="form-box"></div>
   <script src="script.js?v=1.1.1"></script>
 
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('service-worker.js?v=1.1.1')
-          .then(reg => console.log("Service Worker registrado:", reg.scope))
-          .catch(err => console.log("Erro no Service Worker:", err));
-      });
-    }
-  </script>
-
-
+  
 
 
 </body>
