@@ -242,7 +242,7 @@ function showQuestion() {
         btnAlt.style.backgroundColor = "#F44336";
         btnAlt.style.color = "#fff";
         feedbackP.className = "incorrect";
-        feedbackP.textContent = `❌ Incorreto. A resposta correta é: ${String.fromCharCode(65 + q.answer)}) ${q.options[q.answer]}`;
+        feedbackP.textContent = `❌ Incorreto. A resposta correta é: ${String.fromCharCode(65 + q.answer)})`;
         optionsDiv.querySelectorAll("button").forEach((btn, j) => {
           if (j === q.answer) {
             btn.style.backgroundColor = "#4CAF50";
