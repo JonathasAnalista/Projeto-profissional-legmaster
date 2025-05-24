@@ -3,7 +3,10 @@ let usuarios = JSON.parse(localStorage.getItem("usuarios") || "[]");
 let currentUser = JSON.parse(localStorage.getItem("usuarioLogado") || "null");
 const somAcerto = new Audio("sounds/acerto.mp3");
 const somErro = new Audio("sounds/erro.mp3");
-sessionStorage.removeItem('sw-updated');
+if (localStorage.getItem('sw-reloaded')) {
+  localStorage.removeItem('sw-reloaded');
+}
+
 
 
 
@@ -519,17 +522,19 @@ if (!currentUser && tela !== "intro" && tela !== "login") {
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
+    // Só registra o SW se ainda não atualizou nesta sessão
     navigator.serviceWorker.register('/service-worker.js')
       .then(registration => {
-        console.log("✔ SW registrado:", registration);
+        console.log("✔ Service Worker registrado com sucesso!");
 
         registration.onupdatefound = () => {
-          const newSW = registration.installing;
-          newSW.onstatechange = () => {
-            if (newSW.state === 'installed' && navigator.serviceWorker.controller) {
-              // Verifica se já recarregou nesta sessão
-              if (!sessionStorage.getItem('sw-updated')) {
-                sessionStorage.setItem('sw-updated', 'true');
+          const newWorker = registration.installing;
+
+          newWorker.onstatechange = () => {
+            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+              // Impede loop: só recarrega se nunca recarregou nesta sessão
+              if (!localStorage.getItem('sw-reloaded')) {
+                localStorage.setItem('sw-reloaded', 'true');
                 alert("🚀 Nova versão disponível! Recarregando...");
                 location.reload();
               }
@@ -537,8 +542,8 @@ if ('serviceWorker' in navigator) {
           };
         };
       })
-      .catch(err => {
-        console.error("❌ Falha ao registrar o SW:", err);
+      .catch(error => {
+        console.error("❌ Falha ao registrar o Service Worker:", error);
       });
   });
 }
