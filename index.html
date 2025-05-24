@@ -51,17 +51,16 @@
   function gtag(){ dataLayer.push(arguments); }
   gtag('js', new Date());
 
-  // Pega o usuário logado no localStorage
   const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado") || "null");
 
-  // Envia a identificação para o GA4 (por nome ou email)
-  if (usuarioLogado) {
-    const id = usuarioLogado.email || usuarioLogado.nome || "usuario-sem-id";
+  if (usuarioLogado && (usuarioLogado.email || usuarioLogado.nome)) {
+    const id = usuarioLogado.email || usuarioLogado.nome;
     gtag('config', 'G-XXXXXXXXXX', { user_id: id });
   } else {
     gtag('config', 'G-XXXXXXXXXX');
   }
 </script>
+
 
 
 
@@ -88,29 +87,6 @@
         navigator.serviceWorker.register('service-worker.js?v=1.1.1')
           .then(reg => console.log("Service Worker registrado:", reg.scope))
           .catch(err => console.log("Erro no Service Worker:", err));
-      });
-    }
-  </script>
-
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('service-worker.js?v=1.1.1').then(registration => {
-          console.log('Service Worker registrado:', registration.scope);
-
-          registration.onupdatefound = () => {
-            const newWorker = registration.installing;
-            newWorker.onstatechange = () => {
-              if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                alert('Nova versão disponível! Recarregando...');
-                window.location.reload();
-              }
-            };
-          };
-
-        }).catch(error => {
-          console.error('Falha ao registrar o Service Worker:', error);
-        });
       });
     }
   </script>
