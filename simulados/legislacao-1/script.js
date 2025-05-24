@@ -1,3 +1,4 @@
+
 const somAcerto = new Audio("acerto.mp3");
 const somErro = new Audio("erro.mp3");
 
@@ -166,79 +167,89 @@ function showQuestion() {
   qDiv.className = "question";
   qDiv.innerHTML = `<h3>Questão ${currentQuestion + 1} de ${questions.length}</h3>`;
 
-if (q.image) {
-  qDiv.innerHTML += `
-    <div style="text-align: center;  ">
-      <img src="${q.image}" alt="Imagem da questão" img.className = "question-image" style="max-width: 350px; height: auto; display: block; margin: 5px auto 5px">
-    </div>`;
-}
+  if (q.image) {
+    qDiv.innerHTML += `
+      <div style="text-align: center;">
+        <img src="${q.image}" alt="Imagem da questão" class="question-image" style="max-width: 200px; height: auto; display: block; margin: 5px auto;">
+      </div>`;
+  }
 
-qDiv.innerHTML += `<p style="font-size: 23px;"><strong>${q.question}</strong></p>`;
-
-
+  qDiv.innerHTML += `<p style="font-size: 23px;"><strong>${q.question}</strong></p>`;
 
   const optionsDiv = document.createElement("div");
   optionsDiv.className = "options";
 
-  q.options.forEach((opt, i) => {
-    const id = `q${currentQuestion}o${i}`;
-    optionsDiv.innerHTML += `
-      <label><input type="radio" name="question" value="${i}" id="${id}"> ${String.fromCharCode(65 + i)}) ${opt}</label>
-    `;
-  });
-
-
   const feedbackP = document.createElement("p");
   qDiv.appendChild(feedbackP);
 
-  const btn = document.createElement("button");
-  btn.textContent = currentQuestion === questions.length - 1 ? "Finalizar Simulado" : "Próxima";
-  btn.style.display = "none";
+  q.options.forEach((opt, i) => {
+    const btnAlt = document.createElement("button");
+    btnAlt.textContent = String.fromCharCode(65 + i) + ") " + opt;
+    btnAlt.className = "option-button";
+    btnAlt.style.display = "block";
+    btnAlt.style.width = "100%";
+    btnAlt.style.padding = "12px";
+    btnAlt.style.margin = "6px 0";
+    btnAlt.style.borderRadius = "8px";
+    btnAlt.style.border = "none";
+    btnAlt.style.fontSize = "24px";
+    btnAlt.style.cursor = "pointer";
+    btnAlt.style.transition = "0.3s";
+    btnAlt.style.textAlign = "left";       // ✅ ALINHA O TEXTO À ESQUERDA
+    btnAlt.style.paddingLeft = "16px";
 
-  qDiv.appendChild(optionsDiv);
+    btnAlt.addEventListener("click", () => {
+      const isCorrect = i === q.answer;
+      if (isCorrect) {
+        somAcerto.cloneNode().play();
+        btnAlt.style.backgroundColor = "#4CAF50";
+        btnAlt.style.color = "#fff";
+        score++;
+        feedbackP.className = "correct";
+        feedbackP.textContent = "✔ Correto!";
+      } else {
+        somErro.cloneNode().play();
+        btnAlt.style.backgroundColor = "#F44336";
+        btnAlt.style.color = "#fff";
+        feedbackP.className = "incorrect";
+        feedbackP.textContent = `❌ Incorreto. A resposta correta é: ${String.fromCharCode(65 + q.answer)})`;
+        optionsDiv.querySelectorAll("button").forEach((btn, j) => {
+          if (j === q.answer) {
+            btn.style.backgroundColor = "#4CAF50";
+            btn.style.color = "#fff";
+          } else {
+            btn.disabled = true;
+          }
+        });
+      }
 
-  qDiv.appendChild(btn);
-  container.appendChild(qDiv);
+      btnAlt.disabled = true;
+      btnNext.style.display = "inline-block";
+    });
 
-  const motivacao = document.createElement("p");
-  motivacao.textContent = "💡 Dica: Se errar, leia a questão completa e memorize a correta.";
-  motivacao.style.marginTop = "15px";
-  motivacao.style.fontStyle = "italic";
-  motivacao.style.color = "#555";
-  qDiv.appendChild(motivacao);
-
-  const radios = container.querySelectorAll("input[type=radio]");
-  radios.forEach(radio => {
-  radio.addEventListener("click", () => {
-    const selected = parseInt(document.querySelector("input[name='question']:checked").value);
-    if (selected === q.answer) {
-      somAcerto.cloneNode().play();
-      radios[selected].parentElement.classList.add("correct");
-      score++;
-      feedbackP.className = "correct ";
-      feedbackP.textContent = "✔ Correto!";
-    } else {
-      somErro.cloneNode().play();
-      feedbackP.className = "incorrect ";
-      feedbackP.textContent = `❌ Incorreto. A resposta correta é: ${String.fromCharCode(65 + q.answer)}`;
-    }
-
-    radios.forEach((r, i) => {
-    const label = r.closest("label");
-      if (i === selected && i !== q.answer) label.classList.add("incorrect-answer");
-      if (i === q.answer) label.classList.add("correct-answer");
-      });
-    btn.style.display = "inline-block";
+    optionsDiv.appendChild(btnAlt);
   });
-}); // <-- FECHAMENTO correto aqui
 
-
-
-  btn.addEventListener("click", () => {
+  const btnNext = document.createElement("button");
+  btnNext.textContent = currentQuestion === questions.length - 1 ? "Finalizar Simulado" : "Próxima";
+  btnNext.style.display = "none";
+  btnNext.className = "auth-btn";
+  btnNext.addEventListener("click", () => {
     currentQuestion++;
     updateProgress();
     showQuestion();
   });
+
+  qDiv.appendChild(optionsDiv);
+  qDiv.appendChild(btnNext);
+  container.appendChild(qDiv);
+
+  const motivacao = document.createElement("p");
+  motivacao.textContent = "💡 Dica: Se errar, leia a questão completa e memorize a alternativa correta.";
+  motivacao.style.marginTop = "15px";
+  motivacao.style.fontStyle = "italic";
+  motivacao.style.color = "#555";
+  qDiv.appendChild(motivacao);
 
   updateProgress();
 }
@@ -252,32 +263,30 @@ function showResult() {
   document.getElementById("quiz-container").classList.add("hidden");
   document.getElementById("result-container").classList.remove("hidden");
   document.getElementById("score").textContent = `Você acertou ${score} de ${questions.length} questões (${Math.round((score / questions.length) * 100)}%)`;
-  
-    const msg = document.getElementById("message");
-    if (score < 21) {
-        msg.textContent = "Atenção! Tente de novo! Precisa melhorar seu resultado";
-        msg.style.color = "red";
-    } else if (score >= 21 && score <= 27) {
-        msg.textContent = "Está razoável! Você está quase lá! Dá pra melhorar!";
-        msg.style.color = "blue";
-    } else {
-        msg.textContent = "Parabéns! Excelente desempenho! Continue assim em todos os simulados!";
-        msg.style.color = "green";
-    }
-    
-    salvarDesempenho("Direção Defensiva - Prova 1", score);
 
-    
+const msg = document.getElementById("message");
+if (score < 21) {
+  msg.textContent = "❌ Atenção! Tente de novo! Precisa melhorar seu resultado";
+  msg.style.color = "#d32f2f"; // vermelho forte
+  msg.style.fontWeight = "bold";
+} else if (score >= 21 && score <= 27) {
+  msg.textContent = "⚠️ Está razoável! Você está quase lá! Dá pra melhorar!";
+  msg.style.color = "#1976d2"; // azul forte
+  msg.style.fontWeight = "bold";
+} else {
+  msg.textContent = "✅ Parabéns! Excelente desempenho! Continue assim em todos os simulados!";
+  msg.style.color = "#388e3c"; // verde forte
+  msg.style.fontWeight = "bold";
 }
 
-showQuestion();
+  salvarDesempenho("Direção Defensiva - Prova 1", score);
+}
 
 function salvarDesempenho(prova, acertos) {
   const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
   if (!usuario) return;
 
   const desempenho = JSON.parse(localStorage.getItem("desempenho") || "{}");
-
   if (!desempenho[usuario.email]) desempenho[usuario.email] = [];
 
   desempenho[usuario.email].push({
@@ -287,5 +296,6 @@ function salvarDesempenho(prova, acertos) {
   });
 
   localStorage.setItem("desempenho", JSON.stringify(desempenho));
-
 }
+
+showQuestion();
