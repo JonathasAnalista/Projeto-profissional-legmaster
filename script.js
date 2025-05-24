@@ -4,15 +4,43 @@ let currentUser = JSON.parse(localStorage.getItem("usuarioLogado") || "null");
 const somAcerto = new Audio("sounds/acerto.mp3");
 const somErro = new Audio("sounds/erro.mp3");
 
-const VERSAO_ATUAL = '1.0.2'; // <-- Você só muda isso quando publicar uma nova versão
+// Versão para controle manual de atualização
+const VERSAO_ATUAL = '1.0.9';
 
 const versaoSalva = localStorage.getItem('versao_legmaster');
-
 if (versaoSalva !== VERSAO_ATUAL) {
   localStorage.setItem('versao_legmaster', VERSAO_ATUAL);
-  alert("🚀 Uma nova versão da plataforma está disponível! Recarregando...");
+  alert("🚀 Uma nova versão da plataforma foi publicada. Recarregando...");
   location.reload();
 }
+
+let deferredPrompt;
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault(); // bloqueia prompt automático
+  deferredPrompt = e;
+
+  if (!localStorage.getItem('pwaInstalado')) {
+    const btn = document.createElement("button");
+    btn.innerText = "📱 Instalar Legmaster";
+    btn.className = "auth-btn";
+    btn.style = "position: fixed; bottom: 30px; right: 20px; z-index: 1000;";
+
+    btn.onclick = () => {
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(choice => {
+        if (choice.outcome === 'accepted') {
+          localStorage.setItem('pwaInstalado', 'true');
+          console.log("PWA instalado");
+        }
+        btn.remove();
+      });
+    };
+
+    document.body.appendChild(btn);
+  }
+});
+
 
 
 function renderLogin() {
