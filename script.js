@@ -438,7 +438,6 @@ function renderIntro() {
 
       <img src="logo_nova.jpg" alt="Logo" style="width: 150px; height: auto; margin-bottom: 20px;" />
 
-      <h2 style="font-size: 36px; color: #2E7D32; margin-bottom: 20px">Escola online para reforço na prova do Detran</h2>
 
       <h3 style="font-size: 20px; color: rgb(2, 147, 173); margin-bottom: 20px">
         “Simulados e aulas que garantem sua aprovação no Detran!”
