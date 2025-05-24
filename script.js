@@ -517,4 +517,63 @@ if (!currentUser && tela !== "intro" && tela !== "login") {
   }
 }
 
+// 1. Registro do SW
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/service-worker.js')
+    .then(reg => {
+      console.log("✔ Service Worker registrado.");
+
+      reg.onupdatefound = () => {
+        const newSW = reg.installing;
+        newSW.onstatechange = () => {
+          if (newSW.state === 'installed' && navigator.serviceWorker.controller) {
+            if (!localStorage.getItem('updateShown')) {
+              alert("🚀 Nova versão disponível! A página será recarregada.");
+              localStorage.setItem('updateShown', 'true');
+              newSW.postMessage({ action: 'skipWaiting' });
+            }
+          }
+        };
+      };
+
+      // Só recarrega uma vez
+      let refreshing = false;
+      navigator.serviceWorker.addEventListener('controllerchange', () => {
+        if (!refreshing) {
+          refreshing = true;
+          location.reload();
+        }
+      });
+    });
+}
+
+// 2. Controle de instalação PWA
+let deferredPrompt;
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  deferredPrompt = e;
+
+  // Mostra botão "Instalar" uma vez
+  if (!localStorage.getItem('pwaInstallPrompted')) {
+    localStorage.setItem('pwaInstallPrompted', 'true');
+
+    // Exibe botão ou popup de instalação (exemplo abaixo)
+    const btn = document.createElement("button");
+    btn.innerText = "📱 Instalar como App";
+    btn.className = "auth-btn";
+    btn.onclick = () => {
+      deferredPrompt.prompt();
+      deferredPrompt.userChoice.then(choiceResult => {
+        if (choiceResult.outcome === 'accepted') {
+          console.log("PWA instalado.");
+        }
+        btn.remove();
+      });
+    };
+
+    document.body.appendChild(btn);
+  }
+});
+
+
 
