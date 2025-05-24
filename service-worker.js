@@ -1,4 +1,4 @@
-const CACHE_NAME = 'legmaster-cache-v1';
+const CACHE_NAME = 'legmaster-cache-v4';
 const urlsToCache = [
   '/',
   '/index.html',
@@ -31,10 +31,4 @@ self.addEventListener('fetch', event => {
       response || fetch(event.request)
     )
   );
-});
-
-self.addEventListener('message', event => {
-  if (event.data.action === 'skipWaiting') {
-    self.skipWaiting();
-  }
 });
