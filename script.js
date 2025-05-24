@@ -477,10 +477,10 @@ function renderIntro() {
   `;
       const depoimentos = [
       { texto: "Os simulados com perguntas reais da prova me ajudou a passar, tirei 27 pontos", autor: "– Maria, Jacutinga MG" },
-      { texto: "O legal é que os simulados são objetivos e interativos. consegui minha aprovação", autor: "– Gabriel,Jacutinga MG" },
-      { texto: "As aulas, as correções de provas e o simulado são ótimos! vai ajudar muita gente.", autor: "– Joyce, Monte sião MG" },
-      { texto: "Passei de primeira graças à plataforma Legmaster!", autor: "– Carla, Jacutinga MG" },
-      { texto: "Excelente metodologia, me senti muito preparado!", autor: "– João, Jacutinga MG" },
+      { texto: "O legal é que os simulados são objetivos e interativos. consegui minha aprovação acertei 25!!", autor: "– Gabriel,Jacutinga MG" },
+      { texto: "As aulas, as correções de provas e o simulado são ótimos! vai ajudar muita gente.", autor: "– Joyce, Jacutinga MG" },
+      { texto: "Passei de primeira graças à plataforma Legmaster! passei com 23", autor: "– Carla, Jacutinga MG" },
+      { texto: "Excelente metodologia, me senti muito preparado! Depois de 3 reprovas agora fooii! tirei 24 pontos", autor: "– João, Jacutinga MG" },
       { texto: "As aulas são claras e objetivas. Aprovada!", autor: "– Marina, Jacutinga MG" }
     ];
 
