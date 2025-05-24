@@ -517,36 +517,37 @@ if (!currentUser && tela !== "intro" && tela !== "login") {
   }
 }
 
-// Registro do Service Worker
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/service-worker.js').then(reg => {
-      console.log("✔ SW registrado");
+  navigator.serviceWorker.register('/service-worker.js')
+    .then(reg => {
+      console.log('✔ SW registrado com sucesso.');
 
       reg.onupdatefound = () => {
         const newSW = reg.installing;
+
         newSW.onstatechange = () => {
-          if (
-            newSW.state === 'installed' &&
-            navigator.serviceWorker.controller &&
-            !localStorage.getItem('versaoAtualizada')
-          ) {
-            localStorage.setItem('versaoAtualizada', 'true');
-            alert("🚀 Nova versão disponível! Recarregando...");
-            location.reload();
+          if (newSW.state === 'installed' && navigator.serviceWorker.controller) {
+            // Sinaliza que tem uma atualização aguardando
+            localStorage.setItem('temAtualizacao', 'true');
+            // Força a ativação
+            newSW.postMessage({ action: 'skipWaiting' });
           }
         };
       };
     });
-  });
 
-  // Limpa o flag na próxima visita normal (sem update)
-  if (localStorage.getItem('versaoAtualizada')) {
-    setTimeout(() => {
-      localStorage.removeItem('versaoAtualizada');
-    }, 3000);
-  }
+  // Recarrega apenas se for a primeira vez que a nova versão entra
+  let atualizou = false;
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (localStorage.getItem('temAtualizacao') && !atualizou) {
+      atualizou = true;
+      localStorage.removeItem('temAtualizacao');
+      alert("🚀 Nova versão instalada. Recarregando...");
+      window.location.reload();
+    }
+  });
 }
+
 
 let deferredPrompt;
 window.addEventListener('beforeinstallprompt', (e) => {
