@@ -222,7 +222,7 @@ function showQuestion() {
     btnAlt.style.margin = "6px 0";
     btnAlt.style.borderRadius = "8px";
     btnAlt.style.border = "none";
-    btnAlt.style.fontSize = "22px";
+    btnAlt.style.fontSize = "24px";
     btnAlt.style.cursor = "pointer";
     btnAlt.style.transition = "0.3s";
     btnAlt.style.textAlign = "left";       // ✅ ALINHA O TEXTO À ESQUERDA
