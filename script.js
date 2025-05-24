@@ -434,7 +434,7 @@ function renderIntro() {
       </h3>
 
       <div style="margin-top: 20px; padding-left: 30px; text-align: left; font-size: 14px; color: #333; line-height: 1.8;">
-        <p>✔️ Aulas de reforço atualizadas com o CTB</p>
+        <p>✔️ Aulas atualizadas com o CTB</p>
         <p>✔️ Simulados com questões reais</p>
         <p>✔️ Método validado por +700 alunos</p>
         <br>
