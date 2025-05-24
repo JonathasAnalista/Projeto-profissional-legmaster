@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Simulado - Questão</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      padding: 30px;
+      text-align: center;
+    }
+
+    .question-container {
+      max-width: 700px;
+      margin: auto;
+      background: #fff;
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    }
+
+    .question-text {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 20px;
+      color: #222;
+    }
+
+    .alternativa {
+      display: block;
+      width: 100%;
+      max-width: 500px;
+      margin: 10px auto;
+      padding: 15px 20px;
+      background-color: #f1f1f1;
+      color: #333;
+      font-size: 18px;
+      text-align: left;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: background-color 0.2s, border-color 0.2s;
+    }
+
+    .alternativa:hover {
+      background-color: #e0e0e0;
+      border-color: #999;
+    }
+
+    .correta {
+      background-color: #c8e6c9 !important;
+      border-color: #2e7d32 !important;
+    }
+
+    .errada {
+      background-color: #ffcdd2 !important;
+      border-color: #d32f2f !important;
+    }
+  </style>
+</head>
+<body>
+  <div class="question-container">
+    <div class="question-text">
+      A distância percorrida pelo veículo, logo após o condutor perceber efetivamente o perigo e acionar os freios, é denominada:
+    </div>
+    <button class="alternativa">A) distância de reação</button>
+    <button class="alternativa">B) distância de frenagem</button>
+    <button class="alternativa">C) distância de seguimento</button>
+    <button class="alternativa">D) distância de parada</button>
+  </div>
+
+  <script>
+    const correta = 0;
+    const alternativas = document.querySelectorAll('.alternativa');
+    let respondido = false;
+
+    alternativas.forEach((btn, index) => {
+      btn.addEventListener('click', () => {
+        if (respondido) return;
+
+        respondido = true;
+        if (index === correta) {
+          btn.classList.add('correta');
+        } else {
+          btn.classList.add('errada');
+          alternativas[correta].classList.add('correta');
+        }
+      });
+    });
+  </script>
+</body>
+</html>
