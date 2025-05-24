@@ -1,5 +1,4 @@
-const CACHE_NAME = 'legmaster-cache-v8';
-
+const CACHE_NAME = 'legmaster-v1';
 const urlsToCache = [
   '/',
   '/index.html',
@@ -8,12 +7,35 @@ const urlsToCache = [
   '/manifest.json'
 ];
 
-// Força o service worker a ativar imediatamente após o skipWaiting
+self.addEventListener('install', event => {
+  self.skipWaiting(); // Ativa imediatamente
+  event.waitUntil(
+    caches.open(CACHE_NAME).then(cache => cache.addAll(urlsToCache))
+  );
+});
+
+self.addEventListener('activate', event => {
+  event.waitUntil(
+    caches.keys().then(names => {
+      return Promise.all(
+        names.map(name => {
+          if (name !== CACHE_NAME) return caches.delete(name);
+        })
+      );
+    }).then(() => self.clients.claim())
+  );
+});
+
+self.addEventListener('fetch', event => {
+  event.respondWith(
+    caches.match(event.request).then(response =>
+      response || fetch(event.request)
+    )
+  );
+});
+
 self.addEventListener('message', event => {
-  if (event.data && event.data.action === 'skipWaiting') {
+  if (event.data === 'skipWaiting') {
     self.skipWaiting();
   }
 });
-
-// Evento de instalação: adiciona os arquivos ao cache
-self.addEventListe

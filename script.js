@@ -3,6 +3,8 @@ let usuarios = JSON.parse(localStorage.getItem("usuarios") || "[]");
 let currentUser = JSON.parse(localStorage.getItem("usuarioLogado") || "null");
 const somAcerto = new Audio("sounds/acerto.mp3");
 const somErro = new Audio("sounds/erro.mp3");
+sessionStorage.removeItem('sw-updated');
+
 
 
 
@@ -423,9 +425,9 @@ function renderIntro() {
 
     <div style="text-align: center">
 
-      <img src="carro-diamante.png" alt="Logo" style="width: 150px; height: auto; margin-bottom: 20px;" />
+      <img src="logo_nova.jpg" alt="Logo" style="width: 150px; height: auto; margin-bottom: 20px;" />
 
-      <h2 style="font-size: 36px; color: #2E7D32; margin-bottom: 20px">Legmaster</h2>
+      <h2 style="font-size: 36px; color: #2E7D32; margin-bottom: 20px">Escola online para reforço na prova do Detran</h2>
 
       <h3 style="font-size: 20px; color: rgb(2, 147, 173); margin-bottom: 20px">
         “Simulados e aulas que garantem sua aprovação no Detran!”
@@ -457,10 +459,7 @@ function renderIntro() {
      
     </div>
     
-    <div style="margin-top: 20px; font-size: 13px; color: #444; text-align: center;">
-      <img src="jonas.png" alt="Instrutor Jonas" style="width: 120px; display: block; margin: 0 auto 10px;">
-      <p><em>“Sou o Jonas, Instrutor de Trânsito desde 2020. Já ajudei mais de 1.000 alunos a passar no Detran!”</em></p>
-    </div>
+   
 
     
 
@@ -520,34 +519,27 @@ if (!currentUser && tela !== "intro" && tela !== "login") {
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
-    // Só registra se ainda não recarregou
-    if (!sessionStorage.getItem('sw-reloaded')) {
-      navigator.serviceWorker.register('/service-worker.js')
-        .then(reg => {
-          console.log("✔ Service Worker registrado com sucesso!");
+    navigator.serviceWorker.register('/service-worker.js')
+      .then(registration => {
+        console.log("✔ SW registrado:", registration);
 
-          reg.onupdatefound = () => {
-            const newWorker = reg.installing;
-
-            newWorker.onstatechange = () => {
-              if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                newWorker.postMessage({ action: 'skipWaiting' });
-
-                navigator.serviceWorker.addEventListener('controllerchange', () => {
-                  if (!sessionStorage.getItem('sw-reloaded')) {
-                    sessionStorage.setItem('sw-reloaded', 'true');
-                    alert("Nova versão disponível! Recarregando...");
-                    location.reload();
-                  }
-                });
+        registration.onupdatefound = () => {
+          const newSW = registration.installing;
+          newSW.onstatechange = () => {
+            if (newSW.state === 'installed' && navigator.serviceWorker.controller) {
+              // Verifica se já recarregou nesta sessão
+              if (!sessionStorage.getItem('sw-updated')) {
+                sessionStorage.setItem('sw-updated', 'true');
+                alert("🚀 Nova versão disponível! Recarregando...");
+                location.reload();
               }
-            };
+            }
           };
-        })
-        .catch(err => {
-          console.error("❌ Falha ao registrar o Service Worker:", err);
-        });
-    }
+        };
+      })
+      .catch(err => {
+        console.error("❌ Falha ao registrar o SW:", err);
+      });
   });
 }
 
