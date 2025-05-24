@@ -4,18 +4,15 @@ let currentUser = JSON.parse(localStorage.getItem("usuarioLogado") || "null");
 const somAcerto = new Audio("sounds/acerto.mp3");
 const somErro = new Audio("sounds/erro.mp3");
 
-const VERSAO_ATUAL = '1.0.2'; // defina sua versão atual aqui
+const VERSAO_ATUAL = '1.0.2'; // <-- Você só muda isso quando publicar uma nova versão
 
 const versaoSalva = localStorage.getItem('versao_legmaster');
+
 if (versaoSalva !== VERSAO_ATUAL) {
   localStorage.setItem('versao_legmaster', VERSAO_ATUAL);
-  alert("🚀 Uma nova versão da plataforma foi publicada. Recarregando...");
+  alert("🚀 Uma nova versão da plataforma está disponível! Recarregando...");
   location.reload();
 }
-
-
-
-
 
 
 function renderLogin() {
