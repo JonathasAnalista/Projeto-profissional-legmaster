@@ -5,17 +5,6 @@ const somAcerto = new Audio("sounds/acerto.mp3");
 const somErro = new Audio("sounds/erro.mp3");
 
 
-if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.getRegistrations().then(function(registrations) {
-    for (let reg of registrations) {
-      reg.unregister();
-    }
-    console.log("✔ Todos os service workers foram removidos.");
-  });
-}
-
-
-
 
 
 
@@ -476,7 +465,7 @@ function renderIntro() {
 
   `;
       const depoimentos = [
-      { texto: "Os simulados com perguntas reais da prova me ajudou a passar, tirei 27 pontos", autor: "– Maria, Jacutinga MG" },
+      { texto: "Os simulados com perguntas reais da prova me ajudou a passar, tirei 28 pontos", autor: "– Maria, Jacutinga MG" },
       { texto: "O legal é que os simulados são objetivos e interativos. consegui minha aprovação acertei 25!!", autor: "– Gabriel,Jacutinga MG" },
       { texto: "As aulas, as correções de provas e o simulado são ótimos! vai ajudar muita gente.", autor: "– Joyce, Jacutinga MG" },
       { texto: "Passei de primeira graças à plataforma Legmaster! passei com 23", autor: "– Carla, Jacutinga MG" },
@@ -528,31 +517,4 @@ if (!currentUser && tela !== "intro" && tela !== "login") {
   }
 }
 
-
-if ('serviceWorker' in navigator) {
-  let refreshing = false;
-
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/service-worker.js')
-      .then(reg => {
-        console.log("✔ Service Worker registrado.");
-
-        reg.onupdatefound = () => {
-          const newWorker = reg.installing;
-          newWorker.onstatechange = () => {
-            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-              newWorker.postMessage({ action: 'skipWaiting' });
-            }
-          };
-        };
-      });
-
-    navigator.serviceWorker.addEventListener('controllerchange', () => {
-      if (refreshing) return;
-      refreshing = true;
-      alert("Nova versão disponível! Recarregando...");
-      location.reload();
-    });
-  });
-}
 
