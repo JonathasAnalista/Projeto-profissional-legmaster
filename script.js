@@ -3,9 +3,17 @@ let usuarios = JSON.parse(localStorage.getItem("usuarios") || "[]");
 let currentUser = JSON.parse(localStorage.getItem("usuarioLogado") || "null");
 const somAcerto = new Audio("sounds/acerto.mp3");
 const somErro = new Audio("sounds/erro.mp3");
-if (localStorage.getItem('sw-reloaded')) {
-  localStorage.removeItem('sw-reloaded');
+
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.getRegistrations().then(function(registrations) {
+    for (let reg of registrations) {
+      reg.unregister();
+    }
+    console.log("✔ Todos os service workers foram removidos.");
+  });
 }
+
 
 
 
@@ -520,40 +528,5 @@ if (!currentUser && tela !== "intro" && tela !== "login") {
   }
 }
 
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/service-worker.js')
-      .then(reg => {
-        console.log("✔ Service Worker registrado!");
-
-        // Detecta nova versão
-        reg.onupdatefound = () => {
-          const newSW = reg.installing;
-
-          newSW.onstatechange = () => {
-            if (
-              newSW.state === 'installed' &&
-              navigator.serviceWorker.controller
-            ) {
-              // Informa ao SW que pode ativar agora
-              newSW.postMessage({ action: 'skipWaiting' });
-            }
-          };
-        };
-
-        // Detecta quando o novo SW toma controle
-        let refreshing = false;
-        navigator.serviceWorker.addEventListener('controllerchange', () => {
-          if (refreshing) return;
-          refreshing = true;
-          alert("🚀 Nova versão disponível! Recarregando...");
-          location.reload();
-        });
-      })
-      .catch(err => {
-        console.error("Erro ao registrar o SW:", err);
-      });
-  });
-}
 
 
