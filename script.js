@@ -4,7 +4,7 @@ let currentUser = JSON.parse(localStorage.getItem("usuarioLogado") || "null");
 const somAcerto = new Audio("sounds/acerto.mp3");
 const somErro = new Audio("sounds/erro.mp3");
 
-const VERSAO_ATUAL = '1.0.7'; // <-- Você só muda isso quando publicar uma nova versão
+const VERSAO_ATUAL = '1.0.8'; // <-- Você só muda isso quando publicar uma nova versão
 
 const versaoSalva = localStorage.getItem('versao_legmaster');
 
@@ -13,36 +13,6 @@ if (versaoSalva !== VERSAO_ATUAL) {
   alert("🚀 Uma nova versão da plataforma está disponível! Recarregando...");
   location.reload();
 }
-
-
-let deferredPrompt;
-
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault(); // Impede o prompt automático
-  deferredPrompt = e;
-
-  if (!localStorage.getItem('pwaInstalado')) {
-    const confirmar = confirm("📱 Deseja instalar este site como um app no seu celular?");
-    if (confirmar) {
-      deferredPrompt.prompt();
-
-      deferredPrompt.userChoice.then(choice => {
-        if (choice.outcome === 'accepted') {
-          console.log("✅ Aplicativo instalado com sucesso");
-          localStorage.setItem('pwaInstalado', 'true');
-        } else {
-          console.log("❌ Usuário recusou a instalação");
-        }
-      });
-    }
-  }
-});
-
-
-
-
-
-
 
 
 function renderLogin() {
@@ -469,7 +439,7 @@ function renderIntro() {
       <div style="margin-top: 20px; padding-left: 30px; text-align: left; font-size: 14px; color: #333; line-height: 1.8;">
         <p>✔️ Aulas atualizadas com o CTB</p>
         <p>✔️ Simulados com questões reais</p>
-        <p>✔️ Método validado por +700 alunos</p>
+        <p>✔️ Método validado por +850 alunos</p>
         <br>
       </div>
       
@@ -550,5 +520,26 @@ if (!currentUser && tela !== "intro" && tela !== "login") {
   }
 }
 
+let deferredPrompt;
 
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault(); // Impede o prompt automático
+  deferredPrompt = e;
+
+  if (!localStorage.getItem('pwaInstalado')) {
+    const confirmar = confirm("📱 Deseja instalar este site como um app no seu celular?");
+    if (confirmar) {
+      deferredPrompt.prompt();
+
+      deferredPrompt.userChoice.then(choice => {
+        if (choice.outcome === 'accepted') {
+          console.log("✅ Aplicativo instalado com sucesso");
+          localStorage.setItem('pwaInstalado', 'true');
+        } else {
+          console.log("❌ Usuário recusou a instalação");
+        }
+      });
+    }
+  }
+});
 
