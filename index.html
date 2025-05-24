@@ -44,14 +44,25 @@
   <meta name="theme-color" content="#2E7D32" />
 
 <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-JRMEXEF83Z"></script>
+<!-- Google Analytics com identificação do usuário -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
+  function gtag(){ dataLayer.push(arguments); }
   gtag('js', new Date());
 
-  gtag('config', 'G-JRMEXEF83Z');
+  // Pega o usuário logado no localStorage
+  const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado") || "null");
+
+  // Envia a identificação para o GA4 (por nome ou email)
+  if (usuarioLogado) {
+    const id = usuarioLogado.email || usuarioLogado.nome || "usuario-sem-id";
+    gtag('config', 'G-XXXXXXXXXX', { user_id: id });
+  } else {
+    gtag('config', 'G-XXXXXXXXXX');
+  }
 </script>
+
 
 
 </head>
