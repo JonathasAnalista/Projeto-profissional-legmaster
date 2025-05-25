@@ -4,7 +4,7 @@ let currentUser = JSON.parse(localStorage.getItem("usuarioLogado") || "null");
 const somAcerto = new Audio("sounds/acerto.mp3");
 const somErro = new Audio("sounds/erro.mp3");
 
-const VERSAO_ATUAL = '1.0.2'; // <-- Você só muda isso quando publicar uma nova versão
+const VERSAO_ATUAL = '1.0.7'; // <-- Você só muda isso quando publicar uma nova versão
 
 const versaoSalva = localStorage.getItem('versao_legmaster');
 
@@ -134,8 +134,8 @@ function login() {
       // ✅ Envia registro para Google Form
       const formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSdA1E_9sq-owsp9HdKT4kGH549C1ziUNAHTLpM-KLmPpr6nKg/formResponse";
       const formData = new FormData();
-      formData.append("entry.834927734", currentUser.email);
-      formData.append("entry.1386755078", "Indefinido");
+      formData.append("entry.749872362", currentUser.email);
+      formData.append("entry.683876114", "Indefinido");
 
 
       fetch(formUrl, {
