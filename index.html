@@ -43,26 +43,24 @@
   <meta name="theme-color" content="#2E7D32">
   <meta name="theme-color" content="#2E7D32" />
 
-<!-- Google tag (gtag.js) -->
-<!-- Global site tag (gtag.js) - Google Analytics -->
+<!-- Tag do Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-JRMEXEF83Z"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
-  function gtag(){ dataLayer.push(arguments); }
+  function gtag() { dataLayer.push(arguments); }
+
   gtag('js', new Date());
 
-  // Configuração inicial
-  gtag('config', 'G-JRMEXEF83Z'); 
+  // 1. Recupera o ID do usuário logado (no seu caso, o email)
+  const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado") || "null");
+  const userId = usuarioLogado ? usuarioLogado.email : null;
 
-  // Envio do user_id (depois do login)
-  const userId = localStorage.getItem("usuarioLogado")
-    ? JSON.parse(localStorage.getItem("usuarioLogado")).email
-    : null;
-
-  if (userId) {
-    gtag('set', { user_id: userId });
-  }
+  // 2. Configura o GA4 normalmente
+  gtag('config', 'G-JRMEXEF83Z', {
+    user_id: userId // <- Enviando user_id aqui diretamente
+  });
 </script>
+
 
 
 
