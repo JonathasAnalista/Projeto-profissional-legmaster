@@ -44,21 +44,26 @@
   <meta name="theme-color" content="#2E7D32" />
 
 <!-- Google tag (gtag.js) -->
+<!-- Global site tag (gtag.js) - Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-JRMEXEF83Z"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){ dataLayer.push(arguments); }
   gtag('js', new Date());
 
-  const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado") || "null");
+  // Configuração inicial
+  gtag('config', 'G-JRMEXEF83Z'); 
 
-  if (usuarioLogado && (usuarioLogado.email || usuarioLogado.nome)) {
-    const id = usuarioLogado.email || usuarioLogado.nome;
-    gtag('config', 'G-JRMEXEF83Z', { user_id: id });
-  } else {
-    gtag('config', 'G-JRMEXEF83Z');
+  // Envio do user_id (depois do login)
+  const userId = localStorage.getItem("usuarioLogado")
+    ? JSON.parse(localStorage.getItem("usuarioLogado")).email
+    : null;
+
+  if (userId) {
+    gtag('set', { user_id: userId });
   }
 </script>
+
 
 
 
