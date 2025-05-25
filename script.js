@@ -2,7 +2,7 @@
 let usuarios = JSON.parse(localStorage.getItem("usuarios") || "[]");
 let currentUser = JSON.parse(localStorage.getItem("usuarioLogado") || "null");
 
-const VERSAO_ATUAL = '1.0.3'; // <-- Você só muda isso quando publicar uma nova versão
+const VERSAO_ATUAL = '1.0.8'; // <-- Você só muda isso quando publicar uma nova versão
 
 const versaoSalva = localStorage.getItem('versao_legmaster');
 
@@ -124,24 +124,23 @@ async function validarAcessoPorPlanilha(email, senha) {
 function login() {
   const email = document.getElementById("email").value;
   const senha = document.getElementById("senha").value;
+  const cidadeInput = document.getElementById("cidade");
+  const cidade = cidadeInput ? cidadeInput.value.trim() : "Indefinido";
 
   validarAcessoPorPlanilha(email, senha).then(valido => {
     if (valido) {
       currentUser = JSON.parse(localStorage.getItem("usuarioLogado"));
-      console.log("Usuário logado:", currentUser);
 
-      // Envia user_id ao GA4 (se quiser manter)
       if (currentUser && typeof gtag === "function") {
         gtag('set', { user_id: currentUser.email });
       }
 
-      // ✅ Envia registro para Google Form
       const formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSdA1E_9sq-owsp9HdKT4kGH549C1ziUNAHTLpM-KLmPpr6nKg/formResponse";
       const formData = new FormData();
       formData.append("entry.749872362", currentUser.email);
-      formData.append("entry.683876114", "Indefinido");
+      formData.append("entry.683876114", cidade); // cidade REAL agora
 
-      console.log("Enviando para o formulário:", currentUser.email);
+      console.log("Enviando:", currentUser.email, cidade);
 
       fetch(formUrl, {
         method: "POST",
@@ -153,6 +152,7 @@ function login() {
     }
   });
 }
+
 
 
 
