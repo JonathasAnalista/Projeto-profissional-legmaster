@@ -4,7 +4,7 @@ let currentUser = JSON.parse(localStorage.getItem("usuarioLogado") || "null");
 const somAcerto = new Audio("sounds/acerto.mp3");
 const somErro = new Audio("sounds/erro.mp3");
 
-const VERSAO_ATUAL = '1.0.7'; // <-- Você só muda isso quando publicar uma nova versão
+const VERSAO_ATUAL = '1.0.'; // <-- Você só muda isso quando publicar uma nova versão
 
 const versaoSalva = localStorage.getItem('versao_legmaster');
 
@@ -132,10 +132,24 @@ function login() {
         gtag('set', { user_id: currentUser.email });
       }
 
-      renderMenuPrincipal(); // Agora com o nome certo
+      // ✅ Registro de acesso na planilha Google
+      fetch("https://script.google.com/macros/s/AKfycbwTHDIF5agMa-CGlCGFzR7KCZMfkr2cJ8PzEOqL8-vU7fN6_mzch6X3ebA-GU7lMPM/exec", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          email: currentUser.email,
+          cidade: "Indefinido" // futuramente podemos preencher via IP
+        })
+      });
+
+      // ✅ Chama a tela principal
+      renderMenuPrincipal();
     }
   });
 }
+
 
 
 
