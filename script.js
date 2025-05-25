@@ -135,7 +135,7 @@ function login() {
       const formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSdA1E_9sq-owsp9HdKT4kGH549C1ziUNAHTLpM-KLmPpr6nKg/formResponse";
       const formData = new FormData();
       formData.append("entry.749872362", currentUser.email);
-      formData.append("entry.683876114", cidade);
+      formData.append("entry.683876114", "Indefinido");
 
       console.log("Enviando para o formulário:", currentUser.email);
 
