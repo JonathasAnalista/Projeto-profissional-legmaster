@@ -1,10 +1,8 @@
 
 let usuarios = JSON.parse(localStorage.getItem("usuarios") || "[]");
 let currentUser = JSON.parse(localStorage.getItem("usuarioLogado") || "null");
-const somAcerto = new Audio("sounds/acerto.mp3");
-const somErro = new Audio("sounds/erro.mp3");
 
-const VERSAO_ATUAL = '1.0.10'; // <-- Você só muda isso quando publicar uma nova versão
+const VERSAO_ATUAL = '1.0.3'; // <-- Você só muda isso quando publicar uma nova versão
 
 const versaoSalva = localStorage.getItem('versao_legmaster');
 
@@ -28,9 +26,15 @@ function renderLogin() {
       <label>Senha</label>
       <input type="password" id="senha" required />
     </div>
-    <button class="auth-btn" onclick="login()">Entrar</button>`;
+    <div class="form-group">
+      <label>Cidade</label>
+      <input type="text" id="cidade" placeholder="Sua cidade" required />
+    </div>
+    <button class="auth-btn" onclick="login()">Entrar</button>
+  `;
   animateCard();
-  }
+}
+
 //Para ativar o button cadastrar cole esse codigo na linha de cima <button class="auth-link" onclick="renderCadastro()">Não tem conta? Cadastre-se</button>
 
 
