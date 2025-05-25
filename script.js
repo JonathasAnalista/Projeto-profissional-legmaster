@@ -4,7 +4,7 @@ let currentUser = JSON.parse(localStorage.getItem("usuarioLogado") || "null");
 const somAcerto = new Audio("sounds/acerto.mp3");
 const somErro = new Audio("sounds/erro.mp3");
 
-const VERSAO_ATUAL = '1.0.4'; // <-- Você só muda isso quando publicar uma nova versão
+const VERSAO_ATUAL = '1.0.2'; // <-- Você só muda isso quando publicar uma nova versão
 
 const versaoSalva = localStorage.getItem('versao_legmaster');
 
@@ -138,6 +138,38 @@ function login() {
       formData.append("entry.683876114", "Indefinido");
 
       console.log("Enviando para o formulário:", currentUser.email);
+
+      fetch(formUrl, {
+        method: "POST",
+        mode: "no-cors",
+        body: formData
+      });
+
+      renderMenuPrincipal();
+    }
+  });
+}
+function login() {
+  const email = document.getElementById("email").value;
+  const senha = document.getElementById("senha").value;
+  const cidade = document.getElementById("cidade");
+  const cidade = cidadeInput ? cidadeInput.value : "Indefinido";
+
+  validarAcessoPorPlanilha(email, senha).then(valido => {
+    if (valido) {
+      currentUser = JSON.parse(localStorage.getItem("usuarioLogado"));
+      console.log("Usuário logado:", currentUser);
+
+      if (currentUser && typeof gtag === "function") {
+        gtag('set', { user_id: currentUser.email });
+      }
+
+      const formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSdA1E_9sq-owsp9HdKT4kGH549C1ziUNAHTLpM-KLmPpr6nKg/formResponse";
+      const formData = new FormData();
+      formData.append("entry.749872362", currentUser.email);
+      formData.append("entry.683876114", cidade); // cidade capturada corretamente
+
+      console.log("Enviando para o formulário:", currentUser.email, cidade);
 
       fetch(formUrl, {
         method: "POST",
