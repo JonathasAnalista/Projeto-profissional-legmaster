@@ -4,7 +4,7 @@ let currentUser = JSON.parse(localStorage.getItem("usuarioLogado") || "null");
 const somAcerto = new Audio("sounds/acerto.mp3");
 const somErro = new Audio("sounds/erro.mp3");
 
-const VERSAO_ATUAL = '1.0.8'; // <-- Você só muda isso quando publicar uma nova versão
+const VERSAO_ATUAL = '1.0.7'; // <-- Você só muda isso quando publicar uma nova versão
 
 const versaoSalva = localStorage.getItem('versao_legmaster');
 
@@ -120,25 +120,24 @@ async function validarAcessoPorPlanilha(email, senha) {
 function login() {
   const email = document.getElementById("email").value;
   const senha = document.getElementById("senha").value;
-  const cidade = document.getElementById("cidade").value; // <-- PEGA a cidade aqui
 
   validarAcessoPorPlanilha(email, senha).then(valido => {
     if (valido) {
       currentUser = JSON.parse(localStorage.getItem("usuarioLogado"));
       console.log("Usuário logado:", currentUser);
 
-      // Envia user_id ao GA4
+      // Envia user_id ao GA4 (se quiser manter)
       if (currentUser && typeof gtag === "function") {
         gtag('set', { user_id: currentUser.email });
       }
 
-      // ✅ Envia registro para o Google Form com cidade real
+      // ✅ Envia registro para Google Form
       const formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSdA1E_9sq-owsp9HdKT4kGH549C1ziUNAHTLpM-KLmPpr6nKg/formResponse";
       const formData = new FormData();
       formData.append("entry.749872362", currentUser.email);
-      formData.append("entry.683876114", cidade); // <-- ENVIA cidade real
+      formData.append("entry.683876114", cidade);
 
-      console.log("Enviando para o formulário:", currentUser.email, cidade);
+      console.log("Enviando para o formulário:", currentUser.email);
 
       fetch(formUrl, {
         method: "POST",
@@ -150,7 +149,6 @@ function login() {
     }
   });
 }
-
 
 
 
