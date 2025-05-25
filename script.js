@@ -4,7 +4,7 @@ let currentUser = JSON.parse(localStorage.getItem("usuarioLogado") || "null");
 const somAcerto = new Audio("sounds/acerto.mp3");
 const somErro = new Audio("sounds/erro.mp3");
 
-const VERSAO_ATUAL = '1.0.3'; // <-- Você só muda isso quando publicar uma nova versão
+const VERSAO_ATUAL = '1.0.8'; // <-- Você só muda isso quando publicar uma nova versão
 
 const versaoSalva = localStorage.getItem('versao_legmaster');
 
@@ -123,34 +123,29 @@ function login() {
 
   validarAcessoPorPlanilha(email, senha).then(valido => {
     if (valido) {
-      // ✅ Atualiza a variável global corretamente
-      currentUser = JSON.parse(localStorage.getItem("usuarioLogado"));
-      console.log("Usuário logado:", currentUser); // opcional para debug
+  currentUser = JSON.parse(localStorage.getItem("usuarioLogado"));
+  console.log("Usuário logado:", currentUser);
 
-      // ✅ Envia o user_id para o Google Analytics
-      if (currentUser && typeof gtag === "function") {
-        gtag('set', { user_id: currentUser.email });
-      }
+  // Envia user_id ao GA4 (se quiser manter)
+  if (currentUser && typeof gtag === "function") {
+    gtag('set', { user_id: currentUser.email });
+  }
 
-      // ✅ Registro de acesso na planilha Google
-      fetch("https://script.google.com/macros/s/AKfycbwTHDIF5agMa-CGlCGFzR7KCZMfkr2cJ8PzEOqL8-vU7fN6_mzch6X3ebA-GU7lMPM/exec", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-          email: currentUser.email,
-          cidade: "Indefinido" // futuramente podemos preencher via IP
-        })
-      });
+  // ✅ Envia registro para Google Form
+  const formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSdA1E_9sq-owsp9HdKT4kGH549C1ziUNAHTLpM-KLmPpr6nKg/formResponse";
+  const formData = new FormData();
+  formData.append("entry.1122256309", currentUser.email);
+  formData.append("entry.1325880646", "Indefinido");
 
-      console.log("Enviando dados para planilha...");
-
-      // ✅ Chama a tela principal
-      renderMenuPrincipal();
-    }
+  fetch(formUrl, {
+    method: "POST",
+    mode: "no-cors",
+    body: formData
   });
+
+  renderMenuPrincipal();
 }
+
 
 
 
