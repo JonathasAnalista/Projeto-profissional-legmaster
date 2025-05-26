@@ -1,8 +1,10 @@
 
 let usuarios = JSON.parse(localStorage.getItem("usuarios") || "[]");
 let currentUser = JSON.parse(localStorage.getItem("usuarioLogado") || "null");
+const somAcerto = new Audio("sounds/acerto.mp3");
+const somErro = new Audio("sounds/erro.mp3");
 
-const VERSAO_ATUAL = '1.0.9'; // <-- Você só muda isso quando publicar uma nova versão
+const VERSAO_ATUAL = '1.0.3'; // <-- Você só muda isso quando publicar uma nova versão
 
 const versaoSalva = localStorage.getItem('versao_legmaster');
 
@@ -26,15 +28,9 @@ function renderLogin() {
       <label>Senha</label>
       <input type="password" id="senha" required />
     </div>
-    <div class="form-group">
-      <label>Cidade</label>
-      <input type="text" id="cidade" placeholder="Sua cidade" required />
-    </div>
-    <button class="auth-btn" onclick="login()">Entrar</button>
-  `;
+    <button class="auth-btn" onclick="login()">Entrar</button>`;
   animateCard();
-}
-
+  }
 //Para ativar o button cadastrar cole esse codigo na linha de cima <button class="auth-link" onclick="renderCadastro()">Não tem conta? Cadastre-se</button>
 
 
@@ -110,9 +106,7 @@ async function validarAcessoPorPlanilha(email, senha) {
     }
 
     // Se tudo certo, salvar usuário
-   currentUser = usuario;
-   localStorage.setItem("usuarioLogado", JSON.stringify(usuario));
-
+    localStorage.setItem("usuarioLogado", JSON.stringify(usuario));
     return true;
 
   } catch (error) {
@@ -124,53 +118,18 @@ async function validarAcessoPorPlanilha(email, senha) {
 
 
 function login() {
-  const email = document.getElementById("email").value.trim();
-  const senha = document.getElementById("senha").value.trim();
-  const cidadeInput = document.getElementById("cidade");
-  const cidade = cidadeInput ? cidadeInput.value.trim() : "";
-
-  if (!email || !senha || !cidade) {
-    alert("Por favor, preencha todos os campos.");
-    return;
-  }
+  const email = document.getElementById("email").value;
+  const senha = document.getElementById("senha").value;
 
   validarAcessoPorPlanilha(email, senha).then(valido => {
     if (valido) {
-      const usuario = JSON.parse(localStorage.getItem("usuarioLogado") || "{}");
+      // ✅ Atualiza a variável global corretamente
+      currentUser = JSON.parse(localStorage.getItem("usuarioLogado"));
+      console.log("Usuário logado:", currentUser); // opcional para debug
 
-      if (typeof gtag === "function") {
-        gtag('set', { user_id: usuario.email });
-      }
-
-      const formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSdA1E_9sq-owsp9HdKT4kGH549C1ziUNAHTLpM-KLmPpr6nKg/formResponse";
-      const formData = new FormData();
-      formData.append("entry.749872362", usuario.email);
-      formData.append("entry.683876114", cidade);
-
-      fetch(formUrl, {
-        method: "POST",
-        mode: "no-cors",
-        body: formData
-      });
-
-      renderTelaInicial?.(); // segurança caso não esteja definida
-      renderMenuPrincipal();
-    } else {
-      mostrarAlerta("❌ Email ou senha inválidos!");
-    }
-  }).catch(error => {
-    console.error("Erro ao validar acesso:", error);
-    mostrarAlerta("Erro ao tentar logar. Verifique sua conexão.");
-  });
-}
-
-
-
-
-  
-
-
-
+      renderMenuPrincipal(); // Agora com o nome certo
+}})
+  }
 
 
 function mostrarAlerta(mensagem) {
@@ -185,10 +144,10 @@ function fecharAlerta() {
 
 function renderMenuPrincipal() {
   localStorage.setItem("telaAtual", "menu");
-  const nome = currentUser?.nome || currentUser?.email || 'Aluno';
+  const nome = currentUser && currentUser.nome ? currentUser.nome : 'Aluno';
   document.getElementById("form-box").innerHTML = `
     <div style="text-align: center;">
-      <h2 style="color:#2E7D32; font-size: 26px; margin-bottom: 20px;"> 👋 Olá, <span style="color:#00796B">${nome}</span>!</h2>
+      <h2 style="color:#2E7D32; font-size: 26px; margin-bottom: 20px;">Bem-vindo, ${nome}!</h2>
       <div style="display: flex; flex-direction: column; align-items: center; gap: 30px; margin-top: 40px;">
       <button class="auth-btn" style="font-size: 20px; padding: 20px;" onclick="renderAulas()">📚 Assistir às Aulas</button>
       <button class="auth-btn" style="font-size: 20px; padding: 20px;" onclick="renderHome()">📝 Fazer Simulados</button>
@@ -459,30 +418,13 @@ function logout() {
   currentUser = null;
   renderIntro();
 }
- 
-function verificarLiberacao(email) {
-      return fetch('liberacoes.json')
-      .then(res => res.json())
-      .then(data => {
-      const liberado = data.find(u => u.email === email);
-      if (!liberado) return false;
 
-      const hoje = new Date();
-      const dataLiberacao = new Date(liberado.liberado_em);
-      const validade = new Date(dataLiberacao);
-      validade.setFullYear(validade.getFullYear() + 1);
-
-      return hoje <= validade;
-    })
-      .catch(() => false);
-    }
 
 function renderIntro() {
   localStorage.setItem("telaAtual", "intro");
   document.getElementById("form-box").innerHTML = `  
 
     
-
 
 
     <div style="text-align: center">
@@ -501,42 +443,24 @@ function renderIntro() {
         <br>
       </div>
       
-          <!-- Botões dentro do card branco -->
-        <div class="auth-card" id="form-box" style="padding: 40px 30px; border-radius: 16px; background: white; box-shadow: 0 0 20px rgba(0,0,0,0.1); max-width: 400px; margin: auto;">
-
-          <!-- Botão Acessar -->
-          <button class="auth-btn" onclick="renderLogin()" style="width: 100%; padding: 12px; margin-bottom: 15px; background-color: #4CAF50; color: white; border: none; border-radius: 6px; font-size: 16px;">
-            Acessar
-          </button>
-
-          <!-- Botão WhatsApp -->
-          <a href="https://wa.me/5535998475349?text=Olá%20Instrutor%20Jonas!%20Gostaria%20de%20solicitar%20acesso%20à%20plataforma%20Legmaster" target="_blank">
-            <button class="auth-btn" style="width: 100%; padding: 12px; background-color: rgb(51, 139, 139); color: white; border: none; border-radius: 6px; font-size: 16px;">
-              Solicitar Acesso
-            </button>
-          </a>
-
-          <!-- ✅ Botão Mercado Pago centralizado abaixo -->
-          <div style="margin-top: 20px; display: flex; justify-content: center;">
-            <div id="wallet_container"></div>
-          </div>
-
-          <!-- Depoimento -->
-          <div id="depoimento" style="margin-top: 25px; text-align: center; font-style: italic; font-size: 14px; color: #555;">
-            <p id="depoimento-texto">“O legal é que os simulados são objetivos e interativos. consegui minha aprovação acertei 25!!”</p>
-            <strong id="depoimento-autor">– Gabriel, Jacutinga MG</strong>
-          </div>
-
-        </div>
 
 
+      <button class="auth-btn" onclick='renderLogin()'>Acessar</button>
+      <br><br>
 
+      <a href="https://wa.me/5535998475349?text=Olá%20Instrutor%20Jonas!%20Gostaria%20de%20solicitar%20acesso%20à%20plataforma%20Legmaster. Como funciona?" target="_blank">
+        <button class="auth-btn" style="transition: all 0.3s ease; background-color:rgb(51, 139, 139);">
+          Solicitar Acesso
+        </button>
+      </a>
 
-
+      <div id="depoimento" style="margin: 20px 0; font-size: 14px; text-align: center; font-style: italic; color: #555;">
+      <p id="depoimento-texto">“...”</p>
+      <strong id="depoimento-autor">– ...</strong>
+      </div>
 
      
     </div>
-
     
    
 
@@ -618,14 +542,4 @@ window.addEventListener('beforeinstallprompt', (e) => {
     }
   }
 });
-
-function atualizarUserIDAnalytics() {
-  const usuario = JSON.parse(localStorage.getItem("usuarioLogado") || "null");
-
-  if (usuario && (usuario.email || usuario.nome)) {
-    const id = usuario.email || usuario.nome;
-    gtag('config', 'G-XXXXXXXXXX', { user_id: id });
-    console.log("✅ user_id enviado ao Analytics:", id);
-  }
-}
 

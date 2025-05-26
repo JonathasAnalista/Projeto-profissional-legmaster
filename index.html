@@ -1,63 +1,65 @@
+
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
+  <style>
+  body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    transition: background 0.3s, color 0.3s;
+  }
+
+  body.light {
+    background: #f0f0f0;
+    color: #222;
+  }
+
+  body.dark {
+    background: #121212;
+    color: #eee;
+  }
+
+  .theme-toggle {
+    position: fixed;
+    top: 10px;
+    right: 10px;
+    background: #2E7D32;
+    color: rgb(255, 247, 163);
+    padding: 10px 15px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    z-index: 9999;
+  }
+ 
+
+</style>
+
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Legmaster - Escola online</title>
   <link rel="stylesheet" href="style.css?v=1.1.1" />
   <link rel="manifest" href="manifest.json">
+  <meta name="theme-color" content="#2E7D32">
   <meta name="theme-color" content="#2E7D32" />
 
-  <!-- Estilo para o tema claro/escuro -->
-  <style>
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      transition: background 0.3s, color 0.3s;
-    }
-    body.light {
-      background: #f0f0f0;
-      color: #222;
-    }
-    body.dark {
-      background: #121212;
-      color: #eee;
-    }
-    .theme-toggle {
-      position: fixed;
-      top: 10px;
-      right: 10px;
-      background: #2E7D32;
-      color: rgb(255, 247, 163);
-      padding: 10px 15px;
-      border: none;
-      border-radius: 20px;
-      cursor: pointer;
-      z-index: 9999;
-    }
-  </style>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-JRMEXEF83Z"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
 
-  <!-- Google Analytics -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-JRMEXEF83Z"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
+  gtag('config', 'G-JRMEXEF83Z');
+</script>
 
-    const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado") || "null");
-    const userId = usuarioLogado ? usuarioLogado.email : null;
 
-    gtag('config', 'G-JRMEXEF83Z', {
-      user_id: userId
-    });
-  </script>
-
-  <!-- SDK Mercado Pago
-  <script src="https://sdk.mercadopago.com/js/v2"></script> 
-</head> -->
-
+</head>
 <body>
-  <!-- Alerta customizado -->
+
+  
+
+
   <div id="custom-alert" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(0,0,0,0.5); z-index:9999; justify-content:center; align-items:center;">
     <div style="background:#ffffff; padding:20px 30px; border-radius:10px; max-width:400px; text-align:center; box-shadow:0 0 20px rgba(0,0,0,0.2);">
       <p id="alert-message" style="font-size:16px; color:#333; margin-bottom:20px;"></p>
@@ -65,26 +67,47 @@
     </div>
   </div>
 
-  <!-- Conteúdo principal -->
+<body>
   <div class="auth-card" id="form-box"></div>
-
-  <!-- Script principal -->
   <script src="script.js?v=1.1.1"></script>
 
-  <!-- Script de inicialização do botão Mercado Pago -->
-  <!-- <script>
-    setTimeout(() => {
-      const mp = new MercadoPago('APP_USR-8e3225a5-95f9-465e-97ad-702abdce1e94');
-      mp.checkout({
-        preference: {
-          id: '2232747525-71892708-f5ae-472a-a255-ddb044cb00ec'
-        },
-        render: {
-          container: '#wallet_container',
-          label: 'Pagar com Mercado Pago'
-        }
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('service-worker.js?v=1.1.1')
+          .then(reg => console.log("Service Worker registrado:", reg.scope))
+          .catch(err => console.log("Erro no Service Worker:", err));
       });
-    }, 300); // espera a renderização do botão -->
+    }
   </script>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('service-worker.js?v=1.1.1').then(registration => {
+          console.log('Service Worker registrado:', registration.scope);
+
+          registration.onupdatefound = () => {
+            const newWorker = registration.installing;
+            newWorker.onstatechange = () => {
+              if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+                alert('Nova versão disponível! Recarregando...');
+                window.location.reload();
+              }
+            };
+          };
+
+        }).catch(error => {
+          console.error('Falha ao registrar o Service Worker:', error);
+        });
+      });
+    }
+  </script>
+
+
+
+
 </body>
+
+
 </html>
