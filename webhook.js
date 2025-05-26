@@ -107,10 +107,10 @@ app.post('/webhook', async (req, res) => {
   }
 });
 
-app.listen(3000, () => {
-  console.log('🚀 Webhook rodando na porta 3000');
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`🚀 Webhook rodando na porta ${PORT}`);
 });
-
 // TESTE COMPLETO: Gera senha, envia e-mail e grava no usuarios.json
 
 const email = 'seu-email@gmail.com'; // Substitua aqui

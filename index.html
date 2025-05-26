@@ -1,76 +1,63 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <style>
-  body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    transition: background 0.3s, color 0.3s;
-  }
-
-  body.light {
-    background: #f0f0f0;
-    color: #222;
-  }
-
-  body.dark {
-    background: #121212;
-    color: #eee;
-  }
-
-  .theme-toggle {
-    position: fixed;
-    top: 10px;
-    right: 10px;
-    background: #2E7D32;
-    color: rgb(255, 247, 163);
-    padding: 10px 15px;
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
-    z-index: 9999;
-  }
- 
-
-</style>
-
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Legmaster - Escola online</title>
   <link rel="stylesheet" href="style.css?v=1.1.1" />
   <link rel="manifest" href="manifest.json">
-  <meta name="theme-color" content="#2E7D32">
   <meta name="theme-color" content="#2E7D32" />
 
-<!-- Tag do Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-JRMEXEF83Z"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag() { dataLayer.push(arguments); }
+  <!-- Estilo para o tema claro/escuro -->
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      transition: background 0.3s, color 0.3s;
+    }
+    body.light {
+      background: #f0f0f0;
+      color: #222;
+    }
+    body.dark {
+      background: #121212;
+      color: #eee;
+    }
+    .theme-toggle {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      background: #2E7D32;
+      color: rgb(255, 247, 163);
+      padding: 10px 15px;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      z-index: 9999;
+    }
+  </style>
 
-  gtag('js', new Date());
+  <!-- Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-JRMEXEF83Z"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
 
-  // 1. Recupera o ID do usuário logado (no seu caso, o email)
-  const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado") || "null");
-  const userId = usuarioLogado ? usuarioLogado.email : null;
+    const usuarioLogado = JSON.parse(localStorage.getItem("usuarioLogado") || "null");
+    const userId = usuarioLogado ? usuarioLogado.email : null;
 
-  // 2. Configura o GA4 normalmente
-  gtag('config', 'G-JRMEXEF83Z', {
-    user_id: userId // <- Enviando user_id aqui diretamente
-  });
-</script>
+    gtag('config', 'G-JRMEXEF83Z', {
+      user_id: userId
+    });
+  </script>
 
-
-
-
-
+  <!-- SDK Mercado Pago -->
+  <script src="https://sdk.mercadopago.com/js/v2"></script>
 </head>
+
 <body>
-
-  
-
-
+  <!-- Alerta customizado -->
   <div id="custom-alert" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(0,0,0,0.5); z-index:9999; justify-content:center; align-items:center;">
     <div style="background:#ffffff; padding:20px 30px; border-radius:10px; max-width:400px; text-align:center; box-shadow:0 0 20px rgba(0,0,0,0.2);">
       <p id="alert-message" style="font-size:16px; color:#333; margin-bottom:20px;"></p>
@@ -78,14 +65,26 @@
     </div>
   </div>
 
-<body>
+  <!-- Conteúdo principal -->
   <div class="auth-card" id="form-box"></div>
+
+  <!-- Script principal -->
   <script src="script.js?v=1.1.1"></script>
 
-  
-
-
+  <!-- Script de inicialização do botão Mercado Pago -->
+  <script>
+    setTimeout(() => {
+      const mp = new MercadoPago('APP_USR-8e3225a5-95f9-465e-97ad-702abdce1e94');
+      mp.checkout({
+        preference: {
+          id: '2232747525-7e8169c0-d6c8-48a5-bded-43609c9c9fe0'
+        },
+        render: {
+          container: '#wallet_container',
+          label: 'Pagar com Mercado Pago'
+        }
+      });
+    }, 300); // espera a renderização do botão
+  </script>
 </body>
-
-
 </html>

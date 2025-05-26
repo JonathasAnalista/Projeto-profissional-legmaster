@@ -142,11 +142,33 @@ function login() {
 
       console.log("Enviando:", currentUser.email, cidade);
 
-      fetch(formUrl, {
-        method: "POST",
-        mode: "no-cors",
-        body: formData
+      
+
+      verificarLiberacao(email).then(acesso => {
+        if (!acesso) {
+          alert("❌ Acesso não liberado! Faça o pagamento para liberar o acesso por 1 ano.");
+          return;
+        }
+
+        // só envia para a planilha se tiver acesso
+        const formUrl = "https://docs.google.com/forms/d/e/SEU_ID_AQUI/formResponse";
+        const formData = new FormData();
+
+        formData.append("entry.749872362", currentUser.email);
+        formData.append("entry.683876114", cidade); // use o valor real da cidade
+
+        fetch(formUrl, {
+          method: "POST",
+          mode: "no-cors",
+          body: formData
+        });
+
+
+        localStorage.setItem("usuarioLogado", JSON.stringify(usuario));
+        renderTelaInicial();
       });
+
+
 
       renderMenuPrincipal();
     }
@@ -169,10 +191,10 @@ function fecharAlerta() {
 
 function renderMenuPrincipal() {
   localStorage.setItem("telaAtual", "menu");
-  const nome = currentUser && currentUser.nome ? currentUser.nome : 'Aluno';
+  const nome = currentUser?.nome || currentUser?.email || 'Aluno';
   document.getElementById("form-box").innerHTML = `
     <div style="text-align: center;">
-      <h2 style="color:#2E7D32; font-size: 26px; margin-bottom: 20px;">Bem-vindo, ${nome}!</h2>
+      <h2 style="color:#2E7D32; font-size: 26px; margin-bottom: 20px;"> 👋 Olá, <span style="color:#00796B">${nome}</span>!</h2>
       <div style="display: flex; flex-direction: column; align-items: center; gap: 30px; margin-top: 40px;">
       <button class="auth-btn" style="font-size: 20px; padding: 20px;" onclick="renderAulas()">📚 Assistir às Aulas</button>
       <button class="auth-btn" style="font-size: 20px; padding: 20px;" onclick="renderHome()">📝 Fazer Simulados</button>
@@ -443,13 +465,30 @@ function logout() {
   currentUser = null;
   renderIntro();
 }
+ 
+function verificarLiberacao(email) {
+      return fetch('liberacoes.json')
+      .then(res => res.json())
+      .then(data => {
+      const liberado = data.find(u => u.email === email);
+      if (!liberado) return false;
 
+      const hoje = new Date();
+      const dataLiberacao = new Date(liberado.liberado_em);
+      const validade = new Date(dataLiberacao);
+      validade.setFullYear(validade.getFullYear() + 1);
+
+      return hoje <= validade;
+    })
+      .catch(() => false);
+    }
 
 function renderIntro() {
   localStorage.setItem("telaAtual", "intro");
   document.getElementById("form-box").innerHTML = `  
 
     
+
 
 
     <div style="text-align: center">
@@ -468,24 +507,42 @@ function renderIntro() {
         <br>
       </div>
       
+          <!-- Botões dentro do card branco -->
+        <div class="auth-card" id="form-box" style="padding: 40px 30px; border-radius: 16px; background: white; box-shadow: 0 0 20px rgba(0,0,0,0.1); max-width: 400px; margin: auto;">
+
+          <!-- Botão Acessar -->
+          <button class="auth-btn" onclick="renderLogin()" style="width: 100%; padding: 12px; margin-bottom: 15px; background-color: #4CAF50; color: white; border: none; border-radius: 6px; font-size: 16px;">
+            Acessar
+          </button>
+
+          <!-- Botão WhatsApp -->
+          <a href="https://wa.me/5535998475349?text=Olá%20Instrutor%20Jonas!%20Gostaria%20de%20solicitar%20acesso%20à%20plataforma%20Legmaster" target="_blank">
+            <button class="auth-btn" style="width: 100%; padding: 12px; background-color: rgb(51, 139, 139); color: white; border: none; border-radius: 6px; font-size: 16px;">
+              Solicitar Acesso
+            </button>
+          </a>
+
+          <!-- ✅ Botão Mercado Pago centralizado abaixo -->
+          <div style="margin-top: 20px; display: flex; justify-content: center;">
+            <div id="wallet_container"></div>
+          </div>
+
+          <!-- Depoimento -->
+          <div id="depoimento" style="margin-top: 25px; text-align: center; font-style: italic; font-size: 14px; color: #555;">
+            <p id="depoimento-texto">“O legal é que os simulados são objetivos e interativos. consegui minha aprovação acertei 25!!”</p>
+            <strong id="depoimento-autor">– Gabriel, Jacutinga MG</strong>
+          </div>
+
+        </div>
 
 
-      <button class="auth-btn" onclick='renderLogin()'>Acessar</button>
-      <br><br>
 
-      <a href="https://wa.me/5535998475349?text=Olá%20Instrutor%20Jonas!%20Gostaria%20de%20solicitar%20acesso%20à%20plataforma%20Legmaster. Como funciona?" target="_blank">
-        <button class="auth-btn" style="transition: all 0.3s ease; background-color:rgb(51, 139, 139);">
-          Solicitar Acesso
-        </button>
-      </a>
 
-      <div id="depoimento" style="margin: 20px 0; font-size: 14px; text-align: center; font-style: italic; color: #555;">
-      <p id="depoimento-texto">“...”</p>
-      <strong id="depoimento-autor">– ...</strong>
-      </div>
+
 
      
     </div>
+
     
    
 
@@ -577,3 +634,4 @@ function atualizarUserIDAnalytics() {
     console.log("✅ user_id enviado ao Analytics:", id);
   }
 }
+
