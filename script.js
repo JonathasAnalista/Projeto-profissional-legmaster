@@ -2,7 +2,7 @@
 let usuarios = JSON.parse(localStorage.getItem("usuarios") || "[]");
 let currentUser = JSON.parse(localStorage.getItem("usuarioLogado") || "null");
 
-const VERSAO_ATUAL = '1.0.5'; // <-- Você só muda isso quando publicar uma nova versão
+const VERSAO_ATUAL = '1.0.2'; // <-- Você só muda isso quando publicar uma nova versão
 
 const versaoSalva = localStorage.getItem('versao_legmaster');
 
@@ -128,7 +128,7 @@ function login() {
   const cidade = cidadeInput ? cidadeInput.value.trim() : "";
 
   if (!email || !senha || !cidade) {
-    alert("Por favor, preencha todos os campos corretamente.");
+    alert("Por favor, preencha todos os campos.");
     return;
   }
 
@@ -138,12 +138,12 @@ function login() {
       localStorage.setItem("usuarioLogado", JSON.stringify(usuario));
 
       if (typeof gtag === "function") {
-        gtag('set', { user_id: usuario.email });
+        gtag('set', { user_id: email });
       }
 
       const formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSdA1E_9sq-owsp9HdKT4kGH549C1ziUNAHTLpM-KLmPpr6nKg/formResponse";
       const formData = new FormData();
-      formData.append("entry.749872362", usuario.email);
+      formData.append("entry.749872362", email);
       formData.append("entry.683876114", cidade);
 
       fetch(formUrl, {
@@ -155,10 +155,14 @@ function login() {
       renderTelaInicial();
       renderMenuPrincipal();
     } else {
-      alert("❌ Login inválido! Verifique seu e-mail e senha.");
+      alert("❌ Email ou senha inválidos!");
     }
+  }).catch(error => {
+    console.error("Erro ao validar acesso:", error);
+    alert("Erro ao tentar logar. Tente novamente.");
   });
 }
+
 
 
 
