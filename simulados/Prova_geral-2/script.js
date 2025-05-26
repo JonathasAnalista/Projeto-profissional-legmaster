@@ -228,7 +228,7 @@ function showQuestion() {
   if (q.image) {
     qDiv.innerHTML += `
       <div style="text-align: center;">
-        <img src="${q.image}" alt="Imagem da questão" class="question-image" style="max-width: 200px; height: auto; display: block; margin: 5px auto;">
+        <img src="${q.image}" alt="Imagem da questão" class="question-image" style="max-width: 300px; height: auto; display: block; margin: 5px auto;">
       </div>`;
   }
 
