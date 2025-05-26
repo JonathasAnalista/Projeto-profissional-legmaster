@@ -124,7 +124,7 @@ const questions = [
     "answer": 2
   },
   {
-    "question": "Em vias dotadas de acostamento, qual dos veículos abaixo está fazendo a conversão à esquerda corretamente?",
+    "question": "Em vias dotadas de acostamento, qual dos veículos acima está fazendo a conversão à esquerda corretamente?",
     "image": "quest18.png",
     "options": ["O veículo 1", "O veículo 3", "O veículo 2", "Nenhum deles"],
     "answer": 1
