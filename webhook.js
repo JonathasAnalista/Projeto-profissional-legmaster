@@ -8,7 +8,7 @@ const app = express();
 
 const ACCESS_TOKEN = 'APP_USR-2844148372696282-052516-b993c3028965be6ae7f7c2bebc57a8c2-2232747525'; // Substitua pela sua Access Token do Mercado Pago
 const EMAIL_REMETENTE = 'jonathasguilhermeti@gmail.com';
-const SENHA_APLICATIVO = 'atpu lemz qman nlgq'; // Use uma senha de app do Gmail
+const SENHA_APLICATIVO = 'dhga jihe lykf egih'; // Use uma senha de app do Gmail
 
 app.use(express.json());
 
