@@ -74,7 +74,7 @@ function renderLogin() {
 // }
 
 async function obterUsuarioDaPlanilha(email, senha) {
-    const planilhaURL = "https://opensheet.elk.sh/1o9KtR9dFCgO37xQQvfMmCa1l1p7YSV19QyAE5YP-D1U/Sheet1";
+  const planilhaURL = "https://opensheet.elk.sh/1o9KtR9dFCgO37xQQvfMmCa1l1p7YSV19QyAE5YP-D1U/Sheet1";
 
   try {
     const response = await fetch(planilhaURL);
@@ -83,38 +83,35 @@ async function obterUsuarioDaPlanilha(email, senha) {
     const usuario = data.find(u => u.email?.toLowerCase() === email.toLowerCase());
 
     if (!usuario) {
-      mostrarAlerta("Atenção verifique o campo de email e senha!.");
-      return false;
+      mostrarAlerta("Atenção, verifique o campo de e-mail e senha.");
+      return null;
     }
 
     if (usuario.senha !== senha) {
       mostrarAlerta("Senha incorreta.");
-      return false;
+      return null;
     }
 
     if (usuario.status.toLowerCase() !== "ativo") {
-      mostrarAlerta(`Olá ${usuario.nome}, seu acesso está inativo.\nEntre em contato para renovação.\n(35)99847-5349`);
-      return false;
+      mostrarAlerta(`Olá ${usuario.nome}, seu acesso está inativo. Contato: (35)99847-5349`);
+      return null;
     }
 
-    // Opcional: Verificar vencimento
     const hoje = new Date();
     const venc = new Date(usuario.vencimento);
     if (venc < hoje) {
       mostrarAlerta(`Seu acesso venceu em ${usuario.vencimento}.`);
-      return false;
+      return null;
     }
 
-    // Se tudo certo, salvar usuário
-    localStorage.setItem("usuarioLogado", JSON.stringify(usuario));
-    return true;
-
+    return usuario; // << RETORNA o usuário completo
   } catch (error) {
     console.error("Erro ao acessar planilha:", error);
     mostrarAlerta("Erro ao validar usuário. Verifique sua conexão.");
-    return false;
+    return null;
   }
 }
+
 
 // async function obterUsuarioDaPlanilha(email) {
 //   const planilhaURL = "https://opensheet.elk.sh/1o9KtR9dFCgO37xQQvfMmCa1l1p7YSV19QyAE5YP-D1U/Sheet1";
@@ -136,21 +133,23 @@ async function login() {
   const email = document.getElementById("email").value.trim();
   const senha = document.getElementById("senha").value.trim();
 
-  const valido = await validarAcessoPorPlanilha(email, senha);
-  if (valido) {
-    const usuario = await obterUsuarioDaPlanilha(email);
-    if (usuario) {
-      localStorage.setItem("usuarioLogado", JSON.stringify(usuario));
-      currentUser = usuario;
-      console.log("Usuário logado:", currentUser);
+  const usuarioValido = await obterUsuarioDaPlanilha(email, senha);
 
-      renderMenuPrincipal();
-      registrarAcesso(usuario.nome || usuario.email || "Aluno");
-    }
+  if (usuarioValido) {
+    currentUser = usuarioValido;
+    localStorage.setItem("usuarioLogado", JSON.stringify(usuarioValido));
+    console.log("✅ Usuário logado:", currentUser);
+
+    renderMenuPrincipal();
+
+    const nomeFinal = usuarioValido.nome?.trim() || usuarioValido.email || "Aluno";
+    console.log("📌 Registrando nome na planilha:", nomeFinal);
+    registrarAcesso(nomeFinal);
   } else {
     mostrarAlerta("❌ Email ou senha inválidos!");
   }
 }
+
 
 
 
