@@ -4,7 +4,7 @@ let currentUser = JSON.parse(localStorage.getItem("usuarioLogado") || "null");
 const somAcerto = new Audio("sounds/acerto.mp3");
 const somErro = new Audio("sounds/erro.mp3");
 
-const VERSAO_ATUAL = '1.0.5'; // <-- Você só muda isso quando publicar uma nova versão
+const VERSAO_ATUAL = '1.0.4'; // <-- Você só muda isso quando publicar uma nova versão
 
 const versaoSalva = localStorage.getItem('versao_legmaster');
 
@@ -73,7 +73,7 @@ function renderLogin() {
 //   renderLogin();
 // }
 
-async function validarAcessoPorPlanilha(email, senha) {
+async function obterUsuarioDaPlanilha(email, senha) {
     const planilhaURL = "https://opensheet.elk.sh/1o9KtR9dFCgO37xQQvfMmCa1l1p7YSV19QyAE5YP-D1U/Sheet1";
 
   try {
@@ -115,6 +115,21 @@ async function validarAcessoPorPlanilha(email, senha) {
     return false;
   }
 }
+
+// async function obterUsuarioDaPlanilha(email) {
+//   const planilhaURL = "https://opensheet.elk.sh/1o9KtR9dFCgO37xQQvfMmCa1l1p7YSV19QyAE5YP-D1U/Sheet1";
+
+//   try {
+//     const response = await fetch(planilhaURL);
+//     const data = await response.json();
+
+//     return data.find(u => u.email?.toLowerCase() === email.toLowerCase()) || null;
+//   } catch (error) {
+//     console.error("Erro ao buscar usuário na planilha:", error);
+//     return null;
+//   }
+// }
+
 
 
 async function login() {
