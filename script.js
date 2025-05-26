@@ -2,7 +2,7 @@
 let usuarios = JSON.parse(localStorage.getItem("usuarios") || "[]");
 let currentUser = JSON.parse(localStorage.getItem("usuarioLogado") || "null");
 
-const VERSAO_ATUAL = '1.0.4'; // <-- Você só muda isso quando publicar uma nova versão
+const VERSAO_ATUAL = '1.0.5'; // <-- Você só muda isso quando publicar uma nova versão
 
 const versaoSalva = localStorage.getItem('versao_legmaster');
 
@@ -122,53 +122,44 @@ async function validarAcessoPorPlanilha(email, senha) {
 
 
 function login() {
-  const email = document.getElementById("email").value;
-  const senha = document.getElementById("senha").value;
+  const email = document.getElementById("email").value.trim();
+  const senha = document.getElementById("senha").value.trim();
   const cidadeInput = document.getElementById("cidade");
-  const cidade = cidadeInput ? cidadeInput.value.trim() : "Indefinido";
+  const cidade = cidadeInput ? cidadeInput.value.trim() : "";
+
+  if (!email || !senha || !cidade) {
+    alert("Por favor, preencha todos os campos corretamente.");
+    return;
+  }
 
   validarAcessoPorPlanilha(email, senha).then(valido => {
     if (valido) {
-      currentUser = JSON.parse(localStorage.getItem("usuarioLogado"));
+      const usuario = { email, senha };
+      localStorage.setItem("usuarioLogado", JSON.stringify(usuario));
 
-      if (currentUser && typeof gtag === "function") {
-        gtag('set', { user_id: currentUser.email });
+      if (typeof gtag === "function") {
+        gtag('set', { user_id: usuario.email });
       }
 
       const formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSdA1E_9sq-owsp9HdKT4kGH549C1ziUNAHTLpM-KLmPpr6nKg/formResponse";
       const formData = new FormData();
-      formData.append("entry.749872362", currentUser.email);
-      formData.append("entry.683876114", cidade); // cidade REAL agora
+      formData.append("entry.749872362", usuario.email);
+      formData.append("entry.683876114", cidade);
 
-      console.log("Enviando:", currentUser.email, cidade);
+      fetch(formUrl, {
+        method: "POST",
+        mode: "no-cors",
+        body: formData
+      });
 
-      
-
-      
-
-        // só envia para a planilha se tiver acesso
-        // const formUrl = "https://docs.google.com/forms/d/e/SEU_ID_AQUI/formResponse";
-        // const formData = new FormData();
-
-       
-
-        fetch(formUrl, {
-          method: "POST",
-          mode: "no-cors",
-          body: formData
-        });
-
-
-        localStorage.setItem("usuarioLogado", JSON.stringify(usuario));
-        renderTelaInicial();
-      
-
-
-
+      renderTelaInicial();
       renderMenuPrincipal();
+    } else {
+      alert("❌ Login inválido! Verifique seu e-mail e senha.");
     }
   });
 }
+
 
 
   
