@@ -1,0 +1,121 @@
+body {
+  font-family: Arial, sans-serif;
+  background-color: #e4e2e2;
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+#footer {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  background-color: #afafaf;
+  text-align: center;
+  padding: 10px 0;
+  font-weight: bold;
+  font-size: 14px;
+  color: #333;
+  box-shadow: 0 -1px 5px rgba(0, 0, 0, 0.2);
+}
+
+
+.container {
+  max-width: 800px;
+  margin: auto;
+  padding: 20px;
+}
+h1 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+.progress-container {
+  background-color: #eee;
+  height: 10px;
+  margin-bottom: 10px;
+  border-radius: 5px;
+}
+.progress-bar {
+  height: 100%;
+  background-color: #4CAF50;
+  width: 0%;
+  border-radius: 5px;
+}
+#timer {
+  font-size: 14px;
+  color: #666;
+  text-align: right;
+}
+.question {
+  text-align: left;
+  margin-bottom: 20px;
+}
+.question h3 {
+  margin-bottom: 15px;
+}
+.options label {
+  display: block;
+  margin-bottom: 5px;
+  cursor: pointer;
+  font-size: 25px;
+}
+.options input {
+  margin-right: 15px;
+}
+button {
+  margin-top: 15px;
+  padding: 10px 20px;
+  font-size: 18px;
+  border-radius: 8px;
+}
+.correct {
+  color: green;
+  font-weight: bold;
+}
+.incorrect {
+  color: red;
+  font-weight: bold;
+}
+.hidden {
+  display: none;
+}
+
+input[type="radio"] {
+  width: 26px;
+  height: 24px;
+  vertical-align: middle;
+  margin-right: 8px;
+}
+
+body, p, label, input, button {
+  font-size: 22px;
+}
+
+
+
+h1 {
+  font-size: 26px;
+}
+
+h3 {
+  font-size: 22px;
+  color: blue;
+}
+
+.correct-answer {
+  background-color: #9cefaf; /* Verde claro */
+  border-left: 6px solid #28a745;
+  border-radius: 6px;
+  padding: 10px;
+  margin: 5px 0;
+  font-weight: bold;
+}
+
+.incorrect-answer {
+  background-color: #efa6ac; /* Vermelho claro */
+  border-left: 6px solid #dc3545;
+  border-radius: 6px;
+  padding: 10px;
+  margin: 5px 0;
+  font-weight: bold;
+}
