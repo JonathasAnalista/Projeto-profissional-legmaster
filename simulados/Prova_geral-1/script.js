@@ -24,161 +24,170 @@ function habilitarAudios() {
 
 const questions = [
   {
-    "question": "A transposição de faixas, ultrapassagem, retornos, conversões denomina-se:",
-    "options": ["deslocamento lateral", "passagem", "ultrapassagem", "conversão livre"],
-    "answer": 0
-  },
-  {
-    "question": "Nas vias dotadas de acostamento, onde não houver local apropriado para a operação de retorno ou entrada à esquerda, antes de realizar manobras para este lado o condutor deverá parar o veículo:",
-    "options": ["No acostamento à direita.", "No centro da via.", "No acostamento da esquerda.", "Junto ao eixo central."],
-    "answer": 0
-  },
-  {
-    "question": "Dirigindo em um veículo numa via dividida ao centro por uma sinalização com duas linhas, sendo a primeira linha à sua esquerda tracejada e a segunda contínua, você poderá:",
-    "options": ["Ultrapassar outro veículo pela esquerda, quando as condições forem favoráveis.", "Ultrapassar outro veículo pela direita, quando as condições forem favoráveis.", "Fazer um retorno para o lado direito da via.", "Estacionar."],
-    "answer": 0
-  },
-  {
-    "question": "O condutor manterá acesos os faróis do veículo não equipado com DRL, utilizando luz baixa durante a noite e durante o dia, em:",
-    "options": ["Vias não iluminadas.", "Túneis providos de iluminação pública e nas rodovias de pista simples fora do perímetro urbano.", "Vias não providas de acostamento.", "Viadutos e trincheiras."],
+    "question": "A Carteira Nacional de Habilitação se tornará inválida quando:",
+    "options": ["O veículo for removido.", "A Carteira Nacional de Habilitação for cassada.", "A Carteira Nacional de Habilitação for roubada.", "O veículo for retido."],
     "answer": 1
   },
   {
-    "question": "A ordem correta de uma ultrapassagem segura é:",
-    "options": ["Usar luz indicadora de direção, ver espaço e visibilidade, ultrapassar só em faixa tracejada/seccionada.", "Buzinar sucessivamente, usar luz indicadora de direção, ultrapassar só em faixa contínua.", "Ligar a luz alta, usar a luz indicadora de direção para a direita, ultrapassar só em faixa seccionada.", "Todas afirmativas estão corretas."],
+    "question": "Diante de uma vítima de trânsito, deve-se primeiramente verificar se:",
+    "options": ["Ocorreu a obstrução de vias aéreas.", "Ocorreram fraturas.", "A vítima consegue ficar em pé.", "Ocorreu sangramento abundante."],
     "answer": 0
   },
   {
-    "question": "A imobilização de veículos por tempo superior ao necessário para embarque ou desembarque de passageiros denomina-se:",
-    "options": ["Transposição de faixas.", "Estacionamento.", "Parada.", "Ultrapassagem."],
-    "answer": 1
-  },
-  {
-    "question": "Ao seguir um veículo em uma via de mão única e o mesmo indicar por sinal que vai entrar à esquerda, você entenderá que pode:",
-    "options": ["Ultrapassar pela faixa da direita.", "Ultrapassar pela faixa da esquerda.", "Esperar na via ele entrar à esquerda.", "Buzinar sucessivamente para apressá-lo."],
-    "answer": 0
-  },
-  {
-    "question": "Dar passagem, pela esquerda, quando solicitado:",
-    "options": ["É uma opção do condutor.", "Só deve ser permitido quando se tratar de motocicletas.", "É apenas uma questão de educação do condutor.", "É dever de todo condutor de veículo automotor."],
+    "question": "Transitar pela contramão em vias de duplo sentido é infração... penalidade:",
+    "options": ["Gravíssima; multa.", "Grave; multa (cinco vezes).", "Gravíssima; multa (três vezes).", "Grave; multa."],
     "answer": 3
   },
   {
-    "question": "A faixa de trânsito destinada a se fazer ultrapassagem e circular em maior velocidade é:",
-    "options": ["A da direita.", "A da esquerda.", "Qualquer uma.", "A de sinalização com linhas amarelas."],
-    "answer": 1
-  },
-  {
-    "question": "Os veículos que se deslocam sobre trilhos, respeitadas as normas de circulação, têm a preferência de passagem:",
-    "options": ["Nos cruzamentos não sinalizados.", "Na rotatória.", "Nos túneis.", "Sobre os demais veículos."],
-    "answer": 3
-  },
-
-  
-  {
-    "question": "As vias terrestres abertas à circulação, de acordo com sua utilização, classificam-se em:",
-    "options": ["Rodovias e vias locais", "Rodovias e estradas", "Vias urbanas e vias rurais", "Vias de trânsito rápido e vias coletoras"],
-    "answer": 2
-  },
-
-  {
-    "question": "As praias abertas à circulação pública, as vias internas pertencentes aos condomínios constituídos por unidades autônomas e os estacionamentos privados de uso coletivo são, para efeito do Código de Trânsito Brasileiro, considerados:",
-    "options": ["Vias terrestres", "Áreas autônomas", "Vias privadas", "Áreas restritas"],
+    "question": "Diante do gesto do agente você entende que:",
+    "image": "ag_lanterna.png",
+    "options": [
+        "É uma ordem de parada somente para o veículo no qual a lanterna está direcionada.",
+        "É uma ordem de parada aos veículos para que os pedestres possam atravesar a via.",
+        "É uma ordem de parada pra todos os veículos que vem na direção do agente.",
+        "É uma ordem de parada para todos os veículos que estão na via."
+    ],
     "answer": 0
-  },
+    },
   {
-    "question": "Qual é a posição adequada para posicionar o dispositivo auxiliar de retenção (bebê conforto) para uma criança de 0 a 1 ano?",
-    "options": ["No meio do banco traseiro.", "No assoalho atrás do banco do motorista.", "De forma que o rosto da criança fique voltado para o vidro traseiro.", "Desde que se dirija devagar, preso no cinto de segurança do banco do carona."],
+    "question": "Um veículo que vai entrar numa rodovia pela direita deve:",
+    "options": ["Ter preferência de passagem.", "Ter prioridade de passagem.", "Aguardar, pois a preferência é da rodovia.", "Nenhuma das anteriores."],
     "answer": 2
   },
   {
-    "question": "O ciclista, na falta de ciclovia ou ciclofaixa, deve andar:",
-    "options": ["No sentido contrário aos carros na via", "No mesmo sentido dos veículos na via", "Pela calçada e junto aos pedestres", "No centro da via em cima da linha divisória"],
-    "answer": 1
-  },
-  {
-    "question": "Ao sair da via pelo lado esquerdo, em pista com circulação nos dois sentidos, o procedimento do condutor deverá ser:",
-    "options": ["Em pista com circulação nos dois sentidos não é permitido sair pelo lado esquerdo.", "Aproximar-se o máximo possível do eixo da linha divisória da via e efetuar a manobra com segurança.", "Aproximar-se o máximo possível do bordo esquerdo e executar a manobra no menor espaço possível.", "Aproximar-se do acostamento e executar a manobra no maior tempo possível."],
-    "answer": 1
-  },
-  {
-    "question": "O embarque e desembarque de passageiros de transporte coletivo deverá acontecer:",
-    "options": ["Sempre que solicitado por idosos e deficientes físicos", "Somente nos pontos estabelecidos para este fim", "Em qualquer ponto da via, desde que não atrapalhe o trânsito", "Sempre que o passageiro solicitar"],
-    "answer": 1
-  },
-  {
-    "question": "O condutor de veículo que pretender sair da via pelo lado esquerdo (virar à esquerda) numa via de mão única deverá:",
-    "options": ["Aguardar nas margens da via até todos os veículos passarem", "Aproximar-se do eixo central da via e efetuar a conversão à esquerda com atenção", "Aproximar-se do bordo direito da via e efetuar a manobra com atenção", "Deslocar-se totalmente para a esquerda da via e efetuar a conversão com segurança"],
+    "question": "A queima incompleta de fuligem pode causar:",
+    "options": ["Alergia.", "Asma.", "Bronquite crônica.", "Todas estão corretas."],
     "answer": 3
   },
   {
-    "question": "Em vias dotadas de acostamento, qual dos veículos abaixo está fazendo a conversão à esquerda corretamente?",
-    "image": "quest18.png",
-    "options": ["O veículo 1", "O veículo 3", "O veículo 2", "Nenhum deles"],
-    "answer": 1
-  },
-  {
-    "question": "O extintor de incêndio é equipamento obrigatório:",
-    "options": ["Para os veículos automotores, exceto motocicletas", "Somente por ocasião do licenciamento do veículo", "Para caminhão, caminhão-trator, micro-ônibus, veículos de transporte de inflamáveis e coletivo de passageiros", "Apenas para veículos novos"],
+    "question": "O processo de oxidação ocorre por:",
+    "options": ["Deixar de usar óleo no motor.", "Deixar de usar óleo no carburador.", "Deixar de usar aditivo na água do radiador.", "Nenhuma das acima."],
     "answer": 2
   },
   {
-    "question": "Ao se aproximar de um cruzamento, uma forma segura de agir é:",
-    "options": ["Reduzir a velocidade", "Manter a mesma velocidade", "Aumentar a velocidade", "Parar o veículo"],
-    "answer": 0
-  },
-  {
-    "question": "Veículos transitando por fluxos que se cruzem, ao se aproximarem de local não sinalizado, têm preferência:",
-    "options": ["Quem vem pela direita", "Quem vai em linha reta", "Quem se desloca pela via de fluxo mais intenso", "O ônibus, por transportar mais passageiros"],
-    "answer": 0
-  },
-  {
-    "question": "Quando uma pista de rolamento comportar várias faixas de circulação no mesmo sentido, são as da _________ destinadas ao deslocamento dos veículos mais _______ e de maior porte, quando não houver faixa especial:",
-    "options": ["Direita; rápidos", "Esquerda; lentos", "Direita; lentos", "Esquerda; rápidos"],
+    "question": "Ações para prever e evitar acidentes são chamadas de:",
+    "options": ["Direção correta.", "Direção corretiva.", "Direção defensiva.", "Direção de alto risco."],
     "answer": 2
   },
   {
-    "question": "Os usuários das vias terrestres devem:",
-    "options": ["Circular somente pelo lado direito da via", "Ceder sempre o direito de passagem aos veículos de transporte coletivo", "Circular sempre com velocidade reduzida", "Abster-se de todo ato que possa constituir perigo ou obstáculo ao trânsito"],
-    "answer": 3
-  },
-  {
-    "question": "O cinto de segurança é obrigatório em todas as vias do território nacional para:",
-    "options": ["O condutor, somente", "Condutor e passageiros do banco dianteiro", "Condutor e passageiros dos bancos dianteiro e traseiro", "Condutor e passageiros do banco traseiro"],
-    "answer": 2
-  },
-  {
-    "question": "Analise a preferência acima e responda:",
-    "image": "quest25.png",
-    "options": ["Entre o veículo 4, 3 e 2. Tem preferência o veículo 4", "Entre o veículo 3, 2 e 1. Tem preferência o veículo 2", "Entre o veículo 1, 2 e 3. Tem a preferência o veículo 3", "Entre o veículo 2, 3 e 4. Tem preferência o veículo 2"],
-    "answer": 3
-  },
-  {
-    "question": "Ao aproximar-se de um cruzamento não sinalizado, surgindo um veículo à sua direita, o condutor deve:",
-    "options": ["Parar o veículo, respeitando a preferência", "Diminuir a velocidade", "Usar atenção difusa e passar", "Não se preocupar, se estiver transitando em uma avenida"],
+    "question": "A placa A-41 adverte:",
+    "image": "santoandre.png",
+    "options": ["Cruz de Santo André.", "Pista dividida.", "Comprimento máximo permitido.", "Passagem de nível sem barreira."],
     "answer": 0
   },
   {
-    "question": "Ao ser ultrapassado em via de acostamento, deve-se:",
-    "options": ["Deslocar-se obrigatoriamente para o acostamento", "Desviar-se para a direita, reduzir ou manter a velocidade", "Reduzir bastante a velocidade", "Não se preocupar, pois a responsabilidade é de quem ultrapassa"],
+    "question": "Sob chuva de granizo, o condutor deve:",
+    "options": ["Aumentar a velocidade.", "Parar em local seguro.", "Ligar o pisca-alerta e parar.", "Parar sob viaduto."],
     "answer": 1
   },
   {
-    "question": "Em uma via coletora sem sinalização, o condutor poderá atingir a velocidade de no máximo:",
-    "options": ["30 km/h", "40 km/h", "50 km/h", "60 km/h"],
+    "question": "Marque a incorreta sobre luz baixa:",
+    "options": ["Iluminar a margem direita.", "Tornar visíveis placas.", "Alcance de 750 metros.", "Alcance de 750 metros."],
     "answer": 1
   },
   {
-    "question": "Os condutores de ciclomotores não poderão circular nas vias:",
-    "options": ["Locais", "Arteriais", "Coletoras", "De trânsito rápido"],
+    "question": "Infração com veículo do exterior deve:",
+    "options": ["Não existe multa.", "Ser paga antes de sair do país.", "Não precisa ser paga.", "Ser paga depois da saída."],
+    "answer": 1
+  },
+  {
+    "question": "Na parada cardíaca, pupilas:",
+    "options": ["Contraídas.", "Enrijecidas.", "Dilatadas.", "Rígidas."],
+    "answer": 2
+  },
+  {
+    "question": "Ao ultrapassar pela esquerda:",
+    "options": ["Verificar se há espaço.", "Buzinar após ultrapassar.", "Ligar faróis altos.", "Aumentar velocidade ao ser ultrapassado."],
+    "answer": 0
+  },
+  {
+    "question": "Veículos com prioridade:",
+    "options": ["Deixar livre a faixa da esquerda.", "Pedestres aguardam no passeio.", "Velocidade reduzida no cruzamento.", "Todas estão corretas."],
     "answer": 3
   },
   {
-    "question": "Analise o desenho e marque a preferência:",
-    "image": "quest30.png",
-    "options": ["Do veículo 1, porque o veículo 2 irá fazer conversão", "Do veículo 2, porque está à direita do veículo 1", "Do veículo 1, porque está em linha reta", "Nenhuma das anteriores"],
+    "question": "Veículos que mais poluem o ar:",
+    "options": ["Diesel ou gasolina.", "Sistema elétrico.", "Propulsão humana.", "Tração animal."],
+    "answer": 0
+  },
+  {
+    "question": "Placa R-28 indica que condutor vai:",
+    "image": "sentidoduplo.png",
+    "options": ["Entrar em uma via de duplo sentido de circulação.", "Entrar em uma via de sentido único de circulação.", "Entrar em uma via que vai e vem.", "Entrar em uma via obrigatória de sentidos contrários."],
+    "answer": 0
+  },
+  {
+    "question": "Terá CNH cassada quem for flagrado em:",
+    "options": ["I, apenas.", "I e II.", "II, apenas.", "I, II e III."],
     "answer": 1
-  }
+  },
+  {
+    "question": "Deixar o veículo morrer na prova é falta:",
+    "options": ["Leve - 3 pontos.", "Eliminatória - 4 pontos.", "Grave - 1 ponto.", "Média - 2 pontos."],
+    "answer": 3
+  },
+  {
+    "question": "Bicicletas não devem circular nas calçadas de vias:",
+    "options": ["Terrestres.", "Coletoras.", "Locais.", "De trânsito rápido."],
+    "answer": 0
+  },
+  {
+    "question": "Fazer reparo em via pública é:",
+    "options": ["Infração média.", "Grave em rodovias.", "Leve em vias comuns.", "B e C corretas."],
+    "answer": 3
+  },
+  {
+    "question": "Ao cruzar com outro veículo à noite, olhar para:",
+    "options": ["Faixa central.", "Faixa da direita.", "Faixa da esquerda.", "Painel do veículo."],
+    "answer": 1
+  },
+  {
+    "question": "Função da suspensão e amortecedores:",
+    "options": ["Manter características do veículo.", "Desgastar pneus.", "Perder controle.", "Manter estabilidade."],
+    "answer": 3
+  },
+  {
+    "question": "Diante do gesto do condutor você entende que:",
+    "image": "gc_direita.png",
+    "options": [
+        "Dobrar à esquerda.",
+        "Diminuir à marcha ou parar.",
+        "Dobrar à direita.",
+        "O carro está apresentando defeito."
+    ],
+    "answer": 2
+    },
+  {
+    "question": "Inscrições no solo servem para:",
+    "options": ["Regulamentar vias preferenciais.", "Reduzir perigos.", "Indicar cruzamentos.", "Melhorar percepção do condutor."],
+    "answer": 3
+  },
+  {
+    "question": "Condutor que não remove veículo após acidente com dano comete:",
+    "options": ["Falta de bom senso.", "Infração leve.", "Infração média.", "Aguardar perícia."],
+    "answer": 2
+  },
+  {
+    "question": "Placa TNA-02 indica:",
+    "image": "praia.png",
+    "options": ["Ilha.", "Praia.", "Coqueiros.", "Vende-se água de côco."],
+    "answer": 1
+  },
+  {
+    "question": "Com ventos laterais fortes, o condutor deve:",
+    "options": ["Fechar janelas e manter velocidade.", "Abrir janelas e manter velocidade.", "Reduzir marcha e abrir vidros.", "Manter velocidade normal."],
+    "answer": 2
+  },
+  {
+    "question": "É órgão recursal:",
+    "options": ["SENATRAN.", "PRF.", "JARI.", "DETRAN."],
+    "answer": 2
+  },
+  {
+    "question": "Tipos de hemorragia:",
+    "options": ["Externa e interna.", "Aberta e fechada.", "Externa e aberta.", "Interna e fechada."],
+    "answer": 0
+  },
 ];
 
 
