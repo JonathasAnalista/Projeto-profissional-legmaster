@@ -91,17 +91,17 @@ const questions = [
     "answer": 1
   },
   {
-    "question": "Na parada cardíaca, pupilas:",
+    "question": "Complete a frase. Nos casos de parada cardíaca os lábios ficam imediatamente azulados, as pupilas encontram-se e a vítima apresenta palidez acentuada.",
     "options": ["Contraídas.", "Enrijecidas.", "Dilatadas.", "Rígidas."],
     "answer": 2
   },
   {
-    "question": "Ao ultrapassar pela esquerda:",
+    "question": "Ao ultrapassar pela esquerda , o motorista deve:",
     "options": ["Verificar se há espaço.", "Buzinar após ultrapassar.", "Ligar faróis altos.", "Aumentar velocidade ao ser ultrapassado."],
     "answer": 0
   },
   {
-    "question": "Veículos com prioridade:",
+    "question": "Veículos com prioridade de passagem :",
     "options": ["Deixar livre a faixa da esquerda.", "Pedestres aguardam no passeio.", "Velocidade reduzida no cruzamento.", "Todas estão corretas."],
     "answer": 3
   },
@@ -163,7 +163,7 @@ const questions = [
     "answer": 3
   },
   {
-    "question": "Condutor que não remove veículo após acidente com dano comete:",
+    "question": "Deixar o condutor, envolvido em acidente sem vítima, de adotar providências para remover o veículo do local, quando necessária tal medida para assegurar a segurança e a fluidez do trânsito:",
     "options": ["Falta de bom senso.", "Infração leve.", "Infração média.", "Aguardar perícia."],
     "answer": 2
   },
@@ -186,7 +186,7 @@ const questions = [
   {
     "question": "Qual é a concentração de álcool no SANGUE, comprovado por exames, que é considerado crime de trânsito?",
     "options": ["5 dc/L de sangue.", "6 dc/L de sangue.", "2 dc/L de sangue.", "0,34 ml/L de ar."],
-    "answer": 0
+    "answer": 1
   },
 ];
 
