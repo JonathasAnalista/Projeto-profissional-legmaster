@@ -110,3 +110,22 @@ app.post('/webhook', async (req, res) => {
 app.listen(3000, () => {
   console.log('🚀 Webhook rodando na porta 3000');
 });
+
+// TESTE COMPLETO: Gera senha, envia e-mail e grava no usuarios.json
+
+const email = 'seu-email@gmail.com'; // Substitua aqui
+const senha = gerarSenha();
+
+// Grava no usuarios.json
+const usuariosPath = 'usuarios.json';
+let usuarios = [];
+
+if (fs.existsSync(usuariosPath)) {
+  usuarios = JSON.parse(fs.readFileSync(usuariosPath));
+}
+
+if (!usuarios.find(u => u.email === email)) {
+  usuarios.push({ email, senha });
+  fs.writeFileSync(usuariosPath, JSON.stringify(usuarios, null, 2));
+}
+
