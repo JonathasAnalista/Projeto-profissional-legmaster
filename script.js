@@ -4,7 +4,7 @@ let currentUser = JSON.parse(localStorage.getItem("usuarioLogado") || "null");
 const somAcerto = new Audio("sounds/acerto.mp3");
 const somErro = new Audio("sounds/erro.mp3");
 
-const VERSAO_ATUAL = '1.0.3'; // <-- Você só muda isso quando publicar uma nova versão
+const VERSAO_ATUAL = '1.0.5'; // <-- Você só muda isso quando publicar uma nova versão
 
 const versaoSalva = localStorage.getItem('versao_legmaster');
 
@@ -117,19 +117,26 @@ async function validarAcessoPorPlanilha(email, senha) {
 }
 
 
-function login() {
-  const email = document.getElementById("email").value;
-  const senha = document.getElementById("senha").value;
+async function login() {
+  const email = document.getElementById("email").value.trim();
+  const senha = document.getElementById("senha").value.trim();
 
-  validarAcessoPorPlanilha(email, senha).then(valido => {
-    if (valido) {
-      // ✅ Atualiza a variável global corretamente
-      currentUser = JSON.parse(localStorage.getItem("usuarioLogado"));
-      console.log("Usuário logado:", currentUser); // opcional para debug
+  const valido = await validarAcessoPorPlanilha(email, senha);
+  if (valido) {
+    const usuario = await obterUsuarioDaPlanilha(email);
+    if (usuario) {
+      localStorage.setItem("usuarioLogado", JSON.stringify(usuario));
+      currentUser = usuario;
+      console.log("Usuário logado:", currentUser);
 
-      renderMenuPrincipal(); // Agora com o nome certo
-}})
+      renderMenuPrincipal();
+      registrarAcesso(usuario.nome || usuario.email || "Aluno");
+    }
+  } else {
+    mostrarAlerta("❌ Email ou senha inválidos!");
   }
+}
+
 
 
 function mostrarAlerta(mensagem) {
@@ -542,4 +549,17 @@ window.addEventListener('beforeinstallprompt', (e) => {
     }
   }
 });
+
+function registrarAcesso(nome) {
+  const url = "https://script.google.com/macros/s/AKfycbyNmUKXQ1T7b4q-ZIOvBBpe4BPJvFgALrK2y8KIreTZxe08WYfHr_tF0tEv2ZGh217C/exec"; 
+  const form = new FormData();
+  form.append("nome", nome);
+
+  fetch(url, {
+    method: "POST",
+    body: form
+  }).then(() => console.log("✅ Acesso registrado com sucesso."))
+    .catch(err => console.error("Erro ao registrar acesso:", err));
+}
+
 
