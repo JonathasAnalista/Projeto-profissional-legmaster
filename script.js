@@ -2,7 +2,7 @@
 let usuarios = JSON.parse(localStorage.getItem("usuarios") || "[]");
 let currentUser = JSON.parse(localStorage.getItem("usuarioLogado") || "null");
 
-const VERSAO_ATUAL = '1.0.9'; // <-- Você só muda isso quando publicar uma nova versão
+const VERSAO_ATUAL = '1.0.3'; // <-- Você só muda isso quando publicar uma nova versão
 
 const versaoSalva = localStorage.getItem('versao_legmaster');
 

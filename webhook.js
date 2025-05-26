@@ -6,9 +6,9 @@ const axios = require('axios');
 const nodemailer = require('nodemailer');
 const app = express();
 
-const ACCESS_TOKEN = 'APP_USR-2844148372696282-052516-b993c3028965be6ae7f7c2bebc57a8c2-2232747525'; // Substitua pela sua Access Token do Mercado Pago
+const ACCESS_TOKEN = 'APP_USR-2844148372696282-052516-b993c3028965be6ae7f7c2bebc57a8c2-2232747525';
 const EMAIL_REMETENTE = 'jonathasguilhermeti@gmail.com';
-const SENHA_APLICATIVO = 'dhga jihe lykf egih'; // Use uma senha de app do Gmail
+const SENHA_APLICATIVO = 'dhga jihe lykf egih';
 
 app.use(express.json());
 
@@ -51,6 +51,7 @@ Equipe Legmaster`
 
 // Webhook do Mercado Pago
 app.post('/webhook', async (req, res) => {
+  console.log('📩 Webhook recebido:', JSON.stringify(req.body, null, 2));
   const body = req.body;
 
   if (body.type === 'payment' && body.data && body.data.id) {
@@ -72,10 +73,7 @@ app.post('/webhook', async (req, res) => {
 
         // Atualiza liberacoes.json
         const liberacoesPath = 'liberacoes.json';
-        let liberacoes = [];
-        if (fs.existsSync(liberacoesPath)) {
-          liberacoes = JSON.parse(fs.readFileSync(liberacoesPath));
-        }
+        let liberacoes = fs.existsSync(liberacoesPath) ? JSON.parse(fs.readFileSync(liberacoesPath)) : [];
         if (!liberacoes.find(u => u.email === email)) {
           liberacoes.push({ email, liberado_em: hoje.toISOString(), valido_ate: validade.toISOString() });
           fs.writeFileSync(liberacoesPath, JSON.stringify(liberacoes, null, 2));
@@ -83,16 +81,12 @@ app.post('/webhook', async (req, res) => {
 
         // Atualiza usuarios.json
         const usuariosPath = 'usuarios.json';
-        let usuarios = [];
-        if (fs.existsSync(usuariosPath)) {
-          usuarios = JSON.parse(fs.readFileSync(usuariosPath));
-        }
+        let usuarios = fs.existsSync(usuariosPath) ? JSON.parse(fs.readFileSync(usuariosPath)) : [];
         if (!usuarios.find(u => u.email === email)) {
           usuarios.push({ email, senha });
           fs.writeFileSync(usuariosPath, JSON.stringify(usuarios, null, 2));
         }
 
-        // Envia e-mail com os dados de acesso
         await enviarEmailAcesso(email, senha);
         console.log(`✅ Acesso liberado e e-mail enviado para ${email}`);
       }
@@ -111,21 +105,3 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`🚀 Webhook rodando na porta ${PORT}`);
 });
-// TESTE COMPLETO: Gera senha, envia e-mail e grava no usuarios.json
-
-const email = 'seu-email@gmail.com'; // Substitua aqui
-const senha = gerarSenha();
-
-// Grava no usuarios.json
-const usuariosPath = 'usuarios.json';
-let usuarios = [];
-
-if (fs.existsSync(usuariosPath)) {
-  usuarios = JSON.parse(fs.readFileSync(usuariosPath));
-}
-
-if (!usuarios.find(u => u.email === email)) {
-  usuarios.push({ email, senha });
-  fs.writeFileSync(usuariosPath, JSON.stringify(usuarios, null, 2));
-}
-
