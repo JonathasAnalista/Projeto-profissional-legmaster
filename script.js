@@ -4,7 +4,7 @@ let currentUser = JSON.parse(localStorage.getItem("usuarioLogado") || "null");
 const somAcerto = new Audio("sounds/acerto.mp3");
 const somErro = new Audio("sounds/erro.mp3");
 
-const VERSAO_ATUAL = '1.0.2'; // <-- Você só muda isso quando publicar uma nova versão
+const VERSAO_ATUAL = '1.0.6'; // <-- Você só muda isso quando publicar uma nova versão
 
 const versaoSalva = localStorage.getItem('versao_legmaster');
 
@@ -553,26 +553,26 @@ if (!currentUser && tela !== "intro" && tela !== "login") {
 
 let deferredPrompt;
 
-window.addEventListener('beforeinstallprompt', (e) => {
-  e.preventDefault(); // Impede o prompt automático
-  deferredPrompt = e;
+// window.addEventListener('beforeinstallprompt', (e) => {
+//   e.preventDefault(); // Impede o prompt automático
+//   deferredPrompt = e;
 
-  if (!localStorage.getItem('pwaInstalado')) {
-    const confirmar = confirm("📱 Deseja instalar este site como um app no seu celular?");
-    if (confirmar) {
-      deferredPrompt.prompt();
+//   if (!localStorage.getItem('pwaInstalado')) {
+//     // const confirmar = confirm("📱 Deseja instalar este site como um app no seu celular?");
+//     if (confirmar) {
+//       deferredPrompt.prompt();
 
-      deferredPrompt.userChoice.then(choice => {
-        if (choice.outcome === 'accepted') {
-          console.log("✅ Aplicativo instalado com sucesso");
-          localStorage.setItem('pwaInstalado', 'true');
-        } else {
-          console.log("❌ Usuário recusou a instalação");
-        }
-      });
-    }
-  }
-});
+//       deferredPrompt.userChoice.then(choice => {
+//         if (choice.outcome === 'accepted') {
+//           console.log("✅ Aplicativo instalado com sucesso");
+//           localStorage.setItem('pwaInstalado', 'true');
+//         } else {
+//           console.log("❌ Usuário recusou a instalação");
+//         }
+//       });
+//     }
+//   }
+// });
 
 function registrarAcesso(nome) {
   const url = "https://script.google.com/macros/s/AKfycbyNmUKXQ1T7b4q-ZIOvBBpe4BPJvFgALrK2y8KIreTZxe08WYfHr_tF0tEv2ZGh217C/exec"; 

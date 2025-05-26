@@ -117,9 +117,9 @@ const questions = [
     "answer": 0
   },
   {
-    "question": "Terá CNH cassada quem for flagrado em:",
-    "options": ["I, apenas.", "I e II.", "II, apenas.", "I, II e III."],
-    "answer": 1
+    "question": "Onde houver marca longitudinal amarela dupla contínua a ultrapassagem é:",
+    "options": ["Permitida para os dois sentidos.", "Proibida para um dos sentidos", "Proibida para os dois sentidos.", "Permitida para um dos sentidos."],
+    "answer": 2
   },
   {
     "question": "Deixar o veículo morrer na prova é falta:",
@@ -170,7 +170,7 @@ const questions = [
   {
     "question": "Placa TNA-02 indica:",
     "image": "praia.png",
-    "options": ["Ilha.", "Praia.", "Coqueiros.", "Vende-se água de côco."],
+    "options": ["Alagamento.", "Praia.", "Chuva forte.", "Vende-se guarda-chuvas."],
     "answer": 1
   },
   {
@@ -184,8 +184,8 @@ const questions = [
     "answer": 2
   },
   {
-    "question": "Tipos de hemorragia:",
-    "options": ["Externa e interna.", "Aberta e fechada.", "Externa e aberta.", "Interna e fechada."],
+    "question": "Qual é a concentração de álcool no SANGUE, comprovado por exames, que é considerado crime de trânsito?",
+    "options": ["5 dc/L de sangue.", "6 dc/L de sangue.", "2 dc/L de sangue.", "0,34 ml/L de ar."],
     "answer": 0
   },
 ];

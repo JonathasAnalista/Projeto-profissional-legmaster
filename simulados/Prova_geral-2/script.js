@@ -25,7 +25,7 @@ function habilitarAudios() {
 const questions = [
   {
     "question": "A placa A-13b indica:",
-    "image":"quest1.png",
+    "image":"quest-1.png",
     "options": ["Confluência à esquerda.", "Confluência à direita.", "Entroncamento oblíquo à esquerda.", "Entroncamento oblíquo à direita."],
     "answer": 1
   },
@@ -56,9 +56,9 @@ const questions = [
     "answer": 3
   },
   {
-    "question": "Ônibus a 136 km/h em rodovia não sinalizada:",
-    "options": ["Infração gravíssima com multa 3x.", "Infração grave com suspensão.", "Grave com apreensão.", "Gravíssima com cassação."],
-    "answer": 0
+    "question": "Quando, dirigindo um veículo numa via de mão única com retorno ou entrada à esquerda, o condutor que estiver à frente indicar, por sinal, que vai entrar para esse lado, você poderá:",
+    "options": ["Ultrapassar pela esquerda.", "Fazer um retorno.", " Acelerar o veículo", "Ultrapassar pela direita."],
+    "answer": 3
   },
   {
     "question": "Validade da Permissão para Dirigir:",
@@ -103,8 +103,8 @@ const questions = [
     "answer": 2
   },
   {
-    "question": "Debrear significa:",
-    "options": ["Pé no freio.", "Regular cabo.", "Acionar embreagem.", "Acionar alavanca."],
+    "question": "O responsável pela infração relativa ao transporte de carga com excesso de peso nos eixos ou quando a carga proveniente de mais de um embarcador ultrapassar o peso bruto total é o:",
+    "options": ["Transportador e embarcador.", "Proprietário.", "Transportador.", "Embarcador."],
     "answer": 2
   },
   {
