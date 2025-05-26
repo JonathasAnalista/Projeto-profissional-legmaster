@@ -101,7 +101,7 @@ const questions = [
     "answer": 0
   },
   {
-    "question": "Veículos com prioridade de passagem :",
+    "question": "Quanto aos veículos com prioridade, podemos afirmar:",
     "options": ["Deixar livre a faixa da esquerda.", "Pedestres aguardam no passeio.", "Velocidade reduzida no cruzamento.", "Todas estão corretas."],
     "answer": 3
   },
