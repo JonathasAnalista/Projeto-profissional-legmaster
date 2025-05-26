@@ -104,6 +104,22 @@
     }
   </script>
 
+  <!-- Google Analytics 4 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  const user = JSON.parse(localStorage.getItem("usuarioLogado") || "null");
+  const userId = user?.email || null;
+
+  gtag('config', 'G-4MCS21GQ7C', {
+    user_id: userId
+  });
+</script>
+
+
 
 
 

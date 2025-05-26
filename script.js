@@ -4,7 +4,7 @@ let currentUser = JSON.parse(localStorage.getItem("usuarioLogado") || "null");
 const somAcerto = new Audio("sounds/acerto.mp3");
 const somErro = new Audio("sounds/erro.mp3");
 
-const VERSAO_ATUAL = '1.0.4'; // <-- Você só muda isso quando publicar uma nova versão
+const VERSAO_ATUAL = '1.0.6'; // <-- Você só muda isso quando publicar uma nova versão
 
 const versaoSalva = localStorage.getItem('versao_legmaster');
 
@@ -136,6 +136,10 @@ async function login() {
   const usuarioValido = await obterUsuarioDaPlanilha(email, senha);
 
   if (usuarioValido) {
+    if (typeof gtag === "function" && usuarioValido?.email) {
+      gtag('set', { user_id: usuarioValido.email });
+      console.log("📊 GA4: user_id set:", usuarioValido.email);
+    }
     currentUser = usuarioValido;
     localStorage.setItem("usuarioLogado", JSON.stringify(usuarioValido));
     console.log("✅ Usuário logado:", currentUser);
@@ -148,6 +152,9 @@ async function login() {
   } else {
     mostrarAlerta("❌ Email ou senha inválidos!");
   }
+
+  
+
 }
 
 
@@ -316,6 +323,8 @@ function renderSimulados() {
         <button class="auth-btn" onclick="renderProvas('Mecânica')">Mecânica</button>
         <button class="auth-btn" onclick="renderProvas('Meio Ambiente')">Meio Ambiente</button>
         <button class="auth-btn" onclick="renderProvas('Infrações')">Infrações</button>
+        <button class="auth-btn" onclick="renderProvas('Provas gerais')">Provas gerais</button>
+
         
         
       </div>
@@ -359,7 +368,8 @@ function renderProvas(materia) {
     "Direção Defensiva": "direcao_defensiva",
     "Primeiros Socorros": "primeiros_socorros",
     "Meio Ambiente": "meio_ambiente",
-    "Mecânica": "mecanica"
+    "Mecânica": "mecanica",
+    "Provas gerais": "provas_gerais",
   };
 
   const prefixo = nomes[materia] || "";
