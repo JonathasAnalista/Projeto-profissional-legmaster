@@ -2,7 +2,7 @@
 let usuarios = JSON.parse(localStorage.getItem("usuarios") || "[]");
 let currentUser = JSON.parse(localStorage.getItem("usuarioLogado") || "null");
 
-const VERSAO_ATUAL = '1.0.2'; // <-- Você só muda isso quando publicar uma nova versão
+const VERSAO_ATUAL = '1.0.9'; // <-- Você só muda isso quando publicar uma nova versão
 
 const versaoSalva = localStorage.getItem('versao_legmaster');
 
@@ -110,7 +110,9 @@ async function validarAcessoPorPlanilha(email, senha) {
     }
 
     // Se tudo certo, salvar usuário
-    localStorage.setItem("usuarioLogado", JSON.stringify(usuario));
+   currentUser = usuario;
+   localStorage.setItem("usuarioLogado", JSON.stringify(usuario));
+
     return true;
 
   } catch (error) {
@@ -134,16 +136,15 @@ function login() {
 
   validarAcessoPorPlanilha(email, senha).then(valido => {
     if (valido) {
-      const usuario = { email, senha };
-      localStorage.setItem("usuarioLogado", JSON.stringify(usuario));
+      const usuario = JSON.parse(localStorage.getItem("usuarioLogado") || "{}");
 
       if (typeof gtag === "function") {
-        gtag('set', { user_id: email });
+        gtag('set', { user_id: usuario.email });
       }
 
       const formUrl = "https://docs.google.com/forms/d/e/1FAIpQLSdA1E_9sq-owsp9HdKT4kGH549C1ziUNAHTLpM-KLmPpr6nKg/formResponse";
       const formData = new FormData();
-      formData.append("entry.749872362", email);
+      formData.append("entry.749872362", usuario.email);
       formData.append("entry.683876114", cidade);
 
       fetch(formUrl, {
@@ -152,14 +153,14 @@ function login() {
         body: formData
       });
 
-      renderTelaInicial();
+      renderTelaInicial?.(); // segurança caso não esteja definida
       renderMenuPrincipal();
     } else {
-      alert("❌ Email ou senha inválidos!");
+      mostrarAlerta("❌ Email ou senha inválidos!");
     }
   }).catch(error => {
     console.error("Erro ao validar acesso:", error);
-    alert("Erro ao tentar logar. Tente novamente.");
+    mostrarAlerta("Erro ao tentar logar. Verifique sua conexão.");
   });
 }
 
