@@ -30,7 +30,7 @@ const questions = [
     "answer": 1
   },
   {
-    "question": "No sistema de arrefecimento não se utiliza:",
+    "question": "No sistema de arrefecimento não se utiliza o seguinte componente:",
     "options": ["Filtro de óleo.", "Ventoinha ou ventilador.", "Radiador.", "Bomba d'água."],
     "answer": 0
   },
@@ -155,8 +155,8 @@ const questions = [
     "answer": 3
   },
   {
-    "question": "Remoção inadequada de acidentado:",
-    "options": ["Verificar coluna.", "Improvisar maca.", "Remover rápido.", "Evitar freadas bruscas."],
+    "question": "O trabalho de remoção de um acidentado deve ser feito por pessoal especializado, com equipamentos apropriados. Mas se numa emergência, esse transporte precisar ser feito por você, qual procedimento pode ser considerado inadequado?",
+    "options": ["Verificar se há deformações na coluna vertebral.", "Improvisar uma marca para transporte do acidentado.", " Remover a vítima do local de maneira mais rápida possível, pois esta necessita de atendimento urgente.", "Evitar freadas bruscas e excesso de velocidade que podem agravar o estado da vítima."],
     "answer": 2
   },
   {
