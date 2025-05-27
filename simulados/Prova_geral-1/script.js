@@ -132,8 +132,8 @@ const questions = [
     "answer": 0
   },
   {
-    "question": "Fazer reparo em via pública é:",
-    "options": ["Infração média.", "Grave em rodovias.", "Leve em vias comuns.", "B e C corretas."],
+    "question": "De acordo com os sinais sonoros dos agentes de trânsito, marque a resposta que corresponda a determinação de mandar o veículo seguir:",
+    "options": ["Três silvos breves.", "Um silvo longo.", "Dois silvos breves.", "Um silvo breve"],
     "answer": 3
   },
   {
@@ -158,8 +158,9 @@ const questions = [
     "answer": 2
     },
   {
-    "question": "Inscrições no solo servem para:",
-    "options": ["Regulamentar vias preferenciais.", "Reduzir perigos.", "Indicar cruzamentos.", "Melhorar percepção do condutor."],
+    "question": "A placa R-16 significa:",
+    "image": "lmp.png",
+    "options": ["Largura permitida por eixo", "Largura limitada.", "Largura máxima por eixo.", "Largura máxima permitida"],
     "answer": 3
   },
   {
