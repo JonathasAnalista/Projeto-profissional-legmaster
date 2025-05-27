@@ -139,9 +139,10 @@ const questions = [
     "answer": 0
   },
   {
-    "question": "Direção que reduz esforço:",
-    "options": ["Elétrica.", "Normal.", "Dinâmica.", "Mecânica."],
-    "answer": 0
+    "question": "A placa A-14 adverte que, você vai encontrar:",
+    "image": "semaforo.png",
+    "options": ["Um semáforo.", "Um cruzamento com semáforo.", "Um semáforo à frente.", "Um semáforo desligado."],
+    "answer": 2
   },
   {
     "question": "Óculos obrigatórios para capacete aberto:",
