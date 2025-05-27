@@ -118,7 +118,7 @@ const questions = [
     "answer": 1
   },
   {
-    "question": "Não faz parte das partes fixas do motor:",
+    "question": "Não faz parte das peças fixas do motor:",
     "options": ["Bloco do motor", "Cilindros.", "Cabeçote.", "Biela."],
     "answer": 3
   },
