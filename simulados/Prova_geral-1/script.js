@@ -29,9 +29,9 @@ const questions = [
     "answer": 1
   },
   {
-    "question": "Diante de uma vítima de trânsito, deve-se primeiramente verificar se:",
-    "options": ["Ocorreu a obstrução de vias aéreas.", "Ocorreram fraturas.", "A vítima consegue ficar em pé.", "Ocorreu sangramento abundante."],
-    "answer": 0
+    "question": "O condutor poderá ultrapassar outro veículo pela direita quando:",
+    "options": ["O veículo da frente autorizar.", "A via for de mão única com entrada à esquerda e o condutor do veículo a ser ultrapassado indicar, por sinal, que vai entrar para esse lado.", "A via for de mão única com retorno ou entrada à direita e o condutor do veículo que estiver à direita indicar, por sinal, que vai entrar para esse lado.", "A via for de mão dupla com retorno ou entrada à esquerda e apenas uma faixa de trânsito."],
+    "answer": 1
   },
   {
     "question": "Transitar pela contramão em vias de duplo sentido é infração... penalidade:",
@@ -60,9 +60,10 @@ const questions = [
     "answer": 3
   },
   {
-    "question": "O processo de oxidação ocorre por:",
-    "options": ["Deixar de usar óleo no motor.", "Deixar de usar óleo no carburador.", "Deixar de usar aditivo na água do radiador.", "Nenhuma das acima."],
-    "answer": 2
+    "question": "A placa A-42a adverte o condutor da existência adiante de:",
+    "image":"ipd.png",
+    "options": ["Início de pista dupla.", "Fim de pista dupla.", "Mão dupla adiante.", "Pista irregular."],
+    "answer": 0
   },
   {
     "question": "Ações para prever e evitar acidentes são chamadas de:",
@@ -81,13 +82,13 @@ const questions = [
     "answer": 1
   },
   {
-    "question": "Marque a incorreta sobre luz baixa:",
-    "options": ["Iluminar a margem direita.", "Tornar visíveis placas.", "Alcance de 750 metros.", "Alcance de 750 metros."],
+    "question": "O condutor que estiver circulando pela faixa do meio, em uma pista de rolamento de três faixas, ao perceber que outro que o segue tem o propósito de ultrapassá-lo, deverá:",
+    "options": ["Deslocar-se para a faixa da direita, acelerando a marcha.", "Manter-se naquela na qual está circulando, sem acelerar a marcha.", "Manter-se na pista, acelerando a marcha.", "Deslocar-se para a faixa da esquerda, acelerando a marcha."],
     "answer": 1
   },
   {
-    "question": "Infração com veículo do exterior deve:",
-    "options": ["Não existe multa.", "Ser paga antes de sair do país.", "Não precisa ser paga.", "Ser paga depois da saída."],
+    "question": "Manter o veículo imobilizado apenas pelo tempo necessário para embarque e desembarque de pessoas, caracteriza-se como:",
+    "options": ["Parada para carga e descarga.", "Parada.", "Estacionamento para carga e descarga.", "Estacionamento."],
     "answer": 1
   },
   {
@@ -127,8 +128,8 @@ const questions = [
     "answer": 3
   },
   {
-    "question": "Bicicletas não devem circular nas calçadas de vias:",
-    "options": ["Terrestres.", "Coletoras.", "Locais.", "De trânsito rápido."],
+    "question": "Na sinalização horizontal a cor utilizada para a regulação de fluxos de sentidos opostos, é:",
+    "options": ["Amarela.", "Branca.", "Azul.", "Preta."],
     "answer": 0
   },
   {
@@ -142,7 +143,7 @@ const questions = [
     "answer": 1
   },
   {
-    "question": "Função da suspensão e amortecedores:",
+    "question": "A Função da suspensão e amortecedores é:",
     "options": ["Manter características do veículo.", "Desgastar pneus.", "Perder controle.", "Manter estabilidade."],
     "answer": 3
   },
