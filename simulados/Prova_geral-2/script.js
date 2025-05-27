@@ -134,9 +134,9 @@ const questions = [
     "answer": 3
   },
   {
-    "question": "Não é crime de trânsito:",
-    "options": ["Velocidade excessiva.", "Homicídio culposo.", "Omissão de socorro.", "Lesão culposa."],
-    "answer": 0
+    "question": "Não é considerado infração de trânsito:",
+    "options": ["Ultrapassagem perigosa.", "Avançar o sinal vermelho.", "Omissão de socorro.", "Estacionamento irregular."],
+    "answer": 2
   },
   {
     "question": "A placa A-14 adverte que, você vai encontrar:",
