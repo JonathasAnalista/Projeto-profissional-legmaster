@@ -24,86 +24,86 @@ function habilitarAudios() {
 
 const questions = [
   {
-    "question": "A transposição de faixas, ultrapassagem, retornos, conversões denomina-se:",
-    "options": ["deslocamento lateral", "passagem", "ultrapassagem", "conversão livre"],
+    "question": "O trânsito de qualquer natureza nas vias terrestres do território nacional, abertas à circulação, rege-se pelo:",
+    "options": [" Código de Trânsito Brasileiro.", "Código Nacional de Trânsito.", " Código Brasileiro de Trânsito.", "Código de Trânsito"],
     "answer": 0
   },
   {
-    "question": "Nas vias dotadas de acostamento, onde não houver local apropriado para a operação de retorno ou entrada à esquerda, antes de realizar manobras para este lado o condutor deverá parar o veículo:",
-    "options": ["No acostamento à direita.", "No centro da via.", "No acostamento da esquerda.", "Junto ao eixo central."],
+    "question": "O condutor para conduzir veículo motorizado de duas ou três rodas, com ou sem carro lateral, deverá estar habilitado na categoria:",
+    "options": ["“A”.", "“B”.", "“C”.", "“D”."],
     "answer": 0
   },
   {
-    "question": "Dirigindo em um veículo numa via dividida ao centro por uma sinalização com duas linhas, sendo a primeira linha à sua esquerda tracejada e a segunda contínua, você poderá:",
-    "options": ["Ultrapassar outro veículo pela esquerda, quando as condições forem favoráveis.", "Ultrapassar outro veículo pela direita, quando as condições forem favoráveis.", "Fazer um retorno para o lado direito da via.", "Estacionar."],
+    "question": "A Licença de Aprendizagem (LADV) suspensa poderá ser obtida novamente após decorridos:",
+    "options": ["Seis meses.", "Três meses.", "Doze meses.", "Nove meses."],
     "answer": 0
   },
   {
-    "question": "O condutor manterá acesos os faróis do veículo não equipado com DRL, utilizando luz baixa durante a noite e durante o dia, em:",
-    "options": ["Vias não iluminadas.", "Túneis providos de iluminação pública e nas rodovias de pista simples fora do perímetro urbano.", "Vias não providas de acostamento.", "Viadutos e trincheiras."],
+    "question": "Organizar e manter o Registro Nacional de Carteiras de Habilitação (RENACH) compete:",
+    "options": ["ao CONTRAN.", "à SENATRAN.", "ao DETRAN.", "ao CETRAN."],
     "answer": 1
   },
   {
-    "question": "A ordem correta de uma ultrapassagem segura é:",
-    "options": ["Usar luz indicadora de direção, ver espaço e visibilidade, ultrapassar só em faixa tracejada/seccionada.", "Buzinar sucessivamente, usar luz indicadora de direção, ultrapassar só em faixa contínua.", "Ligar a luz alta, usar a luz indicadora de direção para a direita, ultrapassar só em faixa seccionada.", "Todas afirmativas estão corretas."],
-    "answer": 0
-  },
-  {
-    "question": "A imobilização de veículos por tempo superior ao necessário para embarque ou desembarque de passageiros denomina-se:",
-    "options": ["Transposição de faixas.", "Estacionamento.", "Parada.", "Ultrapassagem."],
-    "answer": 1
-  },
-  {
-    "question": "Ao seguir um veículo em uma via de mão única e o mesmo indicar por sinal que vai entrar à esquerda, você entenderá que pode:",
-    "options": ["Ultrapassar pela faixa da direita.", "Ultrapassar pela faixa da esquerda.", "Esperar na via ele entrar à esquerda.", "Buzinar sucessivamente para apressá-lo."],
-    "answer": 0
-  },
-  {
-    "question": "Dar passagem, pela esquerda, quando solicitado:",
-    "options": ["É uma opção do condutor.", "Só deve ser permitido quando se tratar de motocicletas.", "É apenas uma questão de educação do condutor.", "É dever de todo condutor de veículo automotor."],
+    "question": "Ao comprar um veículo já registrado, o novo proprietário deverá providenciar a transferência, junto ao Detran, no prazo máximo de:",
+    "options": ["60 dias.", "45 dias.", " 90 dias.", "30 dias."],
     "answer": 3
   },
   {
-    "question": "A faixa de trânsito destinada a se fazer ultrapassagem e circular em maior velocidade é:",
-    "options": ["A da direita.", "A da esquerda.", "Qualquer uma.", "A de sinalização com linhas amarelas."],
+    "question": "A operação de carga ou descarga será regulamentada pelo órgão ou entidade sobre a via e é considerada:",
+    "options": ["Parada.", "Estacionamento", "Embarque.", "Desembarque"],
     "answer": 1
   },
   {
-    "question": "Os veículos que se deslocam sobre trilhos, respeitadas as normas de circulação, têm a preferência de passagem:",
-    "options": ["Nos cruzamentos não sinalizados.", "Na rotatória.", "Nos túneis.", "Sobre os demais veículos."],
-    "answer": 3
+    "question": "O cinto de segurança é obrigatório em todas as vias do território nacional para:",
+    "options": ["O condutor, somente.", "Condutor e passageiros do banco dianteiro.", "Condutor e passageiros dos bancos dianteiro e traseiro","Condutor e passageiros do banco traseiro."],
+    "answer": 2
+  },
+  {
+    "question": "A transposição de faixas é um tipo de:",
+    "options": ["Deslocamento lateral.", "Interseção.", "Logradouro.", "Via."],
+    "answer": 0
+  },
+  {
+    "question": "Nas interseções e suas proximidades, o condutor:",
+    "options": ["Poderá efetuar ultrapassagem.", "Poderá estacionar.", "Não poderá efetuar ultrapassagem.", "Não precisa diminuir a velocidade do veículo."],
+    "answer": 2
+  },
+  {
+    "question": " Não é procedimento para virar à direita:",
+    "options": ["Deslocar-se para a linha divisória da pista.", "Deslocar-se para o bordo direito.", "Observar a preferência de veículos e pedestres.", "Efetuar a manobra no menor espaço possível."],
+    "answer": 0
   },
 
   
   {
-    "question": "As vias terrestres abertas à circulação, de acordo com sua utilização, classificam-se em:",
-    "options": ["Rodovias e vias locais", "Rodovias e estradas", "Vias urbanas e vias rurais", "Vias de trânsito rápido e vias coletoras"],
-    "answer": 2
+    "question": " Realizar, fiscalizar e controlar o processo de formação, aperfeiçoamento, reciclagem e suspensão de condutores, expedir e cassar Licença de Aprendizagem, Permissão para dirigir e Carteira nacional de Habilitação, mediante delegação do órgão federal competente, é de responsabilidade",
+    "options": ["da SENATRAN.", "do DETRAN.", "do CETRAN.", "do CONTRAN."],
+    "answer": 1
   },
 
   {
-    "question": "As praias abertas à circulação pública, as vias internas pertencentes aos condomínios constituídos por unidades autônomas e os estacionamentos privados de uso coletivo são, para efeito do Código de Trânsito Brasileiro, considerados:",
-    "options": ["Vias terrestres", "Áreas autônomas", "Vias privadas", "Áreas restritas"],
+    "question": "Deixar o condutor de prestar socorro à vítima de acidente de trânsito quando solicitado pela autoridade de trânsito e seus agentes é infração:",
+    "options": ["Gravíssima.", "Média.", "Leve.", "Grave"],
+    "answer": 3
+  },
+  {
+    "question": "O gás clorofluorcarbono (CFC) utilizado como propelente em vários tipos de sprays, chips de computadores e solventes usados pela indústria eletrônica. É um dos poluentes responsáveis pela ocorrência:",
+    "options": ["Do aumento de temperatura.", "Da redução da camada de ozônio.", "Da chuva ácida.", "Do efeito estufa."],
+    "answer": 1
+  },
+  {
+    "question": "A sinalização horizontal se apresenta nas seguintes cores:",
+    "options": ["Amarela, vermelha, branca, azul e preta.", "Apenas amarela e branca.", "Apenas amarela, vermelha e branca.", "Amarela, vermelha, branca, verde e preta."],
     "answer": 0
   },
   {
-    "question": "Qual é a posição adequada para posicionar o dispositivo auxiliar de retenção (bebê conforto) para uma criança de 0 a 1 ano?",
-    "options": ["No meio do banco traseiro.", "No assoalho atrás do banco do motorista.", "De forma que o rosto da criança fique voltado para o vidro traseiro.", "Desde que se dirija devagar, preso no cinto de segurança do banco do carona."],
-    "answer": 2
-  },
-  {
-    "question": "O ciclista, na falta de ciclovia ou ciclofaixa, deve andar:",
-    "options": ["No sentido contrário aos carros na via", "No mesmo sentido dos veículos na via", "Pela calçada e junto aos pedestres", "No centro da via em cima da linha divisória"],
+    "question": "Na presença de sangramento abundante, qual o cuidado indicado?",
+    "options": ["Garrotear (usar garrote).", "Fazer compressão no local do sangramento.", " Dar bastante líquido para a pessoa ir tomando.", "Jogar bastante água oxigenada para coagular e limpar o ferimento."],
     "answer": 1
   },
   {
-    "question": "Ao sair da via pelo lado esquerdo, em pista com circulação nos dois sentidos, o procedimento do condutor deverá ser:",
-    "options": ["Em pista com circulação nos dois sentidos não é permitido sair pelo lado esquerdo.", "Aproximar-se o máximo possível do eixo da linha divisória da via e efetuar a manobra com segurança.", "Aproximar-se o máximo possível do bordo esquerdo e executar a manobra no menor espaço possível.", "Aproximar-se do acostamento e executar a manobra no maior tempo possível."],
-    "answer": 1
-  },
-  {
-    "question": "O embarque e desembarque de passageiros de transporte coletivo deverá acontecer:",
-    "options": ["Sempre que solicitado por idosos e deficientes físicos", "Somente nos pontos estabelecidos para este fim", "Em qualquer ponto da via, desde que não atrapalhe o trânsito", "Sempre que o passageiro solicitar"],
+    "question": "Ao se deparar com um acidente num local onde o socorro seja prestado somente pelo Corpo de Bombeiros, você deverá ligar para o número:",
+    "options": ["191.", "193.", "190.", "181."],
     "answer": 1
   },
   {
@@ -118,66 +118,67 @@ const questions = [
     "answer": 1
   },
   {
-    "question": "O extintor de incêndio é equipamento obrigatório:",
-    "options": ["Para os veículos automotores, exceto motocicletas", "Somente por ocasião do licenciamento do veículo", "Para caminhão, caminhão-trator, micro-ônibus, veículos de transporte de inflamáveis e coletivo de passageiros", "Apenas para veículos novos"],
-    "answer": 2
-  },
-  {
-    "question": "Ao se aproximar de um cruzamento, uma forma segura de agir é:",
-    "options": ["Reduzir a velocidade", "Manter a mesma velocidade", "Aumentar a velocidade", "Parar o veículo"],
-    "answer": 0
-  },
-  {
-    "question": "Veículos transitando por fluxos que se cruzem, ao se aproximarem de local não sinalizado, têm preferência:",
-    "options": ["Quem vem pela direita", "Quem vai em linha reta", "Quem se desloca pela via de fluxo mais intenso", "O ônibus, por transportar mais passageiros"],
-    "answer": 0
-  },
-  {
-    "question": "Quando uma pista de rolamento comportar várias faixas de circulação no mesmo sentido, são as da _________ destinadas ao deslocamento dos veículos mais _______ e de maior porte, quando não houver faixa especial:",
-    "options": ["Direita; rápidos", "Esquerda; lentos", "Direita; lentos", "Esquerda; rápidos"],
-    "answer": 2
-  },
-  {
-    "question": "Os usuários das vias terrestres devem:",
-    "options": ["Circular somente pelo lado direito da via", "Ceder sempre o direito de passagem aos veículos de transporte coletivo", "Circular sempre com velocidade reduzida", "Abster-se de todo ato que possa constituir perigo ou obstáculo ao trânsito"],
+    "question": "Não faz parte das partes fixas do motor:",
+    "options": ["Bloco do motor", "Cilindros.", "Cabeçote.", "Biela."],
     "answer": 3
   },
   {
-    "question": "O cinto de segurança é obrigatório em todas as vias do território nacional para:",
-    "options": ["O condutor, somente", "Condutor e passageiros do banco dianteiro", "Condutor e passageiros dos bancos dianteiro e traseiro", "Condutor e passageiros do banco traseiro"],
-    "answer": 2
+    "question": "O conversor catalítico (catalisador), instalado no coletor de escapamento do veículo, é um:",
+    "options": ["Transformador de gases tóxicos em gases não nocivos ao meio ambiente.", "Filtro dos gases do escapamento.", " Acelerador de molécula binárias, oposto aos gases de escapamento.", "Filtro dos gases do escapamento, que separa o vapor d'água dos gases de escapamento."],
+    "answer": 0
   },
   {
-    "question": "Analise a preferência acima e responda:",
+    "question": "Na direção defensiva, é o resultado da prática mais o treinamento:",
+    "options": ["Conhecimento", "Decisão.", "Atenção.", "Habilidade."],
+    "answer": 3
+  },
+  {
+    "question": " Não é considerado crime de trânsito:",
+    "options": ["Dirigir em excesso de velocidade.", "Homicídio culposo.", "Omissão de socorro.", "Lesão corporal culposa."],
+    "answer": 0
+  },
+  {
+    "question": "A ordem do Agente da Autoridade de Trânsito, identificada na imagem, significa ordem de:",
+    "image": "agseguir.png",
+    "options": ["Retorno para os veículos que estão à esquerda.", "Parada obrigatória para todos os veículos.", "Diminuição da velocidade para todos os veículos.", "Seguir para todos os veículos."],
+    "answer": 3
+  },
+  {
+    "question": "Nos dias chuvosos, não é recomendável:",
+    "options": ["Trafegar com o pisca-alerta acionado.", "Aumentar a distância de segurança para com os veículos que seguem à frente", "Acender os faróis.", "Sinalizar com maior abundância, suas intenções de manobras."],
+    "answer": 0
+  },
+  {
+    "question": "A placa A-10b adverte sobre:",
     "image": "quest25.png",
-    "options": ["Entre o veículo 4, 3 e 2. Tem preferência o veículo 4", "Entre o veículo 3, 2 e 1. Tem preferência o veículo 2", "Entre o veículo 1, 2 e 3. Tem a preferência o veículo 3", "Entre o veículo 2, 3 e 4. Tem preferência o veículo 2"],
-    "answer": 3
-  },
-  {
-    "question": "Ao aproximar-se de um cruzamento não sinalizado, surgindo um veículo à sua direita, o condutor deve:",
-    "options": ["Parar o veículo, respeitando a preferência", "Diminuir a velocidade", "Usar atenção difusa e passar", "Não se preocupar, se estiver transitando em uma avenida"],
+    "options": ["Entroncamento oblíquo à direita.", "Junção de pistas", "Entroncamento oblíquo à esquerda.", "Divisão da pista."],
     "answer": 0
   },
   {
-    "question": "Ao ser ultrapassado em via de acostamento, deve-se:",
-    "options": ["Deslocar-se obrigatoriamente para o acostamento", "Desviar-se para a direita, reduzir ou manter a velocidade", "Reduzir bastante a velocidade", "Não se preocupar, pois a responsabilidade é de quem ultrapassa"],
-    "answer": 1
+    "question": "O DNIT (Departamento Nacional de Infraestrutura de Transporte) é o responsável por planejar, projetar, regulamentar e operar o trânsito nas:",
+    "options": ["Rodovias e Estradas municipais.", "Vias dentro do município.", "Rodovias e Estradas federais", "Rodovias e Estradas estaduais."],
+    "answer": 2
   },
   {
-    "question": "Em uma via coletora sem sinalização, o condutor poderá atingir a velocidade de no máximo:",
-    "options": ["30 km/h", "40 km/h", "50 km/h", "60 km/h"],
-    "answer": 1
+    "question": "Para conduzir um caminhão de 8.000 kg com um reboque de5.000 kg engatado atrás é necessário estar habilitado, no mínimo, na categoria:",
+  "options": [" 'C'.", "'D'.", "'B'.", "'E'."],
+    "answer": 0
   },
   {
-    "question": "Os condutores de ciclomotores não poderão circular nas vias:",
-    "options": ["Locais", "Arteriais", "Coletoras", "De trânsito rápido"],
+    "question": "Substâncias infectantes são aquelas que:",
+    "options": ["Contém micro-organismos infecciosos.", "Alteram sua propriedade com o calor", "Contém corrosivos.", "Liberam gás carbônico."],
+    "answer": 0
+  },
+  {
+    "question": "Os ruídos emitidos pelo funcionamento do motor de um veículo são controlados pelo:",
+    "options": ["Carburador.", "Radiador.", "Catalisador.", "Silenciador."],
     "answer": 3
   },
   {
-    "question": "Analise o desenho e marque a preferência:",
+    "question": "Identifique o significado do gesto do condutor expresso no desenho:",
     "image": "quest30.png",
-    "options": ["Do veículo 1, porque o veículo 2 irá fazer conversão", "Do veículo 2, porque está à direita do veículo 1", "Do veículo 1, porque está em linha reta", "Nenhuma das anteriores"],
-    "answer": 1
+    "options": ["Dobrar à direita.", "Diminuir a velocidade.", "Dobrar à esquerda.", "Parar."],
+    "answer": 2
   }
 ];
 
@@ -215,7 +216,7 @@ function showQuestion() {
   if (q.image) {
     qDiv.innerHTML += `
       <div style="text-align: center;">
-        <img src="${q.image}" alt="Imagem da questão" class="question-image" style="max-width: 200px; height: auto; display: block; margin: 5px auto;">
+        <img src="${q.image}" alt="Imagem da questão" class="question-image" style="max-width: 300px; height: auto; display: block; margin: 5px auto;">
       </div>`;
   }
 

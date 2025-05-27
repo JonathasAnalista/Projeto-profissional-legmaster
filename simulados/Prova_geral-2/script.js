@@ -124,10 +124,9 @@ const questions = [
     "answer": 2
   },
   {
-    "question": "Em vias dotadas de acostamento, qual dos veículos acima está fazendo a conversão à esquerda corretamente?",
-    "image": "quest18.png",
-    "options": ["O veículo 1", "O veículo 3", "O veículo 2", "Nenhum deles"],
-    "answer": 1
+    "question": "Aquaplanagem é:",
+    "options": ["Perda da aderência dos pneus devido a uma camada fina de água no solo", "Derrapagem do veículo em pista seca.", "Perda da aderência dos pneus em qualquer tipo de situação.", "Perda de estabilidade do veículo."],
+    "answer": 0
   },
   {
     "question": "Para licenciar um veículo é obrigatório:",
@@ -228,7 +227,7 @@ function showQuestion() {
   if (q.image) {
     qDiv.innerHTML += `
       <div style="text-align: center;">
-        <img src="${q.image}" alt="Imagem da questão" class="question-image" style="max-width: 300px; height: auto; display: block; margin: 5px auto;">
+        <img src="${q.image}" alt="Imagem da questão" class="question-image" style="max-width: 220px; height: auto; display: block; margin: 5px auto;">
       </div>`;
   }
 
