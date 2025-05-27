@@ -4,7 +4,7 @@ let currentUser = JSON.parse(localStorage.getItem("usuarioLogado") || "null");
 const somAcerto = new Audio("sounds/acerto.mp3");
 const somErro = new Audio("sounds/erro.mp3");
 
-const VERSAO_ATUAL = '1.0.5'; // <-- Você só muda isso quando publicar uma nova versão
+const VERSAO_ATUAL = '1.0.7'; // <-- Você só muda isso quando publicar uma nova versão
 
 const versaoSalva = localStorage.getItem('versao_legmaster');
 
@@ -82,13 +82,15 @@ async function obterUsuarioDaPlanilha(email, senha) {
 
     const usuario = data.find(u => u.email?.toLowerCase() === email.toLowerCase());
 
-    if (!usuario) {
-      mostrarAlerta("Atenção, verifique o campo de e-mail e senha.");
+    if (!usuario || usuario.senha !== senha) {
+      mostrarAlerta("Email ou senha errado.");
       return null;
     }
 
-    if (usuario.senha !== senha) {
-      mostrarAlerta("Senha incorreta.");
+    const hoje = new Date();
+    const venc = new Date(usuario.vencimento);
+    if (venc < hoje) {
+      mostrarAlerta("Licença vencida. Entre em contato pelo número 35998475349.");
       return null;
     }
 
@@ -97,37 +99,13 @@ async function obterUsuarioDaPlanilha(email, senha) {
       return null;
     }
 
-    const hoje = new Date();
-    const venc = new Date(usuario.vencimento);
-    if (venc < hoje) {
-      mostrarAlerta(`Seu acesso venceu em ${usuario.vencimento}.`);
-      return null;
-    }
-
-    return usuario; // << RETORNA o usuário completo
+    return usuario;
   } catch (error) {
     console.error("Erro ao acessar planilha:", error);
     mostrarAlerta("Erro ao validar usuário. Verifique sua conexão.");
     return null;
   }
 }
-
-
-// async function obterUsuarioDaPlanilha(email) {
-//   const planilhaURL = "https://opensheet.elk.sh/1o9KtR9dFCgO37xQQvfMmCa1l1p7YSV19QyAE5YP-D1U/Sheet1";
-
-//   try {
-//     const response = await fetch(planilhaURL);
-//     const data = await response.json();
-
-//     return data.find(u => u.email?.toLowerCase() === email.toLowerCase()) || null;
-//   } catch (error) {
-//     console.error("Erro ao buscar usuário na planilha:", error);
-//     return null;
-//   }
-// }
-
-
 
 async function login() {
   const email = document.getElementById("email").value.trim();
@@ -149,13 +127,9 @@ async function login() {
     const nomeFinal = usuarioValido.nome?.trim() || usuarioValido.email || "Aluno";
     console.log("📌 Registrando nome na planilha:", nomeFinal);
     registrarAcesso(nomeFinal);
-  } else {
-    mostrarAlerta("❌ Email ou senha inválidos!");
   }
-
-  
-
 }
+
 
 
 
