@@ -78,7 +78,7 @@ async function buscarDesempenhoFirestore(email) {
 let currentUser = JSON.parse(localStorage.getItem("usuarioLogado") || "null");
 
 
-const VERSAO_ATUAL = "1.6.3";
+const VERSAO_ATUAL = "1.6.2";
 const versaoSalva = localStorage.getItem("versao_legmaster");
 
 if (versaoSalva !== VERSAO_ATUAL) {
@@ -276,7 +276,7 @@ function renderAulas() {
       </div>
 
       <button class="auth-link" style="margin-top: 40px;" onclick="renderMenuPrincipal()">← Voltar</button>
-      <p style='margin-top: 25px; font-size: 14px; color: #555;'>"Estude com foco, conquiste seu sonho!"•</p>
+      <p style='margin-top: 25px; font-size: 14px; color: #555;'>"Estude com foco, conquiste seu sonho!"</p>
 
     </div>
   `;
@@ -371,7 +371,7 @@ function renderSimulados() {
         
       </div>
       
-      <button class="auth-link" style="margin-top: 30px;" onclick="renderMenuPrincipal()">← Voltar</button>
+      <button class="auth-link" style="margin-top: 40px;" onclick="renderMenuPrincipal()">← Voltar</button>
       <p style='margin-top: 25px; font-size: 14px; color: #555;'>"Estude com foco, conquiste seu sonho!"</p>
     
     </div>
@@ -613,7 +613,7 @@ function renderDesempenho() {
         <button class="auth-btn" style="margin-top: 20px;" onclick="apagarHistorico()">🗑️ Apagar Histórico</button>
       `}
       <p style='margin-top: 25px; font-size: 14px; color: #555;'>"Estude com foco, conquiste seu sonho!"</p>
-      <button class="auth-link" style="margin-top: 30px;" onclick="renderMenuPrincipal()">← Voltar</button>
+      <button class="auth-link" style="margin-top: 40px;" onclick="renderMenuPrincipal()">← Voltar</button>
     </div>
   `;
   animateCard();
