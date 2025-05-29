@@ -1,23 +1,97 @@
+// ===============================
+// Firebase Configuração Legmaster
+// ===============================
+const firebaseConfig = {
+  apiKey: "AIzaSyDvvusp4oXSq10OQaYASY0x5nbITAL680c",
+  authDomain: "legmaster-firebase.firebaseapp.com",
+  projectId: "legmaster-firebase",
+  storageBucket: "legmaster-firebase.appspot.com",
+  messagingSenderId: "202888695536",
+  appId: "1:202888695536:web:3872f77a5e0dd1e1d0bc35",
+  measurementId: "G-893VBVSCH8"
+};
 
-let usuarios = JSON.parse(localStorage.getItem("usuarios") || "[]");
+if (!window.firebaseAppInitialized) {
+  firebase.initializeApp(firebaseConfig);
+  window.firebaseAppInitialized = true;
+}
+
+let db;
+document.addEventListener("DOMContentLoaded", () => {
+  if (firebase?.firestore) {
+    db = firebase.firestore();
+  }
+});
+
+
+const auth = firebase.auth();
+
+
+// visível no escopo global:
+window.salvarDesempenhoFirestore = async function(email, prova, acertos) {
+  const emailDoc = email.replace(/[.@]/g, "_");
+  const data = new Date().toLocaleString("pt-BR");
+
+  try {
+    await db.collection("desempenhos").add({
+      email,
+      prova,
+      acertos,
+      data,
+      docId: emailDoc
+    });
+    console.log("✅ Desempenho salvo no Firestore.");
+  } catch (err) {
+    console.error("❌ Erro ao salvar desempenho:", err);
+  }
+};
+
+
+
+
+
+async function buscarDesempenhoFirestore(email) {
+  const emailDoc = email.replace(/[.@]/g, "_");
+  const resultados = [];
+
+  try {
+    const snapshot = await db.collection("desempenhos")
+      .where("email", "==", email)
+      .orderBy("data", "desc")
+      .get();
+
+    snapshot.forEach(doc => {
+      resultados.push(doc.data());
+    });
+
+    console.log("✅ Desempenhos encontrados:", resultados);
+    return resultados;
+  } catch (err) {
+    console.error("Erro ao buscar desempenho no Firestore:", err);
+    return [];
+  }
+}
+
+
+
+
 let currentUser = JSON.parse(localStorage.getItem("usuarioLogado") || "null");
-const somAcerto = new Audio("sounds/acerto.mp3");
-const somErro = new Audio("sounds/erro.mp3");
 
-const VERSAO_ATUAL = '1.4.5'; // <-- Você só muda isso quando publicar uma nova versão
 
-const versaoSalva = localStorage.getItem('versao_legmaster');
+const VERSAO_ATUAL = "1.4.8";
+const versaoSalva = localStorage.getItem("versao_legmaster");
 
 if (versaoSalva !== VERSAO_ATUAL) {
-  localStorage.setItem('versao_legmaster', VERSAO_ATUAL);
+  localStorage.setItem("versao_legmaster", VERSAO_ATUAL);
   alert("🚀 Uma nova versão da plataforma está disponível! Recarregando...");
   location.reload();
 }
 
-
 function renderLogin() {
   localStorage.setItem("telaAtual", "login");
-  document.getElementById("form-box").innerHTML = `
+  const formBox = document.getElementById("form-box");
+  if (!formBox) return;
+  formBox.innerHTML = `
     <button onclick="renderIntro()" style="float:right; background:none; border:none; font-size:28px; color:#999; cursor:pointer;">&times;</button>
     <h2 class="auth-title">Login</h2>
     <div class="form-group">
@@ -28,112 +102,94 @@ function renderLogin() {
       <label>Senha</label>
       <input type="password" id="senha" required />
     </div>
-    <button class="auth-btn" onclick="login()">Entrar</button>`;
+    <button type="button" class="auth-btn" id="botaoLogin">Entrar</button>`;
+  setTimeout(() => {
+    const botaoLogin = document.getElementById("botaoLogin");
+    if (botaoLogin) {
+      botaoLogin.addEventListener("click", () => {
+        console.log("Login button clicked");
+        login();
+      });
+    } else {
+      console.error("Botão de login não encontrado para adicionar evento.");
+    }
+  }, 0);
   animateCard();
-  }
-//Para ativar o button cadastrar cole esse codigo na linha de cima <button class="auth-link" onclick="renderCadastro()">Não tem conta? Cadastre-se</button>
-
-
-
-// function renderCadastro() {
-//   document.getElementById("form-box").innerHTML = `
-//     <button onclick="renderIntro()" style="float:right; background:none; border:none; font-size:28px; color:#999; cursor:pointer;">&times;</button>
-//     <h2 class="auth-title">Cadastro</h2>
-//     <div class="form-group">
-//       <label>Nome</label>
-//       <input type="text" id="nome" required />
-//     </div>
-//     <div class="form-group">
-//       <label>Email</label>
-//       <input type="email" id="email" required />
-//     </div>
-//     <div class="form-group">
-//       <label>Senha</label>
-//       <input type="password" id="senha" required />
-//     </div>
-//     <button class="auth-btn" onclick="cadastrar()">Cadastrar</button>
-//     <button class="auth-link" onclick="renderLogin()">Já tem conta? Login</button>
-//   `;
-//   animateCard();
-// }
-
-// function cadastrar() {
-//   const nome = document.getElementById("nome").value;
-//   const email = document.getElementById("email").value;
-//   const senha = document.getElementById("senha").value;
-
-//   if (!nome || !email || !senha) return alert("Preencha todos os campos.");
-//   if (!email.includes("@")) return alert("Digite um email válido.");
-//   if (senha.length < 4) return alert("A senha deve ter no mínimo 4 caracteres.");
-//   if (usuarios.some(u => u.email === email)) return alert("Email já cadastrado.");
-
-//   usuarios.push({ nome, email, senha });
-//   localStorage.setItem("usuarios", JSON.stringify(usuarios));
-//   alert("Cadastro realizado! Faça login.");
-//   renderLogin();
-// }
-
-async function obterUsuarioDaPlanilha(email, senha) {
-  const planilhaURL = "https://opensheet.elk.sh/1o9KtR9dFCgO37xQQvfMmCa1l1p7YSV19QyAE5YP-D1U/Sheet1";
-
-  try {
-    const response = await fetch(planilhaURL);
-    const data = await response.json();
-
-    const usuario = data.find(u => u.email?.toLowerCase() === email.toLowerCase());
-
-    if (!usuario || usuario.senha !== senha) {
-      mostrarAlerta("Email ou senha errado.");
-      return null;
-    }
-
-    const hoje = new Date();
-    const venc = new Date(usuario.vencimento);
-    if (venc < hoje) {
-      mostrarAlerta("Licença vencida. Entre em contato pelo número 35998475349.");
-      return null;
-    }
-
-    if (usuario.status.toLowerCase() !== "ativo") {
-      mostrarAlerta(`Olá ${usuario.nome}, seu acesso está inativo. Contato: (35)99847-5349`);
-      return null;
-    }
-
-    return usuario;
-  } catch (error) {
-    console.error("Erro ao acessar planilha:", error);
-    mostrarAlerta("Erro ao validar usuário. Verifique sua conexão.");
-    return null;
-  }
 }
 
-async function login() {
-  const email = document.getElementById("email").value.trim();
-  const senha = document.getElementById("senha").value.trim();
+function login() {
+  const emailInput = document.getElementById("email");
+  const senhaInput = document.getElementById("senha");
 
-  const usuarioValido = await obterUsuarioDaPlanilha(email, senha);
+  if (!emailInput || !senhaInput) {
+    mostrarAlertaLogin("⚠️ Erro ao localizar campos de login.");
+    return;
+  }
 
-  if (usuarioValido) {
-    if (typeof gtag === "function" && usuarioValido?.email) {
-      gtag('set', { user_id: usuarioValido.email });
-      console.log("📊 GA4: user_id set:", usuarioValido.email);
-    }
-    currentUser = usuarioValido;
-    localStorage.setItem("usuarioLogado", JSON.stringify(usuarioValido));
-    console.log("✅ Usuário logado:", currentUser);
+  const email = emailInput.value.trim();
+  const senha = senhaInput.value.trim();
 
+  if (!email || !senha) {
+    mostrarAlertaLogin("⚠️ Preencha todos os campos.");
+    return;
+  }
+
+  auth.signInWithEmailAndPassword(email, senha)
+    .then((userCredential) => {
+      const user = userCredential.user;
+      localStorage.setItem("usuarioLogado", JSON.stringify({ email: user.email }));
+      currentUser = { email: user.email };
+
+      if (typeof gtag === "function" && user?.email) {
+        gtag("set", { user_id: user.email });
+      }
+
+      renderMenuPrincipal();
+      if (typeof registrarAcesso === "function") {
+        registrarAcesso(user.email);
+      }
+    })
+    .catch((error) => {
+      if (error.code === "auth/user-not-found") {
+        mostrarAlertaLogin("❌ Usuário não encontrado. Verifique o e-mail digitado.");
+      } else if (error.code === "auth/wrong-password") {
+        mostrarAlertaLogin("🔐 Senha incorreta! Tente novamente com calma.");
+      } else if (error.code === "auth/invalid-login-credentials") {
+        mostrarAlertaLogin("❗ Email ou senha incorretos. Verifique os dados digitados.");
+      } else {
+        mostrarAlertaLogin("⚠️ Erro inesperado. Tente novamente mais tarde.");
+      }
+
+
+  console.error("Erro no login:", error.code, error.message);
+});
+
+}
+
+
+document.addEventListener("DOMContentLoaded", () => {
+  const tela = localStorage.getItem("telaAtual");
+  if (tela === "login") {
+    renderLogin();
+  } else {
+    renderIntro();
+  }
+});
+
+auth.onAuthStateChanged((user) => {
+  if (user) {
+    localStorage.setItem("usuarioLogado", JSON.stringify({ email: user.email }));
+    currentUser = { email: user.email };
     renderMenuPrincipal();
-
-    const nomeFinal = usuarioValido.nome?.trim() || usuarioValido.email || "Aluno";
-    console.log("📌 Registrando nome na planilha:", nomeFinal);
-    registrarAcesso(nomeFinal);
+  } else {
+    renderIntro();
   }
-}
+});
 
 
-
-
-
+// =====================
+// ALERTA PERSONALIZADO
+// =====================
 function mostrarAlerta(mensagem) {
   document.getElementById("alert-message").innerText = mensagem;
   document.getElementById("custom-alert").style.display = "flex";
@@ -143,26 +199,36 @@ function fecharAlerta() {
   document.getElementById("custom-alert").style.display = "none";
 }
 
-
+// =====================
+// MENU PRINCIPAL
+// =====================
 function renderMenuPrincipal() {
   localStorage.setItem("telaAtual", "menu");
-  const nome = currentUser && currentUser.nome ? currentUser.nome : 'Aluno';
+  const nome = currentUser && currentUser.email ? currentUser.email.split('@')[0] : 'Aluno';
   document.getElementById("form-box").innerHTML = `
     <div style="text-align: center;">
       <h2 style="color:#2E7D32; font-size: 26px; margin-bottom: 20px;">Bem-vindo, ${nome}!</h2>
       <div style="display: flex; flex-direction: column; align-items: center; gap: 30px; margin-top: 40px;">
-      <button class="auth-btn" style="font-size: 20px; padding: 20px;" onclick="renderAulas()">📚 Assistir às Aulas</button>
-      <button class="auth-btn" style="font-size: 20px; padding: 20px;" onclick="renderHome()">📝 Fazer Simulados</button>
-      <button class="auth-btn" style="font-size: 20px; padding: 20px;" onclick="renderDesempenho()">📊 Ver Desempenho</button>
-    </div>
-
-      
-    
-    <button class="auth-link" style="margin-top: 25px;" onclick="logout()">Sair</button>
+        <button class="auth-btn" style="font-size: 20px; padding: 20px;" onclick="renderAulas()">📚 Assistir às Aulas</button>
+        <button class="auth-btn" style="font-size: 20px; padding: 20px;" onclick="renderHome()">📝 Fazer Simulados</button>
+        <button class="auth-btn" style="font-size: 20px; padding: 20px;" onclick="renderDesempenho()">📊 Ver Desempenho</button>
+        <button class="auth-link" style="margin-top: 25px;" onclick="logout()">Sair</button>
+      </div>
     </div>
   `;
   animateCard();
 }
+
+// =====================
+// LOGOUT
+// =====================
+function logout() {
+  auth.signOut().then(() => {
+    localStorage.removeItem("usuarioLogado");
+    renderLogin();
+  });
+}
+
 
 function renderAulas() {
   localStorage.setItem("telaAtual", "aulas");
@@ -363,6 +429,145 @@ function renderProvas(materia) {
   animateCard();
 }
 
+async function renderDesempenho() {
+  localStorage.setItem("telaAtual", "desempenho");
+
+  const email = currentUser?.email;
+  if (!email) return;
+
+  const dados = await buscarDesempenhoFirestore(email);
+
+  document.getElementById("form-box").innerHTML = `
+    <div style="text-align:center;">
+      <h2 style="color:#2E7D32; font-size: 24px;">📊 Desempenho</h2>
+      <br>
+      ${dados.length === 0 ? "<p class='desempenho-vazio'>Nenhuma prova realizada ainda.</p>" : `
+        <table style="width: 100%; margin-top: 20px; border-collapse: collapse;">
+          <thead>
+            <tr style="background-color: #e0f2f1;">
+              <th style="padding: 8px; border: 1px solid #ccc;">Prova</th>
+              <th style="padding: 8px; border: 1px solid #ccc;">Acertos</th>
+              <th style="padding: 8px; border: 1px solid #ccc;">Data</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${dados.map(d => `
+              <tr>
+                <td style="padding: 8px; border: 1px solid #ccc;">${d.prova}</td>
+                <td style="padding: 8px; border: 1px solid #ccc;">${d.acertos}</td>
+                <td style="padding: 8px; border: 1px solid #ccc;">${d.data}</td>
+              </tr>`).join('')}
+          </tbody>
+        </table>
+      `}
+      <button class="auth-link" style="margin-top: 20px;" onclick="renderMenuPrincipal()">← Voltar</button>
+    </div>
+  `;
+  animateCard();
+}
+
+function apagarHistorico() {
+  if (!confirm("Tem certeza que deseja apagar todo o histórico de desempenho?")) return;
+
+  const email = currentUser?.email;
+  const desempenho = JSON.parse(localStorage.getItem("desempenho") || "{}");
+
+  delete desempenho[email];
+  localStorage.setItem("desempenho", JSON.stringify(desempenho));
+
+  alert("Histórico apagado com sucesso!");
+  renderDesempenho();
+}
+
+
+
+
+
+
+function logout() {
+  localStorage.removeItem("usuarioLogado");
+  currentUser = null;
+  renderIntro();
+}
+
+
+function renderIntro() {
+  localStorage.setItem("telaAtual", "intro");
+  document.getElementById("form-box").innerHTML = `
+    <div style="text-align: center">
+      <img src="logo_nova.jpg" alt="Logo" style="width: 150px; height: auto; margin-bottom: 20px;" />
+      <h3 style="font-size: 20px; color: rgb(2, 147, 173); margin-bottom: 20px">
+        “Simulados e aulas que garantem sua aprovação no Detran!”
+      </h3>
+      <div style="margin-top: 20px; padding-left: 30px; text-align: left; font-size: 14px; color: #333; line-height: 1.8;">
+        <p>✔️ Aulas atualizadas com o CTB</p>
+        <p>✔️ Simulados com questões reais</p>
+        <p>✔️ Método validado por +850 alunos</p>
+        <br>
+      </div>
+      <button class="auth-btn" id="btn-acessar">Acessar</button>
+      <br><br>
+      <a href="https://wa.me/5535998475349?text=Olá%20Instrutor%20Jonas!%20Gostaria%20de%20solicitar%20acesso%20à%20plataforma%20Legmaster. Como funciona?" target="_blank">
+        <button class="auth-btn" style="transition: all 0.3s ease; background-color:rgb(51, 139, 139);">
+          Solicitar Acesso
+        </button>
+      </a>
+      <div id="depoimento" style="margin: 20px 0; font-size: 14px; text-align: center; font-style: italic; color: #555;">
+        <p id="depoimento-texto">“...”</p>
+        <strong id="depoimento-autor">– ...</strong>
+      </div>
+    </div>
+  `;
+
+  document.getElementById("btn-acessar").addEventListener("click", renderLogin);
+
+  const depoimentos = [
+    { texto: "Os simulados com perguntas reais da prova me ajudou a passar, tirei 28 pontos", autor: "– Maria, Jacutinga MG" },
+    { texto: "O legal é que os simulados são objetivos e interativos. consegui minha aprovação acertei 25!!", autor: "– Gabriel,Jacutinga MG" },
+    { texto: "As aulas, as correções de provas e o simulado são ótimos! vai ajudar muita gente.", autor: "– Joyce, Jacutinga MG" },
+    { texto: "Passei de primeira graças à plataforma Legmaster! passei com 23", autor: "– Carla, Jacutinga MG" },
+    { texto: "Excelente metodologia, me senti muito preparado! Depois de 3 reprovas agora fooii! tirei 24 pontos", autor: "– João, Jacutinga MG" },
+    { texto: "As aulas são claras e objetivas. Aprovada!", autor: "– Marina, Jacutinga MG" }
+  ];
+
+  let indexAtual = 0;
+
+  function mostrarProximoDepoimento() {
+    const texto = document.getElementById("depoimento-texto");
+    const autor = document.getElementById("depoimento-autor");
+
+    if (texto && autor) {
+      texto.textContent = `“${depoimentos[indexAtual].texto}”`;
+      autor.textContent = depoimentos[indexAtual].autor;
+      indexAtual = (indexAtual + 1) % depoimentos.length;
+    }
+  }
+
+  setInterval(mostrarProximoDepoimento, 5000);
+  animateCard();
+}
+
+function animateCard() {
+  const box = document.getElementById("form-box");
+  if (box) box.style.animation = "fadeIn 0.5s ease-in-out";
+}
+
+function mostrarAlertaLogin(msg) {
+  const alerta = document.getElementById("alerta-login");
+  const texto = document.getElementById("mensagem-alerta-login");
+
+  if (alerta && texto) {
+    texto.textContent = msg;
+    alerta.style.display = "block";
+
+    setTimeout(() => {
+      alerta.style.display = "none";
+    }, 5000);
+  } else {
+    console.warn("⚠️ Alerta de login não pôde ser exibido. Elemento não encontrado.");
+  }
+}
+
 function renderDesempenho() {
   localStorage.setItem("telaAtual", "desempenho");
   const email = currentUser?.email;
@@ -413,151 +618,5 @@ function apagarHistorico() {
   renderDesempenho();
 }
 
-
-
-
-
-
-function logout() {
-  localStorage.removeItem("usuarioLogado");
-  currentUser = null;
-  renderIntro();
-}
-
-
-function renderIntro() {
-  localStorage.setItem("telaAtual", "intro");
-  document.getElementById("form-box").innerHTML = `  
-
-    
-
-
-    <div style="text-align: center">
-
-      <img src="logo_nova.jpg" alt="Logo" style="width: 150px; height: auto; margin-bottom: 20px;" />
-
-
-      <h3 style="font-size: 20px; color: rgb(2, 147, 173); margin-bottom: 20px">
-        “Simulados e aulas que garantem sua aprovação no Detran!”
-      </h3>
-
-      <div style="margin-top: 20px; padding-left: 30px; text-align: left; font-size: 14px; color: #333; line-height: 1.8;">
-        <p>✔️ Aulas atualizadas com o CTB</p>
-        <p>✔️ Simulados com questões reais</p>
-        <p>✔️ Método validado por +850 alunos</p>
-        <br>
-      </div>
-      
-
-
-      <button class="auth-btn" onclick='renderLogin()'>Acessar</button>
-      <br><br>
-
-      <a href="https://wa.me/5535998475349?text=Olá%20Instrutor%20Jonas!%20Gostaria%20de%20solicitar%20acesso%20à%20plataforma%20Legmaster. Como funciona?" target="_blank">
-        <button class="auth-btn" style="transition: all 0.3s ease; background-color:rgb(51, 139, 139);">
-          Solicitar Acesso
-        </button>
-      </a>
-
-      <div id="depoimento" style="margin: 20px 0; font-size: 14px; text-align: center; font-style: italic; color: #555;">
-      <p id="depoimento-texto">“...”</p>
-      <strong id="depoimento-autor">– ...</strong>
-      </div>
-
-     
-    </div>
-    
-   
-
-    
-
-  `;
-      const depoimentos = [
-      { texto: "Os simulados com perguntas reais da prova me ajudou a passar, tirei 28 pontos", autor: "– Maria, Jacutinga MG" },
-      { texto: "O legal é que os simulados são objetivos e interativos. consegui minha aprovação acertei 25!!", autor: "– Gabriel,Jacutinga MG" },
-      { texto: "As aulas, as correções de provas e o simulado são ótimos! vai ajudar muita gente.", autor: "– Joyce, Jacutinga MG" },
-      { texto: "Passei de primeira graças à plataforma Legmaster! passei com 23", autor: "– Carla, Jacutinga MG" },
-      { texto: "Excelente metodologia, me senti muito preparado! Depois de 3 reprovas agora fooii! tirei 24 pontos", autor: "– João, Jacutinga MG" },
-      { texto: "As aulas são claras e objetivas. Aprovada!", autor: "– Marina, Jacutinga MG" }
-    ];
-
-    let indexAtual = 0;
-
-    function mostrarProximoDepoimento() {
-      const texto = document.getElementById("depoimento-texto");
-      const autor = document.getElementById("depoimento-autor");
-
-      if (texto && autor) {
-        texto.textContent = `“${depoimentos[indexAtual].texto}”`;
-        autor.textContent = depoimentos[indexAtual].autor;
-        indexAtual = (indexAtual + 1) % depoimentos.length;
-      }
-    }
-
-    setInterval(mostrarProximoDepoimento, 5000);
-
-  animateCard();
-}
-
-
-
-
-function animateCard() {
-  const box = document.getElementById("form-box");
-  box.style.animation = "fadeIn 0.5s ease-in-out";
-}
-
-const tela = localStorage.getItem("telaAtual");
-
-
-
-// Se não estiver logado, força para tela inicial
-if (!currentUser && tela !== "intro" && tela !== "login") {
-  renderIntro();
-} else {
-  switch (tela) {
-    case "login": renderLogin(); break;
-    case "menu": renderMenuPrincipal(); break;
-    case "desempenho": renderDesempenho(); break;
-    case "aulas": renderAulas(); break;
-    case "simulados": renderSimulados(); break;
-    default: renderIntro(); break;
-  }
-}
-
-let deferredPrompt;
-
-// window.addEventListener('beforeinstallprompt', (e) => {
-//   e.preventDefault(); // Impede o prompt automático
-//   deferredPrompt = e;
-
-//   if (!localStorage.getItem('pwaInstalado')) {
-//     // const confirmar = confirm("📱 Deseja instalar este site como um app no seu celular?");
-//     if (confirmar) {
-//       deferredPrompt.prompt();
-
-//       deferredPrompt.userChoice.then(choice => {
-//         if (choice.outcome === 'accepted') {
-//           console.log("✅ Aplicativo instalado com sucesso");
-//           localStorage.setItem('pwaInstalado', 'true');
-//         } else {
-//           console.log("❌ Usuário recusou a instalação");
-//         }
-//       });
-//     }
-//   }
-// });
-
-function registrarAcesso(nome) {
-  const url = "https://script.google.com/macros/s/AKfycbyNmUKXQ1T7b4q-ZIOvBBpe4BPJvFgALrK2y8KIreTZxe08WYfHr_tF0tEv2ZGh217C/exec"; 
-  const form = new FormData();
-  form.append("nome", nome);
-
-  fetch(url, {
-    method: "POST",
-    body: form
-  }).then(() => console.log("✅ Acesso registrado com sucesso."))
-    .catch(err => console.error("Erro ao registrar acesso:", err));
-}
 
 

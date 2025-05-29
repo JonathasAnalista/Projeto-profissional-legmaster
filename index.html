@@ -1,64 +1,53 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-  <style>
-  body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    transition: background 0.3s, color 0.3s;
-  }
-
-  body.light {
-    background: #f0f0f0;
-    color: #222;
-  }
-
-  body.dark {
-    background: #121212;
-    color: #eee;
-  }
-
-  .theme-toggle {
-    position: fixed;
-    top: 10px;
-    right: 10px;
-    background: #2E7D32;
-    color: rgb(255, 247, 163);
-    padding: 10px 15px;
-    border: none;
-    border-radius: 20px;
-    cursor: pointer;
-    z-index: 9999;
-  }
- 
-
-</style>
-
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Legmaster - Escola online</title>
   <link rel="stylesheet" href="style.css?v=1.1.1" />
   <link rel="manifest" href="manifest.json">
   <meta name="theme-color" content="#2E7D32">
-  <meta name="theme-color" content="#2E7D32" />
 
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-JRMEXEF83Z"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      transition: background 0.3s, color 0.3s;
+    }
+    body.light { background: #f0f0f0; color: #222; }
+    body.dark { background: #121212; color: #eee; }
+    .theme-toggle {
+      position: fixed; top: 10px; right: 10px;
+      background: #2E7D32; color: rgb(255, 247, 163);
+      padding: 10px 15px; border: none; border-radius: 20px;
+      cursor: pointer; z-index: 9999;
+    }
+    @keyframes alertaDeslizar {
+      0% { top: -100px; opacity: 0; }
+      100% { top: 20px; opacity: 1; }
+    }
 
-  gtag('config', 'G-JRMEXEF83Z');
-</script>
+  </style>
 
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-JRMEXEF83Z"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-JRMEXEF83Z');
+  </script>
 
-</head>
-<body>
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-auth-compat.js"></script>
 
   
 
+
+</head>
+
+<body>
 
   <div id="custom-alert" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background-color:rgba(0,0,0,0.5); z-index:9999; justify-content:center; align-items:center;">
     <div style="background:#ffffff; padding:20px 30px; border-radius:10px; max-width:400px; text-align:center; box-shadow:0 0 20px rgba(0,0,0,0.2);">
@@ -67,26 +56,16 @@
     </div>
   </div>
 
-<body>
   <div class="auth-card" id="form-box"></div>
-  <script src="script.js?v=1.1.1"></script>
 
-  <script>
-    if ('serviceWorker' in navigator) {
-      window.addEventListener('load', () => {
-        navigator.serviceWorker.register('service-worker.js?v=1.1.1')
-          .then(reg => console.log("Service Worker registrado:", reg.scope))
-          .catch(err => console.log("Erro no Service Worker:", err));
-      });
-    }
-  </script>
+  <!-- Script principal -->
 
+  <!-- Service Worker -->
   <script>
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', () => {
         navigator.serviceWorker.register('service-worker.js?v=1.1.1').then(registration => {
           console.log('Service Worker registrado:', registration.scope);
-
           registration.onupdatefound = () => {
             const newWorker = registration.installing;
             newWorker.onstatechange = () => {
@@ -96,7 +75,6 @@
               }
             };
           };
-
         }).catch(error => {
           console.error('Falha ao registrar o Service Worker:', error);
         });
@@ -104,26 +82,40 @@
     }
   </script>
 
-  <!-- Google Analytics 4 -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  const user = JSON.parse(localStorage.getItem("usuarioLogado") || "null");
-  const userId = user?.email || null;
-
-  gtag('config', 'G-4MCS21GQ7C', {
-    user_id: userId
-  });
-</script>
+  <!-- GA4 com user_id -->
+  <script>
+    const user = JSON.parse(localStorage.getItem("usuarioLogado") || "null");
+    const userId = user?.email || null;
+    gtag('config', 'G-4MCS21GQ7C', { user_id: userId });
+  </script>
 
 
+<div id="alerta-login" style="
+  display:none;
+  position:fixed;
+  top:20px;
+  left:50%;
+  transform:translateX(-50%);
+  background:#fff;
+  color:#d32f2f;
+  border:2px solid #f44336;
+  border-radius:12px;
+  padding:20px;
+  font-size:18px;
+  box-shadow:0 6px 12px rgba(0,0,0,0.3);
+  z-index:1000;
+  max-width: 400px;
+  text-align: center;">
+  <span id="mensagem-alerta-login"></span>
+</div>
+
+<script src="script.js"></script>
+
+  
 
 
 
 </body>
-
-
 </html>
+
+

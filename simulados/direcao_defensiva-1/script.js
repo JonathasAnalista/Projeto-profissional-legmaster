@@ -55,8 +55,8 @@ const questions = [
     "answer": 0
   },
   {
-    "question": "No Brasil são dotados 3 tipos de cinto de segurança, qual o tipo que oferece mais segurança ao condutor:",
-    "options": ["o de três pontos", "o sub abdominal", "o de dois pontos", "o de cinco pontos"],
+    "question": "São elementos da direção defensiva:",
+    "options": ["Conhecimento, habilidade, atenção, previsão e decisão.", "Negligência, imprudência e imperícia.", "Cinto de segurança, encosto de cabeça e airbag.", "Visão, audição, olfato, paladar e tato."],
     "answer": 0
   },
   {
@@ -325,7 +325,13 @@ function salvarDesempenho(prova, acertos) {
     data: new Date().toLocaleString()
   });
 
-  localStorage.setItem("desempenho", JSON.stringify(desempenho));
+  //localStorage.setItem("desempenho", JSON.stringify(desempenho));
+    localStorage.setItem("desempenho", JSON.stringify(desempenho));
+
+
+  salvarDesempenhoFirestore(usuario.email, prova, acertos);
+
+
 }
 
 showQuestion();
