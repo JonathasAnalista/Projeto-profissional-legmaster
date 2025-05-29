@@ -78,14 +78,26 @@ async function buscarDesempenhoFirestore(email) {
 let currentUser = JSON.parse(localStorage.getItem("usuarioLogado") || "null");
 
 
-const VERSAO_ATUAL = "1.6.7";
+const VERSAO_ATUAL = "1.6.8";
 const versaoSalva = localStorage.getItem("versao_legmaster");
 
-if (versaoSalva !== VERSAO_ATUAL) {
-  localStorage.setItem("versao_legmaster", VERSAO_ATUAL);
-  alert("🚀 Uma nova versão da plataforma está disponível! Recarregando...");
-  location.reload();
+
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('/service-worker.js?v=1.1.2').then(reg => {
+    console.log('SW registrado:', reg.scope);
+
+    reg.onupdatefound = () => {
+      const newWorker = reg.installing;
+      newWorker.onstatechange = () => {
+        if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+          alert('🚀 Nova versão da plataforma disponível! Recarregando...');
+          window.location.reload();
+        }
+      };
+    };
+  });
 }
+
 
 function renderLogin() {
   localStorage.setItem("telaAtual", "login");
