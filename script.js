@@ -78,7 +78,7 @@ async function buscarDesempenhoFirestore(email) {
 let currentUser = JSON.parse(localStorage.getItem("usuarioLogado") || "null");
 
 
-const VERSAO_ATUAL = "1.6.8";
+const VERSAO_ATUAL = "1.6.7";
 const versaoSalva = localStorage.getItem("versao_legmaster");
 
 if (versaoSalva !== VERSAO_ATUAL) {
@@ -431,11 +431,13 @@ function renderProvas(materia) {
   `;
   animateCard();
 
-  function abrirProva(nomeProva, url) {
-  localStorage.setItem("provaAtual", nomeProva);
-  window.open(url, "_blank");
+
+
 }
 
+function abrirProva(nomeProva, url) {
+  localStorage.setItem("provaAtual", nomeProva);
+  window.open(url, "_blank");
 }
 
 async function renderDesempenho() {
