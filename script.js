@@ -78,7 +78,7 @@ async function buscarDesempenhoFirestore(email) {
 let currentUser = JSON.parse(localStorage.getItem("usuarioLogado") || "null");
 
 
-const VERSAO_ATUAL = "1.5.6";
+const VERSAO_ATUAL = "1.6.6";
 const versaoSalva = localStorage.getItem("versao_legmaster");
 
 if (versaoSalva !== VERSAO_ATUAL) {
