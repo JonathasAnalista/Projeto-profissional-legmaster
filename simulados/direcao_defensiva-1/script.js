@@ -309,7 +309,9 @@ if (score < 21) {
   msg.style.fontWeight = "bold";
 }
 
-  salvarDesempenho("Direção Defensiva - Prova 1", score);
+  const nomeProva = localStorage.getItem("provaAtual") || "Prova Desconhecida";
+  salvarDesempenho(nomeProva, score);
+
 }
 
 function salvarDesempenho(prova, acertos) {

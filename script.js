@@ -78,7 +78,7 @@ async function buscarDesempenhoFirestore(email) {
 let currentUser = JSON.parse(localStorage.getItem("usuarioLogado") || "null");
 
 
-const VERSAO_ATUAL = "1.6.9";
+const VERSAO_ATUAL = "1.6.8";
 const versaoSalva = localStorage.getItem("versao_legmaster");
 
 if (versaoSalva !== VERSAO_ATUAL) {
@@ -422,13 +422,20 @@ function renderProvas(materia) {
       <h2 style="color:#2E7D32; font-size: 24px; margin-bottom: 10px;">${materia}</h2>
       <p style="font-size: 17px; color: #444;">Escolha uma prova:</p>
       <div style="display: flex; flex-direction: column; align-items: center; margin: 30px 0; gap: 15px;">
-        ${provas.map((url, i) => `<button class="auth-btn" onclick="window.open('${url}', '_blank')">Prova ${i + 1}</button>`).join('')}
+        ${provas.map((url, i) => `<button class="auth-btn" onclick="abrirProva('${materia} - Prova ${i + 1}', '${url}')">Prova ${i + 1}</button>`).join('')}
       </div>
       <button class="auth-link" onclick="renderSimulados()">← Voltar</button>
     
     </div>
+    
   `;
   animateCard();
+
+  function abrirProva(nomeProva, url) {
+  localStorage.setItem("provaAtual", nomeProva);
+  window.open(url, "_blank");
+}
+
 }
 
 async function renderDesempenho() {
