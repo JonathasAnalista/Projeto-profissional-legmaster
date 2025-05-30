@@ -78,7 +78,7 @@ async function buscarDesempenhoFirestore(email) {
 let currentUser = JSON.parse(localStorage.getItem("usuarioLogado") || "null");
 
 
-const VERSAO_ATUAL = "1.6.2";
+const VERSAO_ATUAL = "1.6.1";
 const versaoSalva = localStorage.getItem("versao_legmaster");
 
 if (versaoSalva !== VERSAO_ATUAL) {
@@ -351,7 +351,7 @@ function renderHome() {
 
 function renderSimulados() {
   localStorage.setItem("telaAtual", "simulados");
-  const nome = currentUser && currentUser.nome ? currentUser.nome : 'Aluno';
+  const nome = currentUser && currentUser.email ? currentUser.email.split('@')[0] : 'Aluno';
   document.getElementById("form-box").innerHTML = `
       <div style="text-align: center;">
       <h2 style="color:#2E7D32; font-size: 26px; margin-bottom: 20px;">Olá, ${nome}!</h2>
@@ -400,7 +400,7 @@ function renderSimulados() {
 
 function renderProvas(materia) {
   localStorage.setItem("telaAtual", "provas");
-  const basePath = 'simulados'; // pasta onde estão suas provas locais
+  const basePath = 'simulados';
 
   const nomes = {
     "Sinalização": "sinalizacao",
@@ -425,20 +425,17 @@ function renderProvas(materia) {
         ${provas.map((url, i) => `<button class="auth-btn" onclick="abrirProva('${materia} - Prova ${i + 1}', '${url}')">Prova ${i + 1}</button>`).join('')}
       </div>
       <button class="auth-link" onclick="renderSimulados()">← Voltar</button>
-    
     </div>
-    
   `;
   animateCard();
-
-
-
 }
 
-function abrirProva(nomeProva, url) {
+// 🔥 Aqui está a função global visível pelo botão
+window.abrirProva = function(nomeProva, url) {
   localStorage.setItem("provaAtual", nomeProva);
   window.open(url, "_blank");
 }
+
 
 async function renderDesempenho() {
   localStorage.setItem("telaAtual", "desempenho");
