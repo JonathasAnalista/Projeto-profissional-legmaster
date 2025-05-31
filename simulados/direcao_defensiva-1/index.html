@@ -48,33 +48,29 @@
       <button onclick="location.reload()">🔁 Refazer Prova</button>
     </div>
   </div>
-  <!-- Conteúdo local do simulado -->
+
+  <div id="form-box" style="display:none"></div>
+
+  <!-- Firebase compat scripts -->
+  <script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-firestore-compat.js"></script>
+
+  <!-- Inicializa Firebase -->
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyDvvusp4oXSq10OQaYASY0x5nbITAL680c",
+      authDomain: "legmaster-firebase.firebaseapp.com",
+      projectId: "legmaster-firebase",
+      storageBucket: "legmaster-firebase.appspot.com",
+      messagingSenderId: "202888695536",
+      appId: "1:202888695536:web:3872f77a5e0dd1e1d0bc35",
+      measurementId: "G-893VBVSCH8"
+    };
+    firebase.initializeApp(firebaseConfig);
+  </script>
+
+  <!-- Script do simulado -->
   <script src="script.js"></script>
-
-<!-- Firebase compat scripts -->
-<script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-auth-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.6.11/firebase-firestore-compat.js"></script>
-
-<!-- Firebase config e inicialização -->
-<script src="../../firebase-init.js"></script>
-<script src="../../script.js"></script>
-
-
-
-
-<div id="form-box" style="display:none"></div>
-
-
-
-
-
-
-
-
-
-
-
-
 </body>
 </html>

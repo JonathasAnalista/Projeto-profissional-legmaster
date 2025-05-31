@@ -1,15 +1,26 @@
-// ===============================
-// Firebase Configuração Legmaster
-// ===============================
+const usuarioSalvo = JSON.parse(localStorage.getItem("usuarioLogado") || "{}");
+
+window.currentUser = {};
+
+if (usuarioSalvo.email) {
+  window.currentUser.email = usuarioSalvo.email;
+}
+if (usuarioSalvo.nome) {
+  window.currentUser.nome = usuarioSalvo.nome;
+}
+
+console.log("Usuário carregado:", window.currentUser);
+
+
 const firebaseConfig = {
-  apiKey: "AIzaSyDvvusp4oXSq10OQaYASY0x5nbITAL680c",
-  authDomain: "legmaster-firebase.firebaseapp.com",
-  projectId: "legmaster-firebase",
-  storageBucket: "legmaster-firebase.appspot.com",
-  messagingSenderId: "202888695536",
-  appId: "1:202888695536:web:3872f77a5e0dd1e1d0bc35",
-  measurementId: "G-893VBVSCH8"
-};
+    apiKey: "AIzaSyDvvusp4oXSq10OQaYASY0x5nbITAL680c",
+    authDomain: "legmaster-firebase.firebaseapp.com",
+    projectId: "legmaster-firebase",
+    storageBucket: "legmaster-firebase.firebasestorage.app",
+    messagingSenderId: "202888695536",
+    appId: "1:202888695536:web:3872f77a5e0dd1e1d0bc35",
+    measurementId: "G-893VBVSCH0"
+  };
 
 if (!window.firebaseAppInitialized) {
   firebase.initializeApp(firebaseConfig);
@@ -78,7 +89,7 @@ async function buscarDesempenhoFirestore(email) {
 let currentUser = JSON.parse(localStorage.getItem("usuarioLogado") || "null");
 
 
-const VERSAO_ATUAL = "1.6.1";
+const VERSAO_ATUAL = "1.6.3";
 const versaoSalva = localStorage.getItem("versao_legmaster");
 
 if (versaoSalva !== VERSAO_ATUAL) {
@@ -137,20 +148,28 @@ function login() {
   }
 
   auth.signInWithEmailAndPassword(email, senha)
-    .then((userCredential) => {
-      const user = userCredential.user;
-      localStorage.setItem("usuarioLogado", JSON.stringify({ email: user.email }));
-      currentUser = { email: user.email };
+  .then((userCredential) => {
+    const user = userCredential.user;
 
-      if (typeof gtag === "function" && user?.email) {
-        gtag("set", { user_id: user.email });
-      }
+    // Recupera nome salvo no localStorage
+    const usuarioSalvo = JSON.parse(localStorage.getItem("usuarioLogado")) || {};
 
-      renderMenuPrincipal();
-      if (typeof registrarAcesso === "function") {
-        registrarAcesso(user.email);
-      }
-    })
+    // Define currentUser completo
+    windowcurrentUser = {
+      email: user.email,
+      nome: usuarioSalvo.nome || "Desconhecido"
+    };
+
+    // Salva para que outros scripts possam usar
+    localStorage.setItem("usuarioLogado", JSON.stringify(currentUser));
+    
+    // Resto do seu código aqui:
+    renderMenuPrincipal();
+    if (typeof registrarAcesso === "function") {
+      registrarAcesso(user.email);
+    }
+  })
+
     .catch((error) => {
       if (error.code === "auth/user-not-found") {
         mostrarAlertaLogin("❌ Usuário não encontrado. Verifique o e-mail digitado.");
@@ -628,5 +647,21 @@ function apagarHistorico() {
   renderDesempenho();
 }
 
+function registrarAcessoFirestore(nome, email, acao, prova, acertos, totalQuestoes) {
+  const data = new Date();
+  const dataFormatada = data.toLocaleString("pt-BR");
+  const porcentagem = Math.round((acertos / totalQuestoes) * 100);
 
-
+  firebase.firestore().collection("acessos").add({
+    nome: nome || "Desconhecido",
+    email: email || "sem@email.com",
+    acao: acao || "Finalizou simulado",
+    prova: prova || "Prova não informada",
+    acertos: acertos || 0,
+    totalQuestoes: totalQuestoes || 0,
+    porcentagem: porcentagem,
+    data: dataFormatada
+  })
+  .then(() => console.log("✅ Registro enviado para o Firestore"))
+  .catch((err) => console.error("❌ Erro ao salvar no Firestore:", err));
+}

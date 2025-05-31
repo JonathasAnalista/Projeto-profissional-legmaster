@@ -1,3 +1,16 @@
+// ✅ Carrega dados do usuário da plataforma
+const usuarioSalvo = JSON.parse(localStorage.getItem("usuarioLogado") || "{}");
+
+window.currentUser = {
+  email: usuarioSalvo.email || null,
+  nome: usuarioSalvo.nome || "Desconhecido"
+};
+
+console.log("Usuário carregado:", window.currentUser);
+
+
+
+
 
 const somAcerto = new Audio("acerto.mp3");
 const somErro = new Audio("erro.mp3");
@@ -451,44 +464,99 @@ function updateProgress() {
   document.getElementById("progress-bar").style.width = `${progress}%`;
 }
 
-function showResult() {
-  document.getElementById("quiz-container").classList.add("hidden");
-  document.getElementById("result-container").classList.remove("hidden");
-  document.getElementById("score").textContent = `Você acertou ${score} de ${questions.length} questões (${Math.round((score / questions.length) * 100)}%)`;
-
-const msg = document.getElementById("message");
-if (score < 21) {
-  msg.textContent = "❌ Atenção! Tente de novo! Precisa melhorar seu resultado";
-  msg.style.color = "#d32f2f"; // vermelho forte
-  msg.style.fontWeight = "bold";
-} else if (score >= 21 && score <= 27) {
-  msg.textContent = "⚠️ Está razoável! Você está quase lá! Dá pra melhorar!";
-  msg.style.color = "#1976d2"; // azul forte
-  msg.style.fontWeight = "bold";
-} else {
-  msg.textContent = "✅ Parabéns! Excelente desempenho! Continue assim em todos os simulados!";
-  msg.style.color = "#388e3c"; // verde forte
-  msg.style.fontWeight = "bold";
-}
-
-  const nomeProva = localStorage.getItem("provaAtual") || "Prova Desconhecida";
-  salvarDesempenho(nomeProva, score);
-}
-
 function salvarDesempenho(prova, acertos) {
-  const usuario = JSON.parse(localStorage.getItem("usuarioLogado"));
-  if (!usuario) return;
+  const email = window.currentUser?.email;
+  if (!email) return;
 
   const desempenho = JSON.parse(localStorage.getItem("desempenho") || "{}");
-  if (!desempenho[usuario.email]) desempenho[usuario.email] = [];
 
-  desempenho[usuario.email].push({
+  if (!desempenho[email]) {
+    desempenho[email] = [];
+  }
+
+  desempenho[email].push({
     prova,
     acertos,
-    data: new Date().toLocaleString()
+    data: new Date().toLocaleString("pt-BR")
   });
 
   localStorage.setItem("desempenho", JSON.stringify(desempenho));
 }
+
+
+function showResult() {
+  // Esconde o quiz e exibe o resultado
+  document.getElementById("quiz-container").classList.add("hidden");
+  document.getElementById("result-container").classList.remove("hidden");
+
+  const totalQuestoes = questions.length;
+  const porcentagem = Math.round((score / totalQuestoes) * 100);
+  const nomeProva = localStorage.getItem("provaAtual") || "Prova Desconhecida";
+
+  // Exibe o resultado na tela
+  document.getElementById("score").textContent =
+    `Você acertou ${score} de ${totalQuestoes} questões (${porcentagem}%)`;
+
+  const msg = document.getElementById("message");
+
+  if (score < 21) {
+    msg.textContent = "❌ Atenção! Tente de novo! Precisa melhorar seu resultado";
+    msg.style.color = "#d32f2f"; // vermelho forte
+  } else if (score >= 21 && score <= 27) {
+    msg.textContent = "⚠️ Está razoável! Você está quase lá! Dá pra melhorar!";
+    msg.style.color = "#1976d2"; // azul forte
+  } else {
+    msg.textContent = "✅ Parabéns! Excelente desempenho! Continue assim em todos os simulados!";
+    msg.style.color = "#388e3c"; // verde forte
+  }
+
+  msg.style.fontWeight = "bold";
+
+  // Salva o desempenho no navegador (localStorage)
+  salvarDesempenho(nomeProva, score);
+
+  // Envia os dados para o Firestore (monitoramento)
+  if (window.currentUser?.email) {
+  registrarAcessoFirestore(
+    window.currentUser.nome || "",  // vazio se não tiver nome
+    window.currentUser.email,
+    "Finalizou simulado",
+    nomeProva,
+    score,
+    totalQuestoes
+  );
+} else {
+  console.warn("⚠️ Usuário sem email. Registro não enviado.");
+}
+
+
+}
+
+
+
+function registrarAcessoFirestore(nome, email, acao, prova, acertos, totalQuestoes) {
+  const data = new Date();
+  const dataFormatada = data.toLocaleString("pt-BR");
+  const porcentagem = Math.round((acertos / totalQuestoes) * 100);
+
+  if (!firebase?.firestore) {
+    console.error("❌ Firestore não está disponível.");
+    return;
+  }
+
+  firebase.firestore().collection("acessos").add({
+    email: email || "sem@email.com",
+    acao: acao || "Finalizou simulado",
+    prova: prova || "Prova não informada",
+    acertos: acertos || 0,
+    totalQuestoes: totalQuestoes || 0,
+    porcentagem,
+    data: dataFormatada
+  })
+  .then(() => console.log("✅ Registro enviado para a coleção 'acessos'"))
+  .catch((err) => console.error("❌ Erro ao enviar para Firestore:", err));
+}
+
+
 
 showQuestion();
